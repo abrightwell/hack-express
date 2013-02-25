@@ -1,0 +1,324 @@
+@font-face {
+    font-family: "Starjedi2";
+    src: url("./resources/Starjhol.eot?#iefix") format("embedded-opentype"),
+    url("./resources/Starjhol.otf") format("opentype"),
+    url("./resources/Starjhol.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@-moz-keyframes saberscores /* Firefox */
+{
+from {background: -moz-linear-gradient(top, transparent, #00FF00 50%, transparent 100%);}
+to {background: -moz-linear-gradient(top, transparent, #FF0000 50%, transparent 100%);}
+}
+
+@-webkit-keyframes saberscores /* Safari and Chrome */
+{
+from {background: -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(50%,#00FF00), to(transparent));}
+to {background: -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(50%,#FF0000), to(transparent));}
+}
+
+* {
+	margin:0;
+	padding:0;
+	border: none;
+}
+
+body {
+	background-color: #000000;
+        font-family: Starjedi2;
+        font-size: 24px;
+        color: #E5B13A;
+        text-shadow: 1px 1px 25px #E5B13A;
+    }
+
+h2 {
+    font-size: 72px;
+}
+
+#wrapper{
+	width:auto;
+	height:auto;
+	margin:20px auto 0;
+}
+
+#wrapper h1{
+	color: #E5B13A;
+	text-align:center;
+	margin-bottom:20px;
+}
+
+#wrapper a{
+	display:block;
+	font-size:1.2em;
+	padding-top:20px;
+	color: #E5B13A;
+	text-decoration:none;
+	text-align:center;
+}
+
+#tabContainer {
+	width:auto;
+	height:auto;
+	padding:15px;
+	background-color: transparent;
+	-moz-border-radius: 4px;
+	border-radius: 4px; 
+}
+
+.tabs{
+	height:30px;
+}
+
+.tabs > ul{
+	font-size: 1em;
+	list-style:none;
+}
+
+.tabs > ul > li{
+	margin:0 2px 0 0;
+	padding:7px 10px;
+	display:block;
+	float:left;
+	color: #E5B13A;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+	-moz-border-radius-topleft: 4px;
+	-moz-border-radius-topright: 4px;
+	-moz-border-radius-bottomright: 0px;
+	-moz-border-radius-bottomleft: 0px;
+	border-top-left-radius:4px;
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 0px;
+	border-bottom-left-radius: 0px;
+	background: #000000; /* old browsers */
+	background: -moz-linear-gradient(top, #000000 50%, #E5B13A 90%, #000000 100%); /* firefox */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#000000), color-stop(90%,#E5B13A), color-stop(100%,#000000)); /* webkit */
+        background: -ms-linear-gradient(top, #000000 50%, #E5B13A 90%, #000000 100%); /* IE10+ */
+        background: linear-gradient(to bottom, #000000 50%,#E5B13A 90%,#000000 100%); /* W3C */
+}
+
+.tabs > ul > li:hover{
+	background: #000000; /* old browsers */
+	background: -moz-linear-gradient(top, #000000 50%, #E5B13A 90%, #000000 100%); /* firefox */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#000000), color-stop(90%,#E5B13A), color-stop(100%,#000000)); /* webkit */
+        background: -ms-linear-gradient(top, #000000 50%, #E5B13A 90%, #000000 100%); /* IE10+ */
+        background: linear-gradient(to bottom, #000000 50%,#E5B13A 90%,#000000 100%); /* W3C */
+	cursor:pointer;
+	color: #E5B13A;
+}
+
+.tabs > ul > li.tabActiveHeader{
+	background: #000000; /* old browsers */
+	background: -moz-linear-gradient(top, #000000 50%, #E5B13A 90%, #000000 100%); /* firefox */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#000000), color-stop(90%,#E5B13A), color-stop(100%,#000000)); /* webkit */
+        background: -ms-linear-gradient(top, #000000 50%, #E5B13A 90%, #000000 100%); /* IE10+ */
+        background: linear-gradient(to bottom, #000000 50%,#E5B13A 90%,#000000 100%); /* W3C */
+	cursor:pointer;
+	color: #E5B13A;
+}
+
+.tabscontent {
+	-moz-border-radius-topleft: 0px;
+	-moz-border-radius-topright: 4px;
+	-moz-border-radius-bottomright: 4px;
+	-moz-border-radius-bottomleft: 4px;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-bottom-left-radius: 4px; 
+	padding: 5px 15px 30px 10px;
+	color: #E5B13A;
+	text-align: left;
+	
+	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	background: -moz-linear-gradient(top, rgba(0,0,0,0.0) 0%, rgba(229,177,57,0.5) 90%, rgba(0,0,0,0.0) 100%); /* FF3.6+ */
+	background: -webkit-linear-gradient(top,  rgba(0,0,0,0.0) 0%,rgba(229,177,57,0.5) 90%, rgba(0,0,0,0.0) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, rgba(0,0,0,0.0) 0%,rgba(229,177,57,0.5) 90%,rgba(0,0,0,0.0) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, rgba(0,0,0,0.0) 0%,rgba(229,177,57,0.5) 90%,rgba(0,0,0,0.0) 100%); /* IE10+ */
+	background: linear-gradient(to bottom, rgba(0,0,0,0.0) 0%,rgba(229,177,57,0.5) 90%,rgba(0,0,0,0.0) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#80000000', endColorstr='#80e5b139',GradientType=0 ); /* IE6-8 */
+}
+
+.tabpage {
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+	border-bottom-left-radius: 0px;
+}
+
+.tabpage form {
+	font-size: 24px;
+}
+
+.tabpage button {
+	font-family: Starjedi;
+	font-size: 24px;
+	color: #E5B13A;
+	text-shadow: 1px 1px 25px #E5B13A;
+	border-radius: 35px;
+	border-color: #E5B13A;
+	background-color: transparent;
+}
+
+
+/*** table's font size ***/
+table.token * {
+    font-size: 24px;
+}
+
+/*** table's progress bars ***/
+table.token progress {
+    vertical-align: middle;
+}
+
+/*** table's thead section, head row style ***/
+table.token thead tr td {
+    background-color: transparent;
+    vertical-align:middle;
+    padding: 0.6em;
+}
+
+/*** table's thead section, coulmns header style ***/
+table.token thead tr th {
+    padding: 0.5em;
+    background-color: transparent;
+}
+
+/*** table's tbody section, odd rows style ***/
+table.token tbody tr:nth-child(odd) {
+   background-color: rgba(229,177,57,0.5);
+}
+
+/*** hover effect to table's tbody odd rows ***/
+table.token tbody tr:nth-child(odd):hover {
+    cursor:pointer;
+    /* add gradient */
+    background-color: #808080;
+    background: -webkit-gradient(linear, left top, left bottom, from(#606060), to(#909090));
+    background: -moz-linear-gradient(top, #606060, #909090); color: #dadada;
+}
+
+/*** table's tbody section, even rows style ***/
+table.token tbody tr:nth-child(even) {
+   background-color: rgba(194,142,22,0.5);
+}
+
+/*** hover effect to apply to table's tbody section, even rows ***/
+table.token tbody tr:nth-child(even):hover {
+    cursor:pointer;
+    /* add gradient */
+    background-color: #808080; background: -webkit-gradient(linear, left
+    top, left bottom, from(#606060), to(#909090)); background:
+    -moz-linear-gradient(top, #606060, #909090); color: #dadada;
+}
+
+/*** table's tbody section, last row style ***/
+table.token tbody tr:last-child {
+     border-bottom: solid 1px #404040;
+}
+
+/*** table's tbody section, separator row pseudo-class ***/
+table.token tbody tr.separator {
+    /* add gradient */
+    background-color: #808080; background: -webkit-gradient(linear, left
+    top, left bottom, from(#606060), to(#909090)); background:
+    -moz-linear-gradient(top, #606060, #909090); color: #dadada;
+}
+
+/*** table's td element, all section ***/
+table.token td {
+   vertical-align:middle; padding: 0.0em;
+}
+
+/*** table's tfoot section ***/
+table.token tfoot{
+    text-align:center;
+}
+
+
+
+
+progress,          /* All HTML5 progress enabled browsers */
+progress[role]     /* polyfill */
+{
+    /* Turns off styling - not usually needed, but good to know. */
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+
+    /* gets rid of default border in Firefox and Opera. */
+    border: none;
+
+    /* Needs to be in here for Safari polyfill so background images work as expected. */
+    background-size: auto;
+
+    /* Dimensions */
+    width: 100px;
+    height: 15px;
+}
+
+/* Polyfill */
+progress[role]:after {
+    background-image: none; /* removes default background from polyfill */
+}
+
+/* Ensure fallback text doesn't appear in polyfill */
+progress[role] strong {
+    display: none;
+}
+
+progress,                          /* Firefox  */
+progress[role][aria-valuenow] {    /* Polyfill */
+   background: transparent !important; /* !important is needed by the polyfill */
+}
+
+/* Chrome */
+progress::-webkit-progress-bar {
+    background: transparent;
+}
+
+/* IE10 */
+progress {
+    color: green;
+}
+
+/* Firefox */
+progress::-moz-progress-bar {
+    /*background: -moz-linear-gradient(top, transparent, #00FF00 50%, transparent 100%);*/
+    -moz-animation:saberscores 5s; /* Firefox */
+}
+
+/* Chrome */
+progress::-webkit-progress-value {
+    /*background: -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(50%,#00FF00), to(transparent));*/
+    -webkit-animation:saberscores 5s; /* Safari and Chrome */
+}
+
+/* Polyfill */
+progress[aria-valuenow]:before  {
+    background: green;
+}
+
+/* Firefox */
+progress:not([value])::-moz-progress-bar {
+  background-image:  url(../images/indeter.gif);
+}
+
+/* Chrome */
+progress:not([value])::-webkit-progress-bar {
+  background-image:  url(../images/indeter.gif);
+}
+
+/* Polyfill - IE */
+progress[role]{
+    background-image: url(../images/indeter.gif) !important;
+}
+
+/* Polyfill - Safari */
+progress:not([value])  {
+    background-image: url(../images/indeter.gif) !important;
+    background-size: auto;  /* Needs to be in here for Safari */
+}

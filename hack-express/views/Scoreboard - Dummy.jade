@@ -1,0 +1,33 @@
+!!! 5
+html
+  head
+    title Hack Warz:  Scoreboard
+    link(rel='stylesheet', type='text/css', href='/stylesheets/hackWarz.css')
+    link(rel='stylesheet', type='text/css', href='/stylesheets/tabs.css')
+  body(onload='initScoreboard();')
+    h2 Scoreboard
+    table#scoreTable.token(name='scoreTable')
+      thead
+        tr
+          th Username
+          th Score
+      tbody
+        tr
+          td Michael
+          td
+            progress(value='57', max='100')
+        tr
+          td Henry
+          td
+            progress(value='35', max='100')
+        tr
+          td Brad
+          td
+            progress(value='78', max='100')
+        tr
+          td ...
+          td ...
+        tr
+          td ...
+          td ...
+    ul#items

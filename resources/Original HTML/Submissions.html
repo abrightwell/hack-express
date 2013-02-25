@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<title>Hack Warz:  Submissions</title>
+<link rel="stylesheet" type="text/css" href="hackWarz.css" />
+<link rel="stylesheet" type="text/css" href="tabs.css" />
+</head>
+
+<script src="hackWarz.js"></script>
+
+<body onload="initTokens();">
+<h2>Submissions</h2>
+
+  <form onsubmit="tokenInfo(); return false;" id="tokenInfo">
+    <label for="tokenID">Token iD:  </label><input type="text" name="tokenID" id="tokenID" tabindex="1" required=true/></br>
+  </form>
+  <button type="submit" form="tokenInfo" id="submit" name="tokenID" value="Submit" tabindex="2">Submit</button>
+
+<table class="token" name="tokenTable" id="tokenTable">
+  <thead>
+    <tr><th>Token iD</th><th>Accomplishment</th><th>Point Value</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>...</td><td>...</td><td>...</td></tr>
+    <tr><td>...</td><td>...</td><td>...</td></tr>
+    <tr><td>...</td><td>...</td><td>...</td></tr>
+    <tr><td>...</td><td>...</td><td>...</td></tr>
+    <tr><td>...</td><td>...</td><td>...</td></tr>
+  </tbody>
+</table>
+
+<ul id="items">
+</ul>
+
+</body>
+
+</html>

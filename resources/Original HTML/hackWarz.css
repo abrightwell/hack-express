@@ -1,0 +1,76 @@
+@font-face {
+    font-family: "Starjedi";
+    src: url("/images/Starjhol.eot?#iefix") format("embedded-opentype"),
+    url("/images/Starjhol.otf") format("opentype"),
+    url("/images/Starjhol.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin:0;
+    padding:0;
+    border: none;
+}
+
+body {
+    background-color: #000000;
+    background-image:url('/images/StarWars.png');
+    background-repeat:no-repeat;
+    background-size:100%;
+    
+    font-family: Starjedi;
+    font-size: 24px;
+    color: #E5B13A;
+    text-shadow: 1px 1px 25px #E5B13A;
+}
+
+h2 {
+    font-size: 72px;
+}
+
+#registrationTitle, #loginTitle{
+}
+
+.registrationBody, .loginBody{
+}
+
+nav {
+    background-color: #000000;
+    font-size: 24px;
+}
+
+a {
+    color: #E5B13A;
+    text-shadow: 1px 1px 25px #E5B13A;
+    /*background: #000000;*/
+    background: -moz-linear-gradient(top, #000000 50%, #E5B13A 90%, #000000 100%); /* firefox */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#000000), color-stop(90%,#E5B13A), color-stop(100%,#000000)); /* webkit */
+    background: -ms-linear-gradient(top, #000000 50%, #E5B13A 90%, #000000 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #000000 50%,#E5B13A 90%,#000000 100%); /* W3C */
+    }
+
+iframe {
+    position: fixed;
+    width:100%;
+    height:100%;
+}
+
+#registrationForm, #loginForm{
+    font-size: 24px;
+}
+
+#submit{
+    font-family: Starjedi;
+    font-size: 24px;
+    font-weight: bold;
+    color: #E5B13A;
+    text-shadow: 1px 1px 25px #E5B13A;
+    border-radius: 35px;
+    border-color: #E5B13A;
+    background-color: transparent;
+}
+
+li {
+    font-size: 24px;
+}

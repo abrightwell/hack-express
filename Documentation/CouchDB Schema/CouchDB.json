@@ -1,0 +1,317 @@
+Database:  hack_db
+Design Doc:  _design/views
+
+User Doc
+
+{
+   "_id": "org.couchdb.user:hack_admin",
+   "name": "hack_admin",
+   "roles": [
+   ],
+   "type": "user",
+   "password": ""
+}
+
+{
+   "_id": "org.couchdb.user:gatekeeper",
+   "name": "gatekeeper",
+   "roles": [
+   ],
+   "type": "user",
+   "password": ""
+}
+
+{
+   "_id": "org.couchdb.user:Bambie",
+   "_rev": "8-f4e29f0561ccc568f003a7d0afabd840",
+   "name": "Bambie",
+   "roles": [
+   ],
+   "totalPoints": 8,
+   "type": "user",
+   "password_sha": "1df9b342a7fd4429bb377709a2572f16ca684af0",
+   "salt": "9a10b7ad518d1ccbc3b4ff699bc06dc0",
+   "tokens": [
+       {
+           "id": "0",
+           "unlocked": false
+       },
+       {
+           "id": "1",
+           "unlocked": false
+       },
+       {
+           "id": "2",
+           "unlocked": false
+       },
+       {
+           "id": "3",
+           "unlocked": false
+       },
+       {
+           "id": "4",
+           "unlocked": false
+       },
+       {
+           "id": "5",
+           "unlocked": false
+       },
+       {
+           "id": "6",
+           "unlocked": false
+       },
+       {
+           "id": "7",
+           "unlocked": false
+       },
+       {
+           "id": "8",
+           "unlocked": false
+       },
+       {
+           "id": "9",
+           "unlocked": false
+       },
+       {
+           "id": "10",
+           "unlocked": false
+       },
+       {
+           "id": "11",
+           "unlocked": false
+       },
+       {
+           "id": "12",
+           "unlocked": false
+       },
+       {
+           "id": "13",
+           "unlocked": false
+       },
+       {
+           "id": "14",
+           "unlocked": false
+       },
+       {
+           "id": "15",
+           "unlocked": false
+       },
+       {
+           "id": "16",
+           "unlocked": false
+       },
+       {
+           "id": "17",
+           "unlocked": false
+       },
+       {
+           "id": "18",
+           "unlocked": false
+       },
+       {
+           "id": "19",
+           "unlocked": false
+       },
+       {
+           "id": "20",
+           "unlocked": false
+       },
+       {
+           "id": "21",
+           "unlocked": false
+       },
+       {
+           "id": "22",
+           "unlocked": false
+       },
+       {
+           "id": "23",
+           "unlocked": false
+       },
+       {
+           "id": "24",
+           "unlocked": false
+       },
+       {
+           "id": "25",
+           "unlocked": false
+       },
+       {
+           "id": "26",
+           "unlocked": false
+       },
+       {
+           "id": "27",
+           "unlocked": false
+       },
+       {
+           "id": "28",
+           "unlocked": false
+       },
+       {
+           "id": "29",
+           "unlocked": false
+       },
+       {
+           "id": "30",
+           "unlocked": false
+       },
+       {
+           "id": "31",
+           "unlocked": false
+       },
+       {
+           "id": "32",
+           "unlocked": false
+       },
+       {
+           "id": "33",
+           "unlocked": false
+       },
+       {
+           "id": "34",
+           "unlocked": false
+       },
+       {
+           "id": "35",
+           "unlocked": false
+       },
+       {
+           "id": "36",
+           "unlocked": false
+       },
+       {
+           "id": "37",
+           "unlocked": false
+       },
+       {
+           "id": "38",
+           "unlocked": false
+       },
+       {
+           "id": "39",
+           "unlocked": false
+       },
+       {
+           "id": "40",
+           "unlocked": false
+       },
+       {
+           "id": "41",
+           "unlocked": false
+       },
+       {
+           "id": "42",
+           "unlocked": false
+       },
+       {
+           "id": "43",
+           "unlocked": false
+       },
+       {
+           "id": "44",
+           "unlocked": false
+       },
+       {
+           "id": "45",
+           "unlocked": false
+       },
+       {
+           "id": "46",
+           "unlocked": false
+       },
+       {
+           "id": "47",
+           "unlocked": false
+       },
+       {
+           "id": "48",
+           "unlocked": false
+       },
+       {
+           "id": "49",
+           "unlocked": false
+       }
+   ]
+}
+
+Hint Doc
+
+{
+   "_id": "78d4e4e17f13ec45ac91315eef004f10",
+   "_rev": "3-edb01371d5e2cb3f67dcf7d1ad838792",
+   "type": "hint",
+   "id": 2,
+   "value": "This is the third hint",
+   "general": true,
+   "pointValue": 0,
+   "timeReleased": 2
+}
+
+Token Doc
+
+{
+   "_id": "78d4e4e17f13ec45ac91315eef003061",
+   "_rev": "2-2e4a89e625b8843af625ff3df852b0e6",
+   "id": 1,
+   "description": "Social Engineering",
+   "value": "ffffffffffffff01",
+   "pointValue": 2,
+   "type": "token"
+}
+
+Scoreboard View Map
+
+function(doc) {
+    if (doc.type === "user" && doc.totalPoints >= 0) {  
+          emit(doc.name + "," + doc.totalPoints);
+    }
+}
+
+GeneralHints View Map
+
+function(doc) {
+    if (doc.type === "hint" && doc.general===true && doc.value) {  
+          emit(doc.value);
+    }
+}
+
+Hints View Map
+
+function(doc) {
+    if (doc.type === "hint" && doc.value) {  
+          emit(doc.value);
+    }
+}
+
+Tokens View Map
+
+function(doc) {
+    if (doc.type === "token" && doc.value) {  
+          emit(doc.id+","+doc.description+","+doc.value+","+doc.pointValue);
+    }
+}
+
+Users
+
+function(doc) {
+    if (doc.type === "user" && doc.totalPoints >= 0) {  
+          emit(doc, null);
+    }
+}
+
+UsersRev View Map
+
+function(doc) {
+    if (doc.type === "user" && doc.totalPoints >= 0) {
+emit(doc._id+","+doc._rev+","+doc.name+","+doc.roles+","+doc.totalPoints+","+doc.type+","+doc.password_sha+","+doc.salt);
+    }
+}
+
+Tokens
+
+function(doc) {
+    if (doc.type === "token" && doc.value) {  
+          emit(doc.id+","+doc.description+","+doc.value+","+doc.pointValue);
+    }
+}

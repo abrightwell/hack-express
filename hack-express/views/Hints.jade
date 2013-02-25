@@ -1,0 +1,32 @@
+!!! 5
+html
+  head
+    title Hack Warz:  Hints
+    link(rel='stylesheet', type='text/css', href='/stylesheets/hackWarz.css')
+    link(rel='stylesheet', type='text/css', href='/stylesheets/tabs.css')
+  body(onload='initHints();')
+    h2 Hints
+    div#wrapper
+      div#tabContainer
+        div.tabs
+          ul
+            li#tabHeader_1 General
+            li#tabHeader_2 Personal
+        br
+        div.tabscontent
+          div#tabpage_1.tabpage
+            table#genHintTable.token(name='genHintTable')
+              thead
+                tr
+                  th General Hints
+              tbody!=tbodGeneral
+          #tabpage_2.tabpage
+            table#perHintTable.token(name='perHintTable')
+              thead
+                tr
+                  th Personal Hints
+              tbody!=tbodPersonal
+            form#personalHints(method='post', action='/hints/buy')
+            button#submit(type='submit', form='personalHints', name='buySubmit', value='Submit', tabindex='1') Buy
+    script(src='/javascripts/tabs.js')
+    ul#items

@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<title>Hack Warz:  Registration</title>
+<link rel="stylesheet" type="text/css" href="hackWarz.css" />
+<link rel="stylesheet" type="text/css" href="tabs.css" />
+</head>
+
+<script src="hackWarz.js"></script>
+
+<body class=registrationBody onload="init();">
+
+<div id="registrationTitle">Hack Warz</div>
+<form type="post" onsubmit="register(); return false;" id="registrationForm">
+<label for="userName">Username:  </label><input type="text" name="userName" id="userName" autofocus=true tabindex="1" required=true/></br>
+<label for="password">Password:  </label><input type="password" name="password" id="password" tabindex="2" required=true/>
+</form>
+
+<button type="submit" form="registrationForm" id="submit" name="registrationSubmit" value="Submit" tabindex="3">Register</button>
+
+</body>
+
+</html>

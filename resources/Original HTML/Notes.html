@@ -1,0 +1,152 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<title>Hack Warz:  Notes</title>
+<link rel="stylesheet" type="text/css" href="hackWarz.css" />
+<link rel="stylesheet" type="text/css" href="tabs.css" />
+</head>
+
+<script src="hackWarz.js"></script>
+
+<body onload="initTokens();">
+<h2>Notes</h2>
+
+<div id="wrapper">
+  <div id="tabContainer">
+    <div class="tabs">
+      <ul>
+        <li id="tabHeader_1">Network information</li>
+        <li id="tabHeader_2">Credentials</li>
+        <li id="tabHeader_3">Crypto</li>
+        <li id="tabHeader_4">Miscellaneous</li>
+      </ul>
+    </div>
+    </br>
+    <div class="tabscontent">
+      <div class="tabpage" id="tabpage_1">
+        <table name="networkTable" id="networkTable">
+          <tr>
+            <td>
+              <form onsubmit="networkInfo(); return false;" id="networkInfo">
+                <label for="fqdn">FQDN:  </label><input type="text" name="fqdn" id="fqdn" tabindex="1" required=false/></br>
+                <label for="ipAddress">iP Address:  </label><input type="text" name="ipAddress" id="ipAddress" tabindex="2" required=false/></br>
+                <label for="macAddress">MAC Address:  </label><input type="text" name="macAddress" id="macAddress" tabindex="3" required=false/>
+              </form>
+              <button type="submit" form="networkInfo" id="submit" name="networkSubmit" value="Submit" tabindex="4">Submit</button>
+            </td>
+            <td>
+              <table class="token" name="netTokenTable" id="netTokenTable">
+                <thead>
+                  <tr><th>FQDN</th><th>iP Address</th><th>MAC Address</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>...</td><td>...</td><td>...</td></tr>
+                  <tr><td>...</td><td>...</td><td>...</td></tr>
+                  <tr><td>...</td><td>...</td><td>...</td></tr>
+                  <tr><td>...</td><td>...</td><td>...</td></tr>
+                  <tr><td>...</td><td>...</td><td>...</td></tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="tabpage" id="tabpage_2">
+        <table name="credentialTable" id="credentialTable">
+          <tr>
+            <td>
+              <form onsubmit="credentialInfo(); return false;" id="credentialInfo">
+                <label for="userName">Username:  </label><input type="text" name="userName" id="userName" tabindex="1" required=false/></br>
+                <label for="password">Password:  </label><input type="password" name="password" id="password" tabindex="2" required=false/>
+              </form>
+              <button type="submit" form="credentialInfo" id="submit" name="credentialSubmit" value="Submit" tabindex="3">Submit</button>
+            </td>
+            <td>
+              <table class="token" name="credTokenTable" id="credTokenTable">
+                <thead>
+                  <tr><th>Username</th><th>Password</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>...</td><td>...</td></tr>
+                  <tr><td>...</td><td>...</td></tr>
+                  <tr><td>...</td><td>...</td></tr>
+                  <tr><td>...</td><td>...</td></tr>
+                  <tr><td>...</td><td>...</td></tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="tabpage" id="tabpage_3">
+        <table name="cryptoTable" id="cryptoTable">
+          <tr>
+            <td>
+              <form onsubmit="cryptoInfo(); return false;" id="cryptoInfo">
+                <label for="cypherText">Cypher Text:  </label><textarea name="cypherText" id="cypherText" tabindex="1" required=false/></textarea></br>
+                <label for="plainText">Plain Text:  </label><textarea name="plainText" id="plainText" tabindex="2" required=false/></textarea>
+              </form>
+              <button type="submit" form="cryptoInfo" id="submit" name="cryptoSubmit" value="Submit" tabindex="3">Submit</button>
+            </td>
+            <td>
+              <table class="token" name="cryptoTokenTable" id="cryptoTokenTable">
+                <thead>
+                  <tr><th>Cypher Text</th><th>Plain Text</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>...</td><td>...</td></tr>
+                  <tr><td>...</td><td>...</td></tr>
+                  <tr><td>...</td><td>...</td></tr>
+                  <tr><td>...</td><td>...</td></tr>
+                  <tr><td>...</td><td>...</td></tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="tabpage" id="tabpage_4">
+        <table name="miscTable" id="miscTable">
+          <tr>
+            <td>
+              <form onsubmit="miscInfo(); return false;" id="miscInfo">
+                <label for="name">Name:  </label><input type="text" name="name" id="name" tabindex="1" required=false/></br>
+                <label for="dob">Date of Birth:  </label><input type="date" name="dob" id="dob" tabindex="2" required=false/></br>
+                <label for="email">Email:  </label><input type="email" name="email" id="email" tabindex="3" required=false/></br>
+                <label for="telephoneNumber">Telephone Number:  </label><input type="tel" name="telephoneNumber" id="telephoneNumber" tabindex="4" required=false/></br>
+                <label for="miscNumber">Misc Number:  </label><input type="number" name="miscNumber" id="miscNumber" tabindex="5" required=false/></br>
+                <label for="file">File:  </label><input type="file" name="file" id="file" tabindex="6" required=false/></br>
+                <label for="image">image:  </label><input type="image" name="image" id="image" tabindex="7" required=false/></br>
+                <label for="url">URL:  </label><input type="url" name="url" id="url" tabindex="8" required=false/>
+              </form>
+              <button type="submit" form="miscInfo" id="submit" name="miscSubmit" value="Submit" tabindex="9">Submit</button>
+            </td>
+            <td>
+              <table class="token" name="miscTokenTable" id="miscTokenTable">
+                <thead>
+                  <tr><th>Name</th><th>Date of Birth</th><th>Email</th><th>Telephone Number</th><th>Misc Number</th><th>File</th><th>image</th><th>URL</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+                  <tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+                  <tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+                  <tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+                  <tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="tabs.js"></script>
+
+<ul id="items">
+</ul>
+
+</body>
+
+</html>

@@ -1,0 +1,14 @@
+!!! 5
+html
+    head
+        title Hack Warz:  Main
+        link(rel='stylesheet', type='text/css', href='/stylesheets/hackWarz.css')
+        link(rel='stylesheet', type='text/css', href='/stylesheets/tabs.css')
+    body.mainBody
+        nav
+            a(href='/Scoreboard', target='CurrentPage') Scoreboard  
+            a(href='/Hints', target='CurrentPage') Hints    
+            a(href='/Notes', target='CurrentPage') Notes    
+            a(href='/Submissions', target='CurrentPage') Submissions    
+            a(href='/Logout', target='CurrentPage') Logout  
+        iframe#CurrentPage(name='CurrentPage', src='/Scoreboard', seamless='seamless')

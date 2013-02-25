@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<title>Hack Warz:  Hints</title>
+<link rel="stylesheet" type="text/css" href="hackWarz.css" />
+<link rel="stylesheet" type="text/css" href="tabs.css" />
+</head>
+
+<script src="hackWarz.js"></script>
+
+<body onload="initHints();">
+<h2>Hints</h2>
+
+<div id="wrapper">
+  <div id="tabContainer">
+    <div class="tabs">
+      <ul>
+        <li id="tabHeader_1">General</li>
+        <li id="tabHeader_2">Personal</li>
+      </ul>
+    </div>
+    </br>
+    <div class="tabscontent">
+      <div class="tabpage" id="tabpage_1">
+        <table class="token" name="genHintTable" id="genHintTable">
+            <thead>
+                <tr><th>General Hints</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>...</td></tr>
+                <tr><td>...</td></tr>
+                <tr><td>...</td></tr>
+                <tr><td>...</td></tr>
+                <tr><td>...</td></tr>
+            </tbody>
+        </table>
+      </div>
+      <div class="tabpage" id="tabpage_2">
+        <table class="token" name="perHintTable" id="perHintTable">
+            <thead>
+                <tr><th>Personal Hints</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>...</td></tr>
+                <tr><td>...</td></tr>
+                <tr><td>...</td></tr>
+                <tr><td>...</td></tr>
+                <tr><td>...</td></tr>
+            </tbody>
+        </table>
+        <form onsubmit="personalHints(); return false;" id="personalHints"></form>
+        <button type="submit" form="personalHints" id="submit" name="buySubmit" value="Submit" tabindex="1">Buy</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="tabs.js"></script>
+
+<ul id="items">
+</ul>
+
+</body>
+
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<title>Hack Warz:  Login</title>
+<link rel="stylesheet" type="text/css" href="hackWarz.css" />
+<link rel="stylesheet" type="text/css" href="tabs.css" />
+</head>
+
+<script src="hackWarz.js"></script>
+
+<body class=loginBody onload="init();">
+
+<div id="loginTitle">Hack Warz</div>
+<form onsubmit="login(); return false;" id="loginForm">
+<label for="userName">Username:  </label><input type="text" name="userName" id="userName" autofocus=true tabindex="1" required=true/></br>
+<label for="password">Password:  </label><input type="password" name="password" id="password" tabindex="2" required=true/>
+</form>
+
+<button type="submit" form="loginForm" id="submit" name="loginSubmit" value="Submit" tabindex="3">Login</button>
+
+</body>
+
+</html>

@@ -1,0 +1,18 @@
+!!! 5
+html
+    head
+        title Hack Warz:  Login
+        link(rel='stylesheet', type='text/css', href='/stylesheets/hackWarz.css')
+        link(rel='stylesheet', type='text/css', href='/stylesheets/tabs.css')
+    body.loginBody(onload='init();')
+        #loginTitle Hack Warz
+        form#loginForm(method='post', action='/login/submit')
+            label(for='userName') Username:
+            input#userName(type='text', name='userName', autofocus='true', tabindex='1', required='true/')
+            br
+            label(for='password') Password:
+            input#password(type='password', name='password', tabindex='2', required='true/')
+        button#submit(type='submit', form='loginForm', name='loginSubmit', value='Submit', tabindex='3') Login
+        br
+        a#reg(href='/Registration') Register
+        

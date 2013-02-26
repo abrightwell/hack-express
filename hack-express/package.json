@@ -1,12 +1,35 @@
 {
-  "name": "application-name",
+  "name": "hack-warz-score-board",
   "version": "0.0.1",
   "private": true,
+  
+  "maintainers": [
+    {
+      "name": "Robert Dunigan",
+      "web": ""
+    },
+    {
+      "name": "Adam Brightwell",
+      "web": "www.github.com/abrightwell"
+    },
+    {
+      "name": "Chris Gunn",
+      "web": ""
+    }
+  ],
+  
   "scripts": {
     "start": "node app"
   },
+  
   "dependencies": {
-    "express": "3.0.1",
-    "jade": "*"
-  }
+    "express": "3.1.0",
+    "jade": "0.28.1"
+  },
+  
+  "devDependencies": {
+    "nodeunit": "0.7.4"
+  },
+  
+  "license": "Apache 2.0"
 }

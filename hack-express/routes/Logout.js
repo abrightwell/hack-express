@@ -15,6 +15,10 @@
  */
 
 /*
+ *Authors:  Robert Dunigan
+ */
+
+/*
  * Close session.
  * GET Logout page.
  */

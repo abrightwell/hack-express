@@ -15,7 +15,9 @@
  */
 
 /*
- *  This code needs major refactoring...It is sloppy at the moment, but it works!
+ *Authors:  Robert Dunigan
+ *
+ *Note:  This code needs major refactoring...It is sloppy at the moment, but it works.
  */
 
 /*

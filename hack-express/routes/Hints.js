@@ -15,6 +15,10 @@
  */
 
 /*
+ *Authors:  Robert Dunigan
+ */
+
+/*
  * GET Hints page.
  */
 

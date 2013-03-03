@@ -15,6 +15,10 @@
  */
 
 /*
+ *Authors:  Robert Dunigan
+ */
+
+/*
 when page loads
   get tab container
   set current tab with class of activetabheader and store which tab we are on

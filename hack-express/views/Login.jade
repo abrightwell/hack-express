@@ -20,10 +20,9 @@
 
 !!! 5
 html
-    head
-        title Hack Warz:  Login
-        link(rel='stylesheet', type='text/css', href='/stylesheets/hackWarz.css')
-        link(rel='stylesheet', type='text/css', href='/stylesheets/tabs.css')
+    
+    include includes/head
+    
     body.loginBody(onload='init();')
         #loginTitle Hack Warz
         form#loginForm(method='post', action='/login/submit')

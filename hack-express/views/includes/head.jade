@@ -15,19 +15,11 @@
 //-
 
 //-
-//-   Authors:  Robert Dunigan
+//- Authors: Adam Brightwell
 //-
 
-!!! 5
-html
+head
+  title Hack Warz:  Submissions
+  link(rel='stylesheet', type='text/css', href='/stylesheets/hackWarz.css')
+  link(rel='stylesheet', type='text/css', href='/stylesheets/tabs.css')
 
-  include includes/head
-
-  body
-    h2 Scoreboard
-    table#scoreTable.token(name='scoreTable')
-      thead
-        tr
-          th Username
-          th Score
-      tbody!= tbod

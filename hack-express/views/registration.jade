@@ -19,15 +19,14 @@
 
 !!! 5
 html
-    head
-        title Hack Warz:  Registration
-        link(rel='stylesheet', type='text/css', href='/stylesheets/hackWarz.css')
-        link(rel='stylesheet', type='text/css', href='/stylesheets/tabs.css')
+    
+    include includes/head
+    
     body.registrationBody(onload='init();')
         #registrationTitle Hack Warz
         form#registrationForm(method='post', action='/registration/submit')
-            label(for='userName') Username:
-            input#userName(type='text', name='userName', autofocus='true', tabindex='1', required='true/')
+            label(for='username') Username:
+            input#username(type='text', name='username', autofocus='true', tabindex='1', required='true/')
             br
             label(for='password') Password:
             input#password(type='password', name='password', tabindex='2', required='true/')

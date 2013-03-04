@@ -13,13 +13,16 @@
 //-   See the License for the specific language governing permissions and
 //-   limitations under the License.
 //-
-
 //-
 //- Authors: Adam Brightwell
 //-
 
 head
-  title Hack Warz:  Submissions
+  - if (typeof title != 'undefined')
+    title Hack Warz: #{title}
+  - else
+    title Hack Warz
+    
   link(rel='stylesheet', type='text/css', href='/stylesheets/hackWarz.css')
   link(rel='stylesheet', type='text/css', href='/stylesheets/tabs.css')
 

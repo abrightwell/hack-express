@@ -22,6 +22,8 @@
  * Module dependencies.
  */
 
+var config = require('./config');
+
 var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
@@ -38,51 +40,39 @@ var express = require('express')
   , https = require('https')  //added for https
   , fs = require('fs');       //added for https
   
-  //SSL Key/Cert
-  //Place in app.js directory
-  var sslkey = fs.readFileSync('serverkey.pem').toString();  //added for https
-  var sslcert = fs.readFileSync('cacert.pem').toString();     //added for https
-  
-  // your admin credentials
-  var username = 'hack_admin';
-  var userpass = '';
+//SSL Key/Cert
+//Place in app.js directory
 
-  //Database module used for communication between Express and CouchDB
-  nano = require('nano')('https://'+username+':'+userpass+'@localhost:6984');
-  //nano = require('nano')('https://'+username+':'+userpass+'@192.168.100.42:6984');
+var sslkey = fs.readFileSync(config.ssl.key).toString();  //added for https
+var sslcert = fs.readFileSync(config.ssl.cert).toString(); //added for https
+  
+// your admin credentials
+var username = 'hack_admin';
+var userpass = '';
+
+//Database module used for communication between Express and CouchDB
+nano = require('nano')(config.db.url);
 
 //Create the hack_db database within CouchDB if it doesn't already exist
-nano.db.create('hack_db', function(err, body) {
+nano.db.create(config.db.name, function(err, body) {
   if (!err) {
-    console.log('database hack_db created!');
+    console.log('Database ' + config.db.name + 'created!');
+  } else {
+    console.log('Error: ' + err.reason);
   }
 });
 
-//List databases within CouchDB to verify creation/existance
-nano.db.list(function(err, body) {
-  console.log("\n");
-  console.log("\nExisting Databases:");
-  //body is an array
-  body.forEach(function(db) {
-    console.log(db);
-    });
-  });
-
-//Create aliases for manipulation of the databases
-//These global variables are using the admin privileges from above
-hack_db = nano.db.use('hack_db');
-_users = nano.db.use('_users');
-_session = nano.db.use('_session');
+hack_db = nano.db.use(config.db.name);
 
 //Added for https
 var options = {
-  key : sslkey
-, cert : sslcert
+  key : sslkey,
+  cert : sslcert
 }
 
 app = express();
 
-app.configure(function(){
+app.configure(function() {
   app.set('port', process.env.PORT || 443);   //modified for https
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
@@ -91,12 +81,13 @@ app.configure(function(){
   app.use(express.bodyParser());
   //app.use(express.cookieParser('secret-string-is-secret'));
   app.use(express.cookieParser('0708aa9e17c6090c04a5e7ea2b482bb7'));
+  app.use(express.session());
   app.use(express.methodOverride());
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
 });
 
-app.configure('development', function(){
+app.configure('development', function() {
   app.use(express.errorHandler());
 });
 
@@ -124,6 +115,7 @@ app.post('/submissions/submit', Submissions.submit);
 app.get('/logout', Logout.show);
 
 //Modified for https
-https.createServer(options,app).listen(app.get('port'), function(){
+
+https.createServer(options, app).listen(app.get('port'), function() {
   console.log("Express server listening on port:  " + app.get('port'));
 });

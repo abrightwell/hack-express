@@ -1,5 +1,6 @@
 {
  "_id": "_design/users",
+ "language": "javascript",
  "views": {
    "by_username": {
      "map": "function(doc) { if (doc.type == 'user') { emit(doc.username, { username: doc.username, password: doc.password }); }}"

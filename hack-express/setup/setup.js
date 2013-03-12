@@ -18,11 +18,11 @@ nano.db.create(config.db.name, function(err, body) {
 
 db = nano.use(config.db.name);
 
-design_docs = fs.readdirSync('./design_docs');
+design_docs = fs.readdirSync('./design_docs/' + config.db.name);
 
 design_docs.forEach(function(design_doc) {
-  file = fs.readFileSync(path.join('./design_docs', design_doc)
-  design = JSON.parse(file, 'utf8'));
+  var file = fs.readFileSync(path.join('./design_docs', config.db.name, design_doc));
+  var design = JSON.parse(file, 'utf8');
   
   db.insert(design, function(error, response) {
     if (!error) {
@@ -47,3 +47,19 @@ nano.db.create('hack-express-session', function(err, body) {
 // Install hack-express-sessions database design documents.
 
 db = nano.use('hack-express-session');
+
+design_docs = fs.readdirSync('./design_docs/' + 'hack-express-session');
+
+design_docs.forEach(function(design_doc) {
+  var file = fs.readFileSync(path.join('./design_docs', 'hack-express-session', design_doc));
+  var design = JSON.parse(file, 'utf8');
+  
+  db.insert(design, function(error, response) {
+    if (!error) {
+      console.log('Successfully installed: ' + design_doc);
+    } else {
+      console.log('Error occurred installing: ' + design_doc);
+      console.log('Error: ' + error.reason);
+    }
+  });
+});

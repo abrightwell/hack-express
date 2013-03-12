@@ -24,8 +24,8 @@
  */
 
 exports.show = function(req, res){
-  //Close session
-  // The CouchDB cookie name is AuthSession
-  res.clearCookie('AuthSession');
-  res.render('Logout');
+  req.session.destroy(function() {
+    res.clearCookie('connect.sid');
+    res.redirect('/login');
+  });
 };

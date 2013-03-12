@@ -18,16 +18,8 @@
 //-   Authors:  Robert Dunigan
 //-
 
-!!! 5
-html
+extends layout
 
-  include includes/head
-
-  body
-    h2 Scoreboard
-    table#scoreTable.token(name='scoreTable')
-      thead
-        tr
-          th Username
-          th Score
-      tbody!= tbod
+block content
+  h2 Scoreboard
+    

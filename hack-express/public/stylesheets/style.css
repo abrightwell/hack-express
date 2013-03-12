@@ -26,3 +26,34 @@ body {
 a {
   color: #00B7FF;
 }
+
+.info {
+  border-color: yellow;
+  color: yellow;
+}
+.warn {
+color:red
+}
+.message {
+color:yellow
+}
+
+#flash {
+  border:1px solid black;
+  width:100%;
+  text-align:center
+}
+
+#header {
+  float: right;
+  clear: both;
+}
+
+#user {
+  float: left;
+  margin-right: 1em;
+}
+
+#logout {
+  float: left;
+}

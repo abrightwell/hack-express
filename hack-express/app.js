@@ -29,7 +29,6 @@ var express = require('express')
   , user = require('./routes/user')
   , Registration = require('./routes/Registration')
   , Login = require('./routes/Login')
-  , Main = require('./routes/Main')
   , Scoreboard = require('./routes/Scoreboard')
   , Hints = require('./routes/Hints')
   , Notes = require('./routes/Notes')
@@ -37,9 +36,22 @@ var express = require('express')
   , Logout = require('./routes/Logout')
   , http = require('http')
   , path = require('path')
-  , https = require('https')  //added for https
-  , fs = require('fs');       //added for https
-  
+  , https = require('https')
+  , fs = require('fs')
+  , auth = require('./auth')
+  , flash = require('connect-flash');
+
+ConnectCouchDB = require('connect-couchdb')(express);
+
+var store = new ConnectCouchDB({
+  host: 'localhost',
+  port: '5984',
+  name: 'hack-express-sessions',
+  reapInterval: 600000,
+  compactInterval: 300000,
+  setThrottle: 60000
+});
+
 //SSL Key/Cert
 //Place in app.js directory
 
@@ -52,15 +64,6 @@ var userpass = '';
 
 //Database module used for communication between Express and CouchDB
 nano = require('nano')(config.db.url);
-
-//Create the hack_db database within CouchDB if it doesn't already exist
-nano.db.create(config.db.name, function(err, body) {
-  if (!err) {
-    console.log('Database ' + config.db.name + 'created!');
-  } else {
-    console.log('Error: ' + err.reason);
-  }
-});
 
 hack_db = nano.db.use(config.db.name);
 
@@ -79,39 +82,45 @@ app.configure(function() {
   app.use(express.favicon());
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
-  //app.use(express.cookieParser('secret-string-is-secret'));
   app.use(express.cookieParser('0708aa9e17c6090c04a5e7ea2b482bb7'));
-  app.use(express.session());
+  app.use(express.session({secret: 'secret', store: store}));
+  app.use(flash());
+  
+  app.use(function(req, res, next) {
+    res.locals({user: req.session.user});
+    next();
+  });
+  
   app.use(express.methodOverride());
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
+  
 });
 
 app.configure('development', function() {
   app.use(express.errorHandler());
 });
 
-app.get('/', routes.index);
-//app.get('/users', user.list);
+
 
 /**
  * Hack Warz Routes
  */
+app.get('/', routes.index);
 app.get('/registration', Registration.show);
 app.post('/registration/submit', Registration.submit);
 app.get('/login', Login.show);
 app.post('/login/submit', Login.submit);
-app.get('/main', Main.show);
-app.get('/scoreboard', Scoreboard.show);
-app.get('/hints', Hints.show);
-app.post('/hints/buy', Hints.buy);
-app.get('/notes', Notes.show);
-app.post('/notes/submitNetwork', Notes.submitNetwork);
-app.post('/notes/submitCredentials', Notes.submitCredentials);
-app.post('/notes/submitCrypto', Notes.submitCrypto);
-app.post('/notes/submitMisc', Notes.submitMisc);
-app.get('/submissions', Submissions.show);
-app.post('/submissions/submit', Submissions.submit);
+app.get('/scoreboard', auth.requiresLogin, Scoreboard.show);
+app.get('/hints', auth.requiresLogin, Hints.show);
+app.post('/hints/buy', auth.requiresLogin, Hints.buy);
+app.get('/notes', auth.requiresLogin, Notes.show);
+app.post('/notes/submitNetwork', auth.requiresLogin, Notes.submitNetwork);
+app.post('/notes/submitCredentials', auth.requiresLogin, Notes.submitCredentials);
+app.post('/notes/submitCrypto', auth.requiresLogin, Notes.submitCrypto);
+app.post('/notes/submitMisc', auth.requiresLogin, Notes.submitMisc);
+app.get('/submissions', auth.requiresLogin, Submissions.show);
+app.post('/submissions/submit', auth.requiresLogin, Submissions.submit);
 app.get('/logout', Logout.show);
 
 //Modified for https

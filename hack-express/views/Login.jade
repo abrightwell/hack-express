@@ -18,19 +18,16 @@
 //-   Authors:  Robert Dunigan
 //-
 
-!!! 5
-html
-    
-    include includes/head
-    
-    body.loginBody(onload='init();')
-        #loginTitle Hack Warz
-        form#loginForm(method='post', action='/login/submit')
-            label(for='userName') Username:
-            input#userName(type='text', name='userName', autofocus='true', tabindex='1', required='true/')
-            br
-            label(for='password') Password:
-            input#password(type='password', name='password', tabindex='2', required='true/')
-        button#submit(type='submit', form='loginForm', name='loginSubmit', value='Submit', tabindex='3') Login
-        br
-        a#reg(href='/Registration') Register
+extends layout
+
+block content
+  form(method='POST', action='/login/submit')
+    input(type='hidden', name='redir', value='redir')
+    p
+      label(for='username') Username:
+      input(type='text', name='username', autofocus='true', tabindex='1', required='true/')
+    p
+      label(for='password') Password:
+      input(type='password', name='password', tabindex='2', required='true/')
+    p
+      input(type='submit')

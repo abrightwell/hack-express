@@ -15,11 +15,23 @@
 //-
 
 //-
-//-   Authors:  Robert Dunigan
+//-   Authors:  Adam Brightwell, Robert Dunigan
 //-
 
 extends layout
 
 block content
   h2 Scoreboard
+  
+  div
+    table
+      thead
+        tr
+          th Username
+          th Points
+      tbody
+        each userScore in userScores
+          tr
+            td #{userScore.key}
+            td #{userScore.value}
     

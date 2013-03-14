@@ -29,10 +29,15 @@ html
       label(for='tokenID') Token iD:  
       input#tokenID(type='password', name='tokenID', tabindex='1', required='true/')
     button#submit(type='submit', form='tokenInfo', name='tokenSubmit', value='Submit', tabindex='2') Submit
-    table#tokenTable.token.submission(name='tokenTable')
-      thead
-        tr
-          th Token iD
-          th Accomplishment
-          th Point Value
-      tbody!= tbod
+   
+    div
+      table
+        thead
+          tr
+            th Token
+            th Points
+        tbody
+          each token in tokens
+            tr
+              td #{token.token_value}
+              td #{token.points}

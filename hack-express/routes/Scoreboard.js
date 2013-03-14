@@ -15,36 +15,32 @@
  */
 
 /*
- *Authors:  Robert Dunigan
+ * Authors: Adam Brightwell, Robert Dunigan
  */
 
-/*
- * GET Scoreboard page.
- */
-
+/**
+ * Gets and dispalys the scoreboard values.
+ *
+ * The scoreboard values are added to the response locals value as:
+ *
+ * 'res.locals.userScores'
+ *
+ * To access the values in the 'res.locals.userScores'
+ *
+ * key   -> the username
+ * value -> the point value
+ *
+ */ 
 exports.show = function(req, res) {
-  res.render('scoreboard', {title: 'Scoreboard', messages: req.flash()});
-  
-  //Query DB for users' info
-  // _users.view('views', 'Scoreboard', function(err, body) {
-  //   if (!err) {
-  //     body.rows.forEach(function(doc) {
-  //       //Print to console
-  //       console.log(doc.key);
-  //       //Split user keys into a string array
-  //       temp = doc.key.split(",");
-  //       //Build table rows per user
-  //       userInfo += "<tr><td>"+ "\t" + temp[0] + "\t" + "</td>";
-  //       userInfo += "<td>" + "\t" + "<progress value=\"" + temp[1] + "\" max=\"150\"></progress>" + "\t"+ temp[1] + "\t" + "</td></tr>";
-  //     });
-  //     //Close table
-  //     userInfo += "</tbody>"
-  //     //Render Scoreboard page with populated table
-  //     res.render('Scoreboard', {layout: false, tbod: userInfo });
-  //   }
-  //   else{
-  //     console.log(err);
-  //   }
-  // });
+  hack_db.view('users', 'scores', {group: true, group_level: 1}, function(err, body) {
+    if (err) {
+      console.log("Error getting user scores: " + err.reason);
+    } else {
+      res.render('scoreboard', {
+        title: 'Scoreboard', 
+        userScores: body.rows
+      });
+    }
+  });
 };
 

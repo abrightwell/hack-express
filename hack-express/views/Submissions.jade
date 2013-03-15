@@ -17,13 +17,9 @@
 //-
 //-   Authors:  Robert Dunigan
 //-
+extends layout
 
-!!! 5
-html
-  
-  include includes/head
-  
-  body(onload='initTokens();')
+block content
     h2 Submissions
     form#tokenInfo(method='post', action='/submissions/submit')
       label(for='tokenID') Token iD:  
@@ -35,9 +31,11 @@ html
         thead
           tr
             th Token
+            th Description
             th Points
         tbody
           each token in tokens
             tr
               td #{token.token_value}
+              td #{token.description}
               td #{token.points}

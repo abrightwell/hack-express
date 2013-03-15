@@ -1,0 +1,13 @@
+{
+  "_id": "_design/users",
+  "language": "javascript",
+  "views": {
+    "tokens": {
+      "map": "function(doc) {\n  if(doc.type == 'token') {\n    for (user in doc.users) {\n      emit(doc.users[user], {\n        \"_id\": doc._id,\n        \"points\": doc.points,\n        \"token_value\": doc.token_value\n      });\n    }\n  }\n}"
+    },
+    "scores": {
+      "map": "function(doc) {\n  if(doc.type == 'token') {\n    for (user in doc.users) {\n      emit(doc.users[user], doc.points);\n    }\n  }\n}",
+      "reduce": "function(key, value) {\n  return sum(value);\n}"
+    }
+  }
+}

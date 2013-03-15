@@ -1,0 +1,9 @@
+{
+  "_id": "_design/tokens",
+  "language": "javascript",
+  "views": {
+    "by_token_value": {
+      "map": "function(doc) {\n  if(doc.type == 'token') {\n    emit(doc.token_value, doc);\n  }\n}"
+    }
+  }
+}

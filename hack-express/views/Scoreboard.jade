@@ -15,19 +15,23 @@
 //-
 
 //-
-//-   Authors:  Robert Dunigan
+//-   Authors:  Adam Brightwell, Robert Dunigan
 //-
 
-!!! 5
-html
+extends layout
 
-  include includes/head
-
-  body
-    h2 Scoreboard
-    table#scoreTable.token(name='scoreTable')
+block content
+  h2 Scoreboard
+  
+  div
+    table
       thead
         tr
           th Username
-          th Score
-      tbody!= tbod
+          th Points
+      tbody
+        each userScore in userScores
+          tr
+            td #{userScore.key}
+            td #{userScore.value}
+    

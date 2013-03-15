@@ -15,11 +15,26 @@
 //-
 
 //-
-//-   Authors:  Robert Dunigan
+//-   Authors:  Adam Brightwell, Robert Dunigan
 //-
 
 doctype 5
 html
   include includes/head
   body
+    #main
+      #header
+        - if (typeof user !== 'undefined')
+            #user= 'logged in as: ' + user.username
+            #logout 
+              a(href='/logout') logout
+  
+      - if (typeof messages !== 'undefined')  
+        - if (typeof messages.info !== 'undefined')
+          each message in messages.info
+            #flash.info= message
+        - if (typeof messages.warn !== 'undefined')
+          each message in messages.warn
+            #flash.warn= message
+    
     block content

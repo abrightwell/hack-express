@@ -44,13 +44,14 @@ exports.submit = function(req, res){
       var user = body.rows[0];
       if (typeof user == 'undefined') {
         createUser(username, password, function() {
+          req.flash('info', 'Successfully created account.');
           res.redirect('/');
         }, function() {
-          // TODO create flash message about user creation failure.
+          req.flash('info', 'Failed to create account.');
           res.redirect('/login')
         });
       } else {
-        // TODO create flash message about user already existing.
+        req.flash('info', 'User name already exists.')
         res.redirect('/login');
       }
     }

@@ -19,7 +19,6 @@
  */
 
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -41,7 +40,7 @@ color:yellow
 #flash {
   border:1px solid black;
   width:100%;
-  text-align:center
+  text-align: left;
 }
 
 #header {

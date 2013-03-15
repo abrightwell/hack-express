@@ -8,6 +8,9 @@
     "scores": {
       "map": "function(doc) {\n  if(doc.type == 'token') {\n    for (user in doc.users) {\n      emit(doc.users[user], doc.points);\n    }\n  }\n}",
       "reduce": "function(key, value) {\n  return sum(value);\n}"
+    },
+    "by_username": {
+      "map": "function(doc) {\n  if(doc.type == 'user') {\n    emit(doc.username, doc);\n  }\n}"
     }
   }
 }

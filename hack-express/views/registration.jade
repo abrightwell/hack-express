@@ -17,17 +17,39 @@
 //-   Authors:  Robert Dunigan
 //-
 
-!!! 5
-html
-    
-    include includes/head
-    
-    body.registrationBody(onload='init();')
-        #registrationTitle Hack Warz
-        form#registrationForm(method='post', action='/registration/submit')
-            label(for='username') Username:
-            input#username(type='text', name='username', autofocus='true', tabindex='1', required='true/')
-            br
-            label(for='password') Password:
-            input#password(type='password', name='password', tabindex='2', required='true/')
-        button#submit(type='submit', form='registrationForm', name='registrationSubmit', value='Submit', tabindex='3') Register
+extends layout
+
+block content
+    div.container
+    div.fluid-container
+      div.row-fluid
+        div.span3
+        div.span6.well
+          legend Registration
+          form.form-horizontal(method='post', action='/registration/submit')
+            input(type='hidden', name='redir', value='redir')
+            div.control-group
+                label.control-label(for='username') Username:
+                div.controls
+                  div.input-prepend
+                    span.add-on
+                      i.icon-user
+                    input(type='text', name='username', autofocus='true', tabindex='1', required='true/', placeholder='Username')
+            div.control-group
+                label.control-label(for='password') Password:
+                div.controls  
+                  div.input-prepend
+                    span.add-on
+                      i.icon-lock
+                    input(type='password', name='password', tabindex='2', required='true/', placeholder='Password')
+            div.control-group
+                label.control-label(for='confirm') Confirm:
+                div.controls  
+                  div.input-prepend
+                    span.add-on
+                      i.icon-lock
+                    input(type='password', name='confirm', tabindex='3', required='true/', placeholder='Confirm Password')
+            div.control-group
+                div.controls
+                  button.btn.primary-btn(type='submit') Register
+        div.span3

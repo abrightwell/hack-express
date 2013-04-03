@@ -35,24 +35,32 @@ exports.submit = function(req, res){
   //User credentials to be created
   var username = req.param("username");
   var password = req.param("password");
+  var confirm  = req.param("confirm");
 
   hack_db.view('users', 'by_username', {key: username}, function(err, body) {
     if (err) {
-      // TODO create flash message about query failure.
+      req.flash('error', 'Error crap');//TODO create flash message about query failure.
       res.redirect('/');
     } else {
       var user = body.rows[0];
       if (typeof user == 'undefined') {
-        createUser(username, password, function() {
-          req.flash('info', 'Successfully created account.');
-          res.redirect('/');
-        }, function() {
-          req.flash('info', 'Failed to create account.');
-          res.redirect('/login')
-        });
+        createUser(username, password, confirm,
+          function() {
+            req.flash('info', 'Successfully created account.');
+            res.redirect('/');
+          },
+          function(message) {
+            if (message !== 'undefined') {
+              req.flash('info', 'Failed to create account: ' + message);  
+            } else {
+              req.flash('info', 'Failed to create account.');
+            }
+            res.redirect('/registration')
+          }
+        );
       } else {
         req.flash('info', 'User name already exists.')
-        res.redirect('/login');
+        res.redirect('/registration');
       }
     }
   });
@@ -68,17 +76,21 @@ exports.submit = function(req, res){
  * success: callback used if the user was successfully created.
  * failure: callback used if the user creation failed.
  */
-function createUser(username, password, success, failure) {
+function createUser(username, password, confirm, success, failure) {
   var salt = bcrypt.genSaltSync(10);
   var hash = bcrypt.hashSync(password, salt);
   
   user_entry = {username: username, password: hash, type: 'user'};
   
-  hack_db.insert(user_entry, function(err, body) {
-    if (err) {
-      failure();
-    } else {
-      success();
-    }
-  });
+  if (password !== confirm) {
+    failure('Passwords do not match.');
+  } else {
+    hack_db.insert(user_entry, function(err, body) {
+      if (err) {
+        failure();
+      } else {
+        success();
+      }
+    });
+  }
 }

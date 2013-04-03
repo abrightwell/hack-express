@@ -44,11 +44,11 @@ var express = require('express')
 ConnectCouchDB = require('connect-couchdb')(express);
 
 var store = new ConnectCouchDB({
-  host: 'localhost',
-  port: '5984',
-  name: 'hack-express-session',
-  username: 'hack-admin',
-  password: 'secret',
+  host: config.session.db.host,
+  port: config.session.db.port,
+  name: config.session.db.name,
+  username: config.session.db.username,
+  password: config.session.db.password,
   reapInterval: 600000,
   compactInterval: 300000,
   setThrottle: 60000
@@ -59,15 +59,9 @@ var store = new ConnectCouchDB({
 
 var sslkey = fs.readFileSync(config.ssl.key).toString();  //added for https
 var sslcert = fs.readFileSync(config.ssl.cert).toString(); //added for https
-  
-// your admin credentials
-var username = 'hack_admin';
-var userpass = '';
 
 //Database module used for communication between Express and CouchDB
-console.log(config.db.url);
-
-nano = require('nano')(config.db.url);
+nano = require('nano')(config.db.connection_string());
 
 hack_db = nano.db.use(config.db.name);
 

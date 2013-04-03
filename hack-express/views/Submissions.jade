@@ -15,19 +15,25 @@
 //-
 
 //-
-//-   Authors:  Robert Dunigan
+//-   Authors: Adam Brightwell, Robert Dunigan
 //-
 extends layout
 
+//-  div.container
+//-    div.fluid-container
+//-      div.row-fluid
+
 block content
+  
+  div.span9.well.bs-docs.sidebar
     h2 Submissions
-    form#tokenInfo(method='post', action='/submissions/submit')
-      label(for='tokenID') Token iD:  
-      input#tokenID(type='password', name='tokenID', tabindex='1', required='true/')
-    button#submit(type='submit', form='tokenInfo', name='tokenSubmit', value='Submit', tabindex='2') Submit
-   
+    
+    form.form-inline(method='post', action='/submissions/submit')
+      input(type='password', name='tokenID', placeholder="Enter Token ID")
+      span.icon-bar
+      button.btn(type='submit') Submit
     div
-      table
+      table.table.table-striped
         thead
           tr
             th Token
@@ -39,3 +45,5 @@ block content
               td #{token.token_value}
               td #{token.description}
               td #{token.points}
+  include includes/sponsors
+    

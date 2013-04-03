@@ -4,7 +4,7 @@ config.db = {};
 config.redis = {};
 config.ssl = {};
 
-config.db.url = 'http://localhost:5984';
+config.db.url = 'http://hack-admin:secret@localhost:5984';
 config.db.name = 'hack-express';
 config.db.user = 'hack-admin';
 config.db.password = 'secret';

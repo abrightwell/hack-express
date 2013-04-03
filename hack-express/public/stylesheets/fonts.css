@@ -1,0 +1,21 @@
+
+@font-face {
+    font-family: "Starjedi";
+    src: url("/images/Starjedi.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+	font-family: "Starjedi-hollow";
+	src: url("/images/starjhol.otf");
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Starjedi-out";
+	src: url("/images/starjout.otf");
+	font-weight: normal;
+	font-style: normal;
+}

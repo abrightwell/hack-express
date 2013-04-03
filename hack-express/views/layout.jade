@@ -22,19 +22,44 @@ doctype 5
 html
   include includes/head
   body
-    #main
-      #header
-        - if (typeof user !== 'undefined')
-            #user= 'logged in as: ' + user.username
-            #logout 
-              a(href='/logout') logout
-  
-      - if (typeof messages !== 'undefined')  
+    div.navbar.navbar-inverse.navbar-fixed-top
+      div.navbar-inner
+        div.container
+          button.btn.btn-navbar(data-toggle="collapse", data-target=".nav-collapse")
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.brand(href="#") Hack Express
+          div.nav-collapse.collapse
+            ul.nav
+              li
+                a(href="/scoreboard") Scoreboard
+              li
+                a(href="/submissions") Submissions
+              li
+                a(href="/notes") Notes
+              li
+                a(href="/hints") Hints
+          - if (typeof user !== 'undefined')
+            div
+              form.navbar-form.form-inline.pull-right(action='/logout')
+                input(type='hidden', name='redir', value='redir')
+                div.control-groups
+                  div.controls
+                    div.input-prepend.input-append
+                      span.add-on= 'Logged in as: ' + user.username
+                      button.btn Logout
+    div.container
+      div.fluid-container
+        h1.title Hack Warz
+        //img(src='/images/hack-warz-logo.png', width='300px', style='padding:10px;')
+        - if (typeof messages !== 'undefined')  
         - if (typeof messages.info !== 'undefined')
           each message in messages.info
-            #flash.info= message
+            a.close(href="#") ×
+            div.alert.alert-info #{message}
         - if (typeof messages.warn !== 'undefined')
           each message in messages.warn
             #flash.warn= message
-    
-    block content
+        div.row-fluid
+          block content

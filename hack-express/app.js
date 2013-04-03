@@ -15,7 +15,7 @@
  */
 
 /*
- *Authors:  Robert Dunigan
+ *Authors:  Adam Brightwell, Robert Dunigan
  */
 
 /**
@@ -46,7 +46,9 @@ ConnectCouchDB = require('connect-couchdb')(express);
 var store = new ConnectCouchDB({
   host: 'localhost',
   port: '5984',
-  name: 'hack-express-sessions',
+  name: 'hack-express-session',
+  username: 'hack-admin',
+  password: 'secret',
   reapInterval: 600000,
   compactInterval: 300000,
   setThrottle: 60000
@@ -63,15 +65,14 @@ var username = 'hack_admin';
 var userpass = '';
 
 //Database module used for communication between Express and CouchDB
+console.log(config.db.url);
+
 nano = require('nano')(config.db.url);
 
 hack_db = nano.db.use(config.db.name);
 
 //Added for https
-var options = {
-  key : sslkey,
-  cert : sslcert
-}
+var options = { key : sslkey, cert : sslcert };
 
 app = express();
 
@@ -109,12 +110,14 @@ app.configure('development', function() {
 /**
  * Hack Warz Routes
  */
-app.get('/', routes.index);
+app.get('/', function (req, res) {
+  res.redirect('scoreboard');
+});
 app.get('/registration', Registration.show);
 app.post('/registration/submit', Registration.submit);
 app.get('/login', Login.show);
 app.post('/login/submit', Login.submit);
-app.get('/scoreboard', auth.requiresLogin, Scoreboard.show);
+app.get('/scoreboard', Scoreboard.show);
 app.get('/hints', auth.requiresLogin, Hints.show);
 app.post('/hints/buy', auth.requiresLogin, Hints.buy);
 app.get('/notes', auth.requiresLogin, Notes.show);

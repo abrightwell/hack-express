@@ -15,19 +15,38 @@
 //-
 
 //-
-//-   Authors:  Robert Dunigan
+//-   Authors: Adam Brightwell, Robert Dunigan
 //-
 
 extends layout
 
 block content
-  form(method='POST', action='/login/submit')
-    input(type='hidden', name='redir', value='redir')
-    p
-      label(for='username') Username:
-      input(type='text', name='username', autofocus='true', tabindex='1', required='true/')
-    p
-      label(for='password') Password:
-      input(type='password', name='password', tabindex='2', required='true/')
-    p
-      input(type='submit')
+
+  div.container
+    div.fluid-container
+      div.row-fluid
+        div.span3
+        div.span6.well
+          legend Login
+          form.form-horizontal(method='post', action='/login/submit')
+            input(type='hidden', name='redir', value='redir')
+            div.control-group
+                label.control-label(for='username') Username:
+                div.controls
+                  div.input-prepend
+                    span.add-on
+                      i.icon-user
+                    input(type='text', name='username', autofocus='true', tabindex='1', required='true/', placeholder='Username')
+            div.control-group
+                label.control-label(for='password') Password:
+                div.controls  
+                  div.input-prepend
+                    span.add-on
+                      i.icon-lock
+                    input(type='password', name='password', tabindex='2', required='true/', placeholder='Password')
+            div.control-group
+                div.controls
+                  button.btn.primary-btn(type='submit') Login
+          p= "New User? "
+            a(href='/registration') Register Now!
+        div.span3

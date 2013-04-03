@@ -2,7 +2,7 @@ var config = require('../config');
 var fs = require('fs');
 var path = require('path');
 
-var nano = require('nano')(config.db.url);
+var nano = require('nano')(config.db.user+':'+config.db.password+'@'+config.db.url);
 
 // Setup hack-express database.
 

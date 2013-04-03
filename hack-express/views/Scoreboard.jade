@@ -21,17 +21,19 @@
 extends layout
 
 block content
-  h2 Scoreboard
-  
-  div
-    table
+
+  div.span3.well.bs-docs-sidebar
+    h2 Feed
+  div.span6.well
+    h2 Scoreboard
+    table.table.table-striped
       thead
         tr
-          th Username
+          th Name
           th Points
       tbody
-        each userScore in userScores
-          tr
-            td #{userScore.key}
-            td #{userScore.value}
-    
+      each userScore in userScores
+        tr
+          td #{userScore.key}
+          td #{userScore.value}
+  include includes/sponsors

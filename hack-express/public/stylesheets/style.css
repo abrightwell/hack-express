@@ -1,58 +1,96 @@
-/*
- *   Copyright 2013 Life Cycle Engineering
- *
- *   Licensed under the Apache License, Version 2.0 (the "License");
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- *   Unless required by applicable law or agreed to in writing, software
- *   distributed under the License is distributed on an "AS IS" BASIS,
- *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *   See the License for the specific language governing permissions and
- *   limitations under the License.
- */
-
-/*
- *Authors:  Robert Dunigan
- */
-
 body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	background-image: url('/images/background.png');
+	padding-top: 60px;
+	padding-bottom: 40px;
+	color: #c3ab55;
+	font-size: 14pt;
 }
 
-a {
-  color: #00B7FF;
+.navbar-inverse .navbar-inner {
+	background-color:#c3ab55;
+	background-image:-webkit-linear-gradient(top, #594c23, #151610);
+}
+	
+textarea, input[type="text"], input[type="password"], 
+input[type="datetime"], input[type="datetime-local"], 
+input[type="date"], input[type="month"], input[type="time"], 
+input[type="week"], input[type="number"], input[type="email"], 
+input[type="url"], input[type="search"], input[type="tel"], 
+input[type="color"], .uneditable-input {
+	background-color: #131313;
+	border: 1px solid rgb(111, 85, 30);
 }
 
-.info {
-  border-color: yellow;
-  color: yellow;
+.navbar-inverse .brand {
+	color: #c3ab55;
+	font-size: 16pt;
 }
-.warn {
-color:red
-}
-.message {
-color:yellow
-}
-
-#flash {
-  border:1px solid black;
-  width:100%;
-  text-align: left;
+	
+.well {
+	background-color: #151610;
+	border: 2px solid #c3ab55;
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
-#header {
-  float: right;
-  clear: both;
+legend {
+	font-family: Starjedi;
+	color: #c3ab55;
+	border-bottom: 1px solid #c3ab55;
 }
 
-#user {
-  float: left;
-  margin-right: 1em;
+h1, h2 {
+	font-family: Starjedi;
 }
 
-#logout {
-  float: left;
+h1 {
+	font-size: 48pt;
+	padding: 10px;
+}
+
+h1.title {
+	font-family: Starjedi;
+	font-size: 48pt;
+	padding: 10px;
+}
+
+@media (min-width: 1200px) {
+	.bs-docs-container {
+
+	}
+	.bs-docs-sidenav {
+
+	}
+	.bs-docs-sidenav > li > a {
+		width: 230px \9;
+	}
+}
+
+th {
+	font-family: Starjedi;
+	font-size: 20pt;
+	background-color: rgb(68, 66, 59);
+}
+
+table {
+	border: 1px solid #c3ab55;
+}
+
+.table-striped tbody > tr:nth-child(odd) > td,
+.table-striped tbody > tr:nth-child(odd) > th {
+  /*background-color: #151610;*/
+  background-color: rgb(21,22,16);	
+  border: none;
+}
+
+.table-striped tbody > tr:nth-child(even) > td,
+.table-striped tbody > tr:nth-child(even) > th {
+  /*background-color: #151610;*/
+  background-color: rgb(68, 66, 59);
+  border: none;
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+	background-image: url('/images/glyphicons-halflings.png')
 }

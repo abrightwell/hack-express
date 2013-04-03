@@ -2,6 +2,11 @@ var bcrypt = require('bcrypt');
 
 module.exports.authenticate = function(username, password, callback) {
   hack_db.view('users', 'by_username', {key: username}, function(err, body) {
+    
+    if (err) {
+      console.log(err.reason);
+    }
+
     user = body.rows[0].value;
     
     if (user) {

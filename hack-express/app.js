@@ -47,6 +47,7 @@ var store = new ConnectCouchDB({
   host: config.session.db.host,
   port: config.session.db.port,
   name: config.session.db.name,
+  ssl:  config.session.db.ssl,
   username: config.session.db.username,
   password: config.session.db.password,
   reapInterval: 600000,

@@ -13,8 +13,9 @@ config.db.name = 'hack-express';
 config.db.user = 'hack-admin';
 config.db.password = 'secret';
 
-config.db.host = 'localhost';
-config.db.port = 5984;
+config.session.db.host = 'localhost';
+config.session.db.port = 5984;
+config.session.db.ssl = false;
 config.session.db.name = 'hack-express-session';
 config.session.db.revs_limit = '1000';
 config.session.db.username = 'hack-admin';

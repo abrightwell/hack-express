@@ -1,11 +1,10 @@
 var config = require('../config');
 var fs = require('fs');
 var path = require('path');
-var async = require('async');
 
 var nano = require('nano')(config.db.connection_string());
 
-// Setup hack-express database.
+  // Setup hack-express database.
 nano.db.create(config.db.name, function(err, body) {
   if (!err) {
     console.log('Database ' + config.db.name + ' created!');

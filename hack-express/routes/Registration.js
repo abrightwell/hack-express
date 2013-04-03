@@ -21,7 +21,7 @@
 var bcrypt = require('bcrypt');
 
 exports.show = function(req, res){
-  res.render('Registration');
+  res.render('registration');
 };
 
 /*

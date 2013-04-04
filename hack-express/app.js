@@ -62,7 +62,10 @@ var sslkey = fs.readFileSync(config.ssl.key).toString();  //added for https
 var sslcert = fs.readFileSync(config.ssl.cert).toString(); //added for https
 
 //Database module used for communication between Express and CouchDB
-nano = require('nano')(config.db.connection_string());
+nano = require('nano')({
+  request_defaults: {strictSSL: false},
+  url: config.db.connection_string()
+});
 
 hack_db = nano.db.use(config.db.name);
 
@@ -72,7 +75,7 @@ var options = { key : sslkey, cert : sslcert };
 app = express();
 
 app.configure(function() {
-  app.set('port', process.env.PORT || 443);   //modified for https
+  app.set('port', process.env.PORT || 44443);   //modified for https
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.use(express.favicon());
@@ -106,7 +109,7 @@ app.configure('development', function() {
  * Hack Warz Routes
  */
 app.get('/', function (req, res) {
-  res.redirect('scoreboard');
+  res.redirect('Scoreboard');
 });
 app.get('/registration', Registration.show);
 app.post('/registration/submit', Registration.submit);

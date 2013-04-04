@@ -28,10 +28,10 @@ exports.show = function(req, res) {
     if (err) {
       req.flash('error', 'Error occured fetching user tokens.');
       console.log('Error occured fetching user tokens.');
-      res.render('submissions');
+      res.render('Submissions');
     } else {
       tokens = body.rows.map(function(row) {return row.value;});
-      res.render('submissions', {tokens: tokens});      
+      res.render('Submissions', {tokens: tokens});      
     }
   });
 };

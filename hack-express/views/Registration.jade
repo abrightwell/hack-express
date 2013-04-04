@@ -1,0 +1,55 @@
+//-
+//-   Copyright 2013 Life Cycle Engineering
+//-   
+//-      Licensed under the Apache License, Version 2.0 (the "License");
+//-   you may not use this file except in compliance with the License.
+//-   You may obtain a copy of the License at
+//-
+//-   http://www.apache.org/licenses/LICENSE-2.0
+//-
+//-   Unless required by applicable law or agreed to in writing, software
+//-   distributed under the License is distributed on an "AS IS" BASIS,
+//-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//-   See the License for the specific language governing permissions and
+//-   limitations under the License.
+
+//-
+//-   Authors:  Robert Dunigan
+//-
+
+extends layout
+
+block content
+    div.container
+    div.fluid-container
+      div.row-fluid
+        div.span3
+        div.span6.well
+          legend Registration
+          form.form-horizontal(method='post', action='/registration/submit')
+            input(type='hidden', name='redir', value='redir')
+            div.control-group
+                label.control-label(for='username') Username:
+                div.controls
+                  div.input-prepend
+                    span.add-on
+                      i.icon-user
+                    input(type='text', name='username', autofocus='true', tabindex='1', required='true/', placeholder='Username')
+            div.control-group
+                label.control-label(for='password') Password:
+                div.controls  
+                  div.input-prepend
+                    span.add-on
+                      i.icon-lock
+                    input(type='password', name='password', tabindex='2', required='true/', placeholder='Password')
+            div.control-group
+                label.control-label(for='confirm') Confirm:
+                div.controls  
+                  div.input-prepend
+                    span.add-on
+                      i.icon-lock
+                    input(type='password', name='confirm', tabindex='3', required='true/', placeholder='Confirm Password')
+            div.control-group
+                div.controls
+                  button.btn.primary-btn(type='submit') Register
+        div.span3

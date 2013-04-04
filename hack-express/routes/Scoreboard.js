@@ -36,7 +36,7 @@ exports.show = function(req, res) {
     if (err) {
       console.log("Error getting user scores: " + err.reason);
     } else {
-      res.render('scoreboard', {
+      res.render('Scoreboard', {
         title: 'Scoreboard', 
         userScores: body.rows
       });

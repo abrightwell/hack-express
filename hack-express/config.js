@@ -27,12 +27,8 @@ config.redis.db = 1;
 config.redis.ttl = 30;
 config.redis.password = 'secret';
 
-/*
 config.ssl.key = './security/hack-express-dev.key';
 config.ssl.cert = './security/hack-express-dev.crt';
-*/
-config.ssl.key = './security/serverkey.pem';
-config.ssl.cert = './security/cacert.pem';
 
 config.db.connection_string = function() {
 	return util.format('https://%s:%s@%s:%d', 

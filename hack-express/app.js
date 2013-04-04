@@ -75,7 +75,7 @@ var options = { key : sslkey, cert : sslcert };
 app = express();
 
 app.configure(function() {
-  app.set('port', process.env.PORT || 44443);   //modified for https
+  app.set('port', process.env.PORT || 443);   //modified for https
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.use(express.favicon());

@@ -6,6 +6,7 @@ config.session = {};
 config.session.db = {};
 config.redis = {};
 config.ssl = {};
+config.page = {};
 
 config.db.host = 'localhost';
 config.db.port = 6984;
@@ -26,6 +27,8 @@ config.redis.port = 6379;
 config.redis.db = 1;
 config.redis.ttl = 30;
 config.redis.password = 'secret';
+
+config.page.refreshTime = 5000;
 
 config.ssl.key = './security/hack-express-dev.key';
 config.ssl.cert = './security/hack-express-dev.crt';

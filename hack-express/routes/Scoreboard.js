@@ -38,9 +38,9 @@ exports.show = function(req, res) {
     } else {
       res.render('Scoreboard', {
         title: 'Scoreboard', 
-        userScores: body.rows
+        userScores: body.rows, 
+        refreshTime: config.page.refreshTime
       });
     }
   });
 };
-

@@ -28,7 +28,7 @@ config.redis.db = 1;
 config.redis.ttl = 30;
 config.redis.password = 'secret';
 
-config.page.refreshTime = 5000;
+config.page.refreshTime = 120000;
 
 config.ssl.key = './security/hack-express-dev.key';
 config.ssl.cert = './security/hack-express-dev.crt';

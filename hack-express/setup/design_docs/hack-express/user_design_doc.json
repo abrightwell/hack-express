@@ -6,7 +6,7 @@
            "map": "function(doc) {\n  if(doc.type == 'token') {\n    for (user in doc.users) {\n      emit(doc.users[user], {\n        \"_id\": doc._id,\n        \"points\": doc.points,\n        \"token_value\": doc.token_value,\n        \"description\": doc.description\n      });\n    }\n  }\n}"
        },
        "scores": {
-           "map": "function(doc) {\n  if(doc.type == 'token') {\n    for (user in doc.users) {\n      emit(doc.users[user], doc.points);\n    }\n  }\n}",
+           "map": "function(doc) {\n  if(doc.type == 'user'){ emit(doc.username, 0); } if(doc.type == 'token') {\n    for (user in doc.users) {\n      emit(doc.users[user], doc.points);\n    }\n  }\n}",
            "reduce": "function(key, value) {\n  return sum(value);\n}"
        },
        "by_username": {

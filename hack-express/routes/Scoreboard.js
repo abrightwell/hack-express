@@ -34,6 +34,7 @@
 exports.show = function(req, res) {
   hack_db.view('users', 'scores', {group: true, group_level: 1}, function(err, body) {
     if (err) {
+      console.log('Error: ' + err);
       console.log("Error getting user scores: " + err.reason);
     } else {
       res.render('Scoreboard', {

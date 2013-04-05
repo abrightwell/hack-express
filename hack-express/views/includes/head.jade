@@ -18,7 +18,10 @@
 //-
 
 head
-  meta(name="viewport", content="width=device-width, initial-scale=1.0")
+  block head_meta
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    yield
+
   - if (typeof title != 'undefined')
     title Hack Warz: #{title}
   - else
@@ -27,7 +30,4 @@ head
   link(rel='stylesheet', type='text/css', href='/stylesheets/fonts.css')
   link(rel='stylesheet', type='text/css', href='/stylesheets/bootstrap.min.css')
   link(rel='stylesheet', type='text/css', href='/stylesheets/bootstrap-responsive.min.css')
-  //- link(rel='stylesheet', type='text/css', href='/stylesheets/hackWarz.css')
   link(rel='stylesheet', type='text/css', href='/stylesheets/style.css')
-  //- link(rel='stylesheet', type='text/css', href='/stylesheets/tabs.css')
-

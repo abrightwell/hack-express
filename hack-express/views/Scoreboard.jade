@@ -20,6 +20,9 @@
 
 extends layout
 
+block append head_meta
+  meta(http-equiv="refresh", content="#{refreshTime}")
+
 block content
 
   div.span3.well.bs-docs-sidebar
@@ -37,9 +40,3 @@ block content
           td #{userScore.key}
           td #{userScore.value}
   include includes/sponsors
-  
-  script(type='text/javascript')
-    function timedRefresh(timeoutPeriod) {
-      setTimeout("location.reload(true);",timeoutPeriod);
-    }
-    timedRefresh(#{refreshTime});

@@ -48,13 +48,15 @@ config.redis.db = 1;
 config.redis.ttl = 30;
 config.redis.password = 'secret';
 
-config.page.refreshTime = 120000;
+config.page.refreshTime = 60;
 
 config.ssl.key = './security/hack-express-dev.key';
 config.ssl.cert = './security/hack-express-dev.crt';
 
 config.db.connection_string = function() {
-	return util.format('https://%s:%s@%s:%d', 
+	var ssl = config.db.ssl ? 's' : '';
+	return util.format('http%s://%s:%s@%s:%d',
+		ssl,
 		config.db.user,
 		config.db.password,
 		config.db.host,

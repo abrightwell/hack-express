@@ -30,7 +30,12 @@ exports.show = function(req, res) {
       console.log('Error occured fetching user tokens.');
       res.render('Submissions');
     } else {
-      tokens = body.rows.map(function(row) {return row.value;});
+      tokens = body.rows.map(function(row) {
+		  /*Return masked value minus the last 4 characters*/
+		  temp = row.value.token_value;
+		  temp2 = "xxxxxxxxxxxx" + temp.substr(12,4);
+		  row.value.token_value = temp2;
+		  return row.value;});
       res.render('Submissions', {tokens: tokens});      
     }
   });

@@ -54,7 +54,7 @@ config.ssl.key = './security/hack-express-dev.key';
 config.ssl.cert = './security/hack-express-dev.crt';
 
 config.db.connection_string = function() {
-	var ssl = config.db.ssl ? 's' : '';
+	var ssl = config.session.db.ssl ? 's' : '';
 	return util.format('http%s://%s:%s@%s:%d',
 		ssl,
 		config.db.user,

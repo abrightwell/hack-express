@@ -31,10 +31,8 @@ exports.show = function(req, res) {
       res.render('Submissions');
     } else {
       tokens = body.rows.map(function(row) {
-		  /*Return masked value minus the last 4 characters*/
-		  temp = row.value.token_value;
-		  temp2 = "xxxxxxxxxxxx" + temp.substr(12,4);
-		  row.value.token_value = temp2;
+		  //Return masked value minus the last 4 characters
+		  row.value.token_value = "xxxxxxxxxxxx" + row.value.token_value.substr(12,4);
 		  return row.value;});
       res.render('Submissions', {tokens: tokens});      
     }
@@ -59,7 +57,7 @@ exports.submit = function(req, res) {
           res.redirect('/submissions');
         }, function() {
           console.log('failed to claim');
-          req.flash('error', 'An error occured trying to claim the token.');
+          req.flash('info', 'An error occured trying to claim the token.');
           res.redirect('/submissions');
         });
       } else {
@@ -80,12 +78,33 @@ exports.submit = function(req, res) {
  * failure - callback to handle failure for claim of token.
  */
 function claimToken(user, token, success, failure) {
-  token.users.push(user);
-  hack_db.insert(token, function(err, body) {
-    if (err) {
-      failure();
-    } else {
-      success();
+	
+	if(token.users.contains(token.users, user)){
+		//Nothing to do here
+		failure();
+	} else {
+		token.users.push(user);
+		hack_db.insert(token, function(err, body) {
+			if (err) {
+				failure();
+			} else {
+				success();
+			}
+		});
+	}
+}
+
+/**
+ * Array Prototype function to search for objects such as Strings
+ * 
+ * arr - Array to be searched
+ * obj - Object searching for
+ */
+ Array.prototype.contains=function(arr, obj) {
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i] === obj) {
+            return true;
+        }
     }
-  });
+    return false;
 }

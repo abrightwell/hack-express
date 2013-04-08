@@ -15,30 +15,48 @@
  */
 
 /*
- *Authors:  Adam Brightwell
+ *Authors:  Adam Brightwell, Robert Dunigan
  */
 
 var bcrypt = require('bcrypt');
 
 module.exports.authenticate = function(username, password, callback) {
-  hack_db.view('users', 'by_username', {key: username}, function(err, body) {
-    
-    if (err) {
-      console.log(err.reason);
-    }
+	hack_db.view('users', 'by_username', {key: username}, function(err, body) {
+		if (err) {
+			console.log(err.reason);
+		} else {
+			if(typeof body.rows[0] !== 'undefined'){
+				user = body.rows[0].value;
+				if (user) {
+					compareLogin(password, user, function() {
+						callback(user);
+					}, function() {
+						callback('undefined');
+					});
+				} else {
+					callback('undefined');
+				}
+			} else{
+				callback('undefined');
+			}
+		}
+	});
+}
 
-    user = body.rows[0].value;
-    
-    if (user) {
-      if (bcrypt.compareSync(password, user.password)) {
-        callback(user);
-      } else {
-        callback(null);
-      }
-    } else {
-      callback(null);
-    }
-  });
+/**
+ * Compares login info for a user.
+ *
+ * user - the user claiming the token.
+ * token - the token the user is claiming.
+ * success - callback to handle successful claim of token.
+ * failure - callback to handle failure for claim of token.
+ */
+function compareLogin(password, user, success, failure) {
+	if (bcrypt.compareSync(password, user.password)) {
+		success();
+	} else {
+		failure();
+	}
 }
 
 /**

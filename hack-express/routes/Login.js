@@ -33,12 +33,13 @@ exports.submit = function(req, res) {
   var password = req.param("password");
   
   auth.authenticate(username, password, function(user) {
-    if (user) {
-      req.session.user = user;
-      req.flash('info', 'Successfully Logged In');
-      res.redirect('/scoreboard');
-    } else {
+    if (user=='undefined') {
+      req.flash('info', 'Username/Password Does Not Exist.');
       res.redirect('/login');
+    } else {
+      req.session.user = user;
+      req.flash('info', 'Successfully Logged In.');
+      res.redirect('/scoreboard');
     }
   });
 };

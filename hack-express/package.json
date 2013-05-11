@@ -27,8 +27,8 @@
     "jade": "0.28.1",
     "nano": "3.3.8",
     "bcrypt": "0.7.5",
-    "connect-couchdb": "0.2.5",
-    "connect-flash": "0.1.0"
+    "connect-flash": "0.1.0",
+    "private-repo": "git://github.com/abrightwell/connect-mongo.git"
   },
   
   "devDependencies": {

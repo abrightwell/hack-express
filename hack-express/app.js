@@ -41,23 +41,17 @@ var express = require('express')
   , auth = require('./auth')
   , flash = require('connect-flash');
 
-ConnectCouchDB = require('connect-couchdb')(express);
+MongoStore = require('connect-mongo')(express);
 
-var store = new ConnectCouchDB({
+var store = new MongoStore({
   host: config.session.db.host,
   port: config.session.db.port,
-  name: config.session.db.name,
-  ssl:  config.session.db.ssl,
-  username: config.session.db.username,
-  password: config.session.db.password,
-  reapInterval: 600000,
-  compactInterval: 300000,
-  setThrottle: 60000
+  db: config.session.db.name,
+  ssl: config.session.db.ssl,
+  collection: 'sessions'
 });
 
 //SSL Key/Cert
-//Place in app.js directory
-
 var sslkey = fs.readFileSync(config.ssl.key).toString();  //added for https
 var sslcert = fs.readFileSync(config.ssl.cert).toString(); //added for https
 

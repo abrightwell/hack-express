@@ -21,12 +21,11 @@
 var bcrypt = require('bcrypt');
 
 module.exports.authenticate = function(username, password, callback) {
-	hack_db.view('users', 'by_username', {key: username}, function(err, body) {
+	users = hack_db.collection('users', function(err, collection) {
 		if (err) {
-			console.log(err.reason);
+			console.error(err);
 		} else {
-			if(typeof body.rows[0] !== 'undefined'){
-				user = body.rows[0].value;
+			collection.findOne({'username': username}, function(err, user) {
 				if (user) {
 					compareLogin(password, user, function() {
 						callback(user);
@@ -36,9 +35,7 @@ module.exports.authenticate = function(username, password, callback) {
 				} else {
 					callback('undefined');
 				}
-			} else{
-				callback('undefined');
-			}
+			});
 		}
 	});
 }

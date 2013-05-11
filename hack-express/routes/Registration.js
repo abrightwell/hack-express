@@ -37,13 +37,14 @@ exports.submit = function(req, res){
   var password = req.param("password");
   var confirm  = req.param("confirm");
 
-  hack_db.view('users', 'by_username', {key: username}, function(err, body) {
+  var users = hack_db.collection('users');
+
+  users.findOne({username: username}, function(err, result) {
     if (err) {
-      req.flash('error', 'Error crap');//TODO create flash message about query failure.
+      req.flash('error', 'Error crap'); //TODO create flash message about query failure.
       res.redirect('/');
     } else {
-      var user = body.rows[0];
-      if (typeof user == 'undefined') {
+      if (result == null) {
         createUser(username, password, confirm,
           function() {
             req.flash('info', 'Successfully created account.');
@@ -85,7 +86,8 @@ function createUser(username, password, confirm, success, failure) {
   if (password !== confirm) {
     failure('Passwords do not match.');
   } else {
-    hack_db.insert(user_entry, function(err, body) {
+    users = hack_db.collection('users');
+    users.insert(user_entry, function(err, result) {
       if (err) {
         failure();
       } else {

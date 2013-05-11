@@ -25,6 +25,9 @@
 config = require('./config');
 
 var express = require('express')
+  , Db = require('mongodb').Db
+  , Server = require('mongodb').Server
+  , Connection = require('mongodb').Connection
   , routes = require('./routes')
   , user = require('./routes/user')
   , Registration = require('./routes/Registration')
@@ -41,6 +44,7 @@ var express = require('express')
   , auth = require('./auth')
   , flash = require('connect-flash');
 
+// Database Configuration and Initialization.
 MongoStore = require('connect-mongo')(express);
 
 var store = new MongoStore({
@@ -51,17 +55,25 @@ var store = new MongoStore({
   collection: 'sessions'
 });
 
+var server = new Server(config.db.host, config.db.port,
+  { ssl: config.db.ssl, w: 1 }
+);
+
+hack_db = new Db(config.db.name, server);
+
+// Connect to the MongoDB.
+hack_db.open(function(err, db) {
+  if (err || db == 'null') {
+    console.log("An Error occured connecting to the database.");
+    console.log(err);
+  } else {
+    console.log("Successfully connected to the database");
+  }
+});
+
 //SSL Key/Cert
 var sslkey = fs.readFileSync(config.ssl.key).toString();  //added for https
 var sslcert = fs.readFileSync(config.ssl.cert).toString(); //added for https
-
-//Database module used for communication between Express and CouchDB
-nano = require('nano')({
-  request_defaults: {strictSSL: false},
-  url: config.db.connection_string()
-});
-
-hack_db = nano.db.use(config.db.name);
 
 //Added for https
 var options = { key : sslkey, cert : sslcert };
@@ -90,7 +102,6 @@ app.configure(function() {
   app.use(express.methodOverride());
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
-  
 });
 
 app.configure('development', function() {

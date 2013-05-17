@@ -19,23 +19,18 @@
  */
 
 var bcrypt = require('bcrypt');
+var User = require('./model/user');
 
 module.exports.authenticate = function(username, password, callback) {
-	users = hack_db.collection('users', function(err, collection) {
-		if (err) {
-			console.error(err);
-		} else {
-			collection.findOne({'username': username}, function(err, user) {
-				if (user) {
-					compareLogin(password, user, function() {
-						callback(user);
-					}, function() {
-						callback('undefined');
-					});
-				} else {
-					callback('undefined');
-				}
+	User.findOne({'username': username}, function(err, user) {
+		if (user) {
+			compareLogin(password, user, function() {
+				callback(user);
+			}, function() {
+				callback('undefined');
 			});
+		} else {
+			callback('undefined');
 		}
 	});
 }

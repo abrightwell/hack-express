@@ -19,6 +19,7 @@
  */
 
 var bcrypt = require('bcrypt');
+var User = require('../model/user');
 
 exports.show = function(req, res){
   res.render('Registration');
@@ -37,9 +38,9 @@ exports.submit = function(req, res){
   var password = req.param("password");
   var confirm  = req.param("confirm");
 
-  var users = hack_db.collection('users');
+  // var users = hack_db.collection('users');
 
-  users.findOne({username: username}, function(err, result) {
+  User.findOne({username: username}, function(err, result) {
     if (err) {
       req.flash('error', 'Error crap'); //TODO create flash message about query failure.
       res.redirect('/');
@@ -81,15 +82,18 @@ function createUser(username, password, confirm, success, failure) {
   var salt = bcrypt.genSaltSync(10);
   var hash = bcrypt.hashSync(password, salt);
   
-  user_entry = {username: username, password: hash, type: 'user'};
-  
   if (password !== confirm) {
     failure('Passwords do not match.');
   } else {
-    users = hack_db.collection('users');
-    users.insert(user_entry, function(err, result) {
-      if (err) {
-        failure();
+    user = new User({
+      username: username,
+      password: hash,
+      tokens: []
+    });
+
+    user.save(function(error, result) {
+      if (error) {
+        failure('Error saving user: ' + user.username);
       } else {
         success();
       }

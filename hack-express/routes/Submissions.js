@@ -18,23 +18,21 @@
  * Authors: Adam Brightwell, Robert Dunigan
  */
 
+var User = require('../model/user');
+var Token = require('../model/token');
+var ObjectId = require('mongodb').ObjectId;
+
 /**
  * Display the submission page with the users achieved tokens.
  */
 exports.show = function(req, res) {
-  username = req.session.user.username;
-  
-  hack_db.view('users', 'tokens', {key: username}, function(err, body) {
+  User.findOne({_id: req.session.user._id})
+  .populate('tokens')
+  .exec(function(err, user) {
     if (err) {
-      req.flash('error', 'Error occured fetching user tokens.');
-      console.log('Error occured fetching user tokens.');
-      res.render('Submissions');
+      console.log(err);
     } else {
-      tokens = body.rows.map(function(row) {
-		  //Return masked value minus the last 4 characters
-		  row.value.token_value = "xxxxxxxxxxxx" + row.value.token_value.substr(12,4);
-		  return row.value;});
-      res.render('Submissions', {tokens: tokens});      
+      res.render('Submissions', {tokens: user.tokens});
     }
   });
 };
@@ -44,29 +42,44 @@ exports.show = function(req, res) {
  */
 exports.submit = function(req, res) {  
   var tokenValue = req.param("tokenID");
-  
-  hack_db.view('tokens', 'by_token_value', {key: tokenValue}, function(err, body) {
-    if (err) {
-      console.log(err.reason);
+  var userId = req.session.user._id;
+
+  Token.findOne({value: tokenValue}, function(error, token) {
+    if (error) {
+      req.flash('error', 'An error occured trying to claim the token');
+      console.error(error);
     } else {
-      if (typeof body.rows[0] !== 'undefined') {
-        user = req.session.user.username;
-        token = body.rows[0].value
-        claimToken(user, token, function() {
-          req.flash('info', 'You have successfully claimed the token');
-          res.redirect('/submissions');
-        }, function() {
-          console.log('failed to claim');
-          req.flash('info', 'An error occured trying to claim the token.');
-          res.redirect('/submissions');
+      if (token != null) {
+
+        var query = {_id: userId, tokens: {$nin: [token.id]}};
+        var update = {$push: {tokens: token.id}};
+
+        User.findOneAndUpdate(query, update, function(err, result) {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log(result);
+            req.flash('info', 'You have successfully claimed the token');
+          }
         });
       } else {
-        console.log('token does not exist.');
-        req.flash('info', 'Sorry, that is not a valid token.');
-        res.redirect('/submissions');
+        req.flash('info', 'Sorry, that is not a valid token or you have already claimed it.')
       }
     }
+    res.redirect('/submissions');
   });
+
+  // claimToken(username, tokenValue, function(err, result) {
+  //   if (err) {
+  //     req.flash('info', 'An error occured trying to claim the token.');
+  //   } else {
+  //     if (result) {
+  //       req.flash('info', 'You have successfully claimed the token');
+  //     } else {
+  //       req.flash('info', 'Sorry, that is not a valid token or you have already claimed it.');
+  //     }
+  //   }
+
 }
 
 /**
@@ -77,34 +90,41 @@ exports.submit = function(req, res) {
  * success - callback to handle successful claim of token.
  * failure - callback to handle failure for claim of token.
  */
-function claimToken(user, token, success, failure) {
-	
-	if(token.users.contains(token.users, user)){
-		//Nothing to do here
-		failure();
-	} else {
-		token.users.push(user);
-		hack_db.insert(token, function(err, body) {
-			if (err) {
-				failure();
-			} else {
-				success();
-			}
-		});
-	}
-}
+function claimToken(username, token_value, callback) {
+  hack_db.collection('tokens', function(err, tokens) {
+    if (err) {
+      console.log('Error accessing tokens collection.');
+      callback(err, null);
+    } else {
+      tokenExists(token_value, function(err, token) {
+        if (err) {
+          callback(err, null);
+        } else {
+          if (token != null) {
+            callback()
+          } else {
 
-/**
- * Array Prototype function to search for objects such as Strings
- * 
- * arr - Array to be searched
- * obj - Object searching for
- */
- Array.prototype.contains=function(arr, obj) {
-    for (var i = 0; i < arr.length; i++) {
-        if (arr[i] === obj) {
-            return true;
+          }
         }
+      });
+
+      tokens.findOne({'value': token_value}, function(err, result) {
+        if (result != null) {
+          // use findAndModify instead.
+          hack_db.collection('users')
+          getTokenIdsByUser(username, function(err, user_tokens) {
+            if (!user_tokens.contains(result._id)) {
+              users = hack_db.collection('users');
+              user = users.update({'username': username}, {$push: {tokens: result._id}});
+              callback(null, true);
+            } else {
+              callback(null, false);
+            }
+          });
+        } else {
+          callback(null, false);
+        }
+      });
     }
-    return false;
+  });
 }

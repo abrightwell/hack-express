@@ -30,6 +30,7 @@ var express = require('express')
   , Connection = require('mongodb').Connection
   , routes = require('./routes')
   , user = require('./routes/user')
+  , admin = require('./routes/admin')
   , Registration = require('./routes/Registration')
   , Login = require('./routes/Login')
   , Scoreboard = require('./routes/Scoreboard')
@@ -44,6 +45,8 @@ var express = require('express')
   , auth = require('./auth')
   , flash = require('connect-flash');
 
+var mongoose = require('mongoose');
+
 // Database Configuration and Initialization.
 MongoStore = require('connect-mongo')(express);
 
@@ -55,20 +58,13 @@ var store = new MongoStore({
   collection: 'sessions'
 });
 
-var server = new Server(config.db.host, config.db.port,
-  { ssl: config.db.ssl, w: 1 }
-);
+mongoose.connect('mongodb://hack-express-db/hack-express', {server: {ssl: false}});
 
-hack_db = new Db(config.db.name, server);
+var hack_db = mongoose.connection;
 
-// Connect to the MongoDB.
-hack_db.open(function(err, db) {
-  if (err || db == 'null') {
-    console.log("An Error occured connecting to the database.");
-    console.log(err);
-  } else {
-    console.log("Successfully connected to the database");
-  }
+hack_db.on('error', console.error.bind(console, 'connection error:'));
+hack_db.once('open', function(err, result) {
+  console.log('Connection to MongoDB is open.')
 });
 
 //SSL Key/Cert
@@ -121,6 +117,7 @@ app.post('/registration/submit', Registration.submit);
 app.get('/login', Login.show);
 app.post('/login/submit', Login.submit);
 app.get('/scoreboard', Scoreboard.show);
+// app.get('/admin', admin.show);
 //app.get('/hints', auth.requiresLogin, Hints.show);
 //app.post('/hints/buy', auth.requiresLogin, Hints.buy);
 //app.get('/notes', auth.requiresLogin, Notes.show);

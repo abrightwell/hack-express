@@ -1,6 +1,6 @@
 {
   "name": "Hack-Express",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "private": true,
   
   "maintainers": [
@@ -28,6 +28,8 @@
     "nano": "3.3.8",
     "bcrypt": "0.7.5",
     "connect-flash": "0.1.0",
+    "mongodb": "1.3.3",
+    "mongoose": "3.6.10",
     "private-repo": "git://github.com/abrightwell/connect-mongo.git"
   },
   

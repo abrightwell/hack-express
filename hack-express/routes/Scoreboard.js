@@ -18,6 +18,8 @@
  * Authors: Adam Brightwell, Robert Dunigan
  */
 
+User = require('../model/user');
+
 /**
  * Gets and dispalys the scoreboard values.
  *
@@ -30,18 +32,26 @@
  * key   -> the username
  * value -> the point value
  *
- */ 
+ */
 exports.show = function(req, res) {
-  hack_db.view('users', 'scores', {group: true, group_level: 1}, function(err, body) {
-    if (err) {
-      console.log('Error: ' + err);
-      console.log("Error getting user scores: " + err.reason);
-    } else {
-      res.render('Scoreboard', {
-        title: 'Scoreboard', 
-        userScores: body.rows, 
-        refreshTime: config.page.refreshTime
+  var scores = [];
+
+  User.find()
+    .populate('tokens', {points: 1})
+    .exec(function (err, users) {
+      users.forEach(function(user) {
+        var score = 0;
+        console.log(user);
+        user.tokens.forEach(function(token) {
+          score += token.points;
+        });
+        scores.push({username: user.username, score: score});
       });
-    }
+    
+      res.render('Scoreboard', {
+      title: 'Scoreboard',
+      userScores: scores,
+      refreshTime: config.page.refreshTime
+    });
   });
 };

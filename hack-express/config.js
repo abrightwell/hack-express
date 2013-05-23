@@ -28,25 +28,20 @@ config.redis = {};
 config.ssl = {};
 config.page = {};
 
-config.db.host = 'localhost';
-config.db.port = 6984;
+config.db.host = 'hack-express-db';
+config.db.port = 27017;
+config.db.ssl = false;
 config.db.name = 'hack-express';
 config.db.user = 'hack-admin';
 config.db.password = 'secret';
 
-config.session.db.host = 'localhost';
-config.session.db.port = 6984;
-config.session.db.ssl = true;
-config.session.db.name = 'hack-express-session';
+config.session.db.host = 'hack-express-db';
+config.session.db.port = 27017;
+config.session.db.ssl = false;
+config.session.db.name = 'hack-express-sessions';
 config.session.db.revs_limit = '1000';
 config.session.db.username = 'hack-admin';
 config.session.db.password = 'secret';
-
-config.redis.host = 'localhost';
-config.redis.port = 6379;
-config.redis.db = 1;
-config.redis.ttl = 30;
-config.redis.password = 'secret';
 
 config.page.refreshTime = 60;
 

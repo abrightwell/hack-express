@@ -18,9 +18,10 @@
  * Authors: Adam Brightwell, Robert Dunigan
  */
 
-var User = require('../model/user');
-var Token = require('../model/token');
-var ObjectId = require('mongodb').ObjectId;
+var database = require('../database').connection,
+    User = require('../model/user')(database),
+    Token = require('../model/token')(database),
+    ObjectId = require('mongodb').ObjectId;
 
 /**
  * Display the submission page with the users achieved tokens.

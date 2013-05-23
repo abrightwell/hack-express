@@ -25,19 +25,10 @@
 config = require('./config');
 
 var express = require('express')
-  , Db = require('mongodb').Db
-  , Server = require('mongodb').Server
-  , Connection = require('mongodb').Connection
+  // , database = require('./database')
   , routes = require('./routes')
   , user = require('./routes/user')
   , admin = require('./routes/admin')
-  , Registration = require('./routes/Registration')
-  , Login = require('./routes/Login')
-  , Scoreboard = require('./routes/Scoreboard')
-  , Hints = require('./routes/Hints')
-  , Notes = require('./routes/Notes')
-  , Submissions = require('./routes/Submissions')
-  , Logout = require('./routes/Logout')
   , http = require('http')
   , path = require('path')
   , https = require('https')
@@ -56,15 +47,6 @@ var store = new MongoStore({
   db: config.session.db.name,
   ssl: config.session.db.ssl,
   collection: 'sessions'
-});
-
-mongoose.connect('mongodb://hack-express-db/hack-express', {server: {ssl: false}});
-
-var hack_db = mongoose.connection;
-
-hack_db.on('error', console.error.bind(console, 'connection error:'));
-hack_db.once('open', function(err, result) {
-  console.log('Connection to MongoDB is open.')
 });
 
 //SSL Key/Cert
@@ -104,19 +86,8 @@ app.configure('development', function() {
   app.use(express.errorHandler());
 });
 
+var routes = require('./routes')(app);
 
-
-/**
- * Hack Warz Routes
- */
-app.get('/', function (req, res) {
-  res.redirect('Scoreboard');
-});
-app.get('/registration', Registration.show);
-app.post('/registration/submit', Registration.submit);
-app.get('/login', Login.show);
-app.post('/login/submit', Login.submit);
-app.get('/scoreboard', Scoreboard.show);
 // app.get('/admin', admin.show);
 //app.get('/hints', auth.requiresLogin, Hints.show);
 //app.post('/hints/buy', auth.requiresLogin, Hints.buy);
@@ -125,9 +96,6 @@ app.get('/scoreboard', Scoreboard.show);
 //app.post('/notes/submitCredentials', auth.requiresLogin, Notes.submitCredentials);
 //app.post('/notes/submitCrypto', auth.requiresLogin, Notes.submitCrypto);
 //app.post('/notes/submitMisc', auth.requiresLogin, Notes.submitMisc);
-app.get('/submissions', auth.requiresLogin, Submissions.show);
-app.post('/submissions/submit', auth.requiresLogin, Submissions.submit);
-app.get('/logout', Logout.show);
 
 //Modified for https
 

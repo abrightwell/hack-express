@@ -28,4 +28,8 @@ var tokenSchema = Schema({
 	description: String
 });
 
-module.exports = mongoose.model('Token', tokenSchema);
+mongoose.model('Token', tokenSchema);
+
+module.exports = function(connection) {
+	return (connection || mongoose).model('Token');
+}

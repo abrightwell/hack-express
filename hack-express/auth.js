@@ -18,8 +18,9 @@
  *Authors:  Adam Brightwell, Robert Dunigan
  */
 
-var bcrypt = require('bcrypt');
-var User = require('./model/user');
+var bcrypt = require('bcrypt'),
+	database = require('./database').connection,
+    User = require('./model/user')(database);
 
 module.exports.authenticate = function(username, password, callback) {
 	User.findOne({'username': username}, function(err, user) {

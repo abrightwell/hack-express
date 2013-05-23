@@ -18,7 +18,8 @@
  * Authors: Adam Brightwell, Robert Dunigan
  */
 
-User = require('../model/user');
+var database = require('../database').connection,
+    User = require('../model/user')(database);
 
 /**
  * Gets and dispalys the scoreboard values.
@@ -35,13 +36,11 @@ User = require('../model/user');
  */
 exports.show = function(req, res) {
   var scores = [];
-
   User.find()
     .populate('tokens', {points: 1})
     .exec(function (err, users) {
       users.forEach(function(user) {
         var score = 0;
-        console.log(user);
         user.tokens.forEach(function(token) {
           score += token.points;
         });

@@ -28,5 +28,8 @@ var userSchema = Schema({
 	tokens: [{ type: Schema.Types.ObjectId, ref: 'Token' }]
 });
 
-module.exports = mongoose.model('User', userSchema);
+mongoose.model('User', userSchema);
 
+module.exports = function(connection) {
+	return (connection || mongoose).model('User');
+}

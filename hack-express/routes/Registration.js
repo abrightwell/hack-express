@@ -19,7 +19,8 @@
  */
 
 var bcrypt = require('bcrypt');
-var User = require('../model/user');
+    database = require('../database').connection,
+    User = require('../model/user')(database);
 
 exports.show = function(req, res){
   res.render('Registration');

@@ -23,14 +23,13 @@
   },
   
   "dependencies": {
-    "express": "3.1.1",
-    "jade": "0.28.1",
-    "nano": "3.3.8",
+    "express": "3.2.5",
+    "jade": "0.31.1",
     "bcrypt": "0.7.5",
-    "connect-flash": "0.1.0",
+    "connect-flash": "0.1.1",
     "mongodb": "1.3.3",
-    "mongoose": "3.6.10",
-    "private-repo": "git://github.com/abrightwell/connect-mongo.git"
+    "mongoose": "3.6.11",
+    "connect-mongo": "git://github.com/kcbanner/connect-mongo.git#f199378"
   },
   
   "devDependencies": {

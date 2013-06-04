@@ -28,7 +28,7 @@ var express = require('express')
   // , database = require('./database')
   , routes = require('./routes')
   , user = require('./routes/user')
-  , admin = require('./routes/admin')
+  // , admin = require('./routes/admin')
   , http = require('http')
   , path = require('path')
   , https = require('https')
@@ -77,6 +77,14 @@ app.configure(function() {
     next();
   });
   
+  /**
+   * This is required for nginx.
+   */
+   app.use(function(req, res, next) {
+     req.forwardedSecure = req.headers["x-forwarded-proto"] === "https";
+     return next();
+   });
+  
   app.use(express.methodOverride());
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
@@ -88,6 +96,9 @@ app.configure('development', function() {
 
 var routes = require('./routes')(app);
 
+/*
+ * Unimplemented Routes
+ */
 // app.get('/admin', admin.show);
 //app.get('/hints', auth.requiresLogin, Hints.show);
 //app.post('/hints/buy', auth.requiresLogin, Hints.buy);
@@ -98,7 +109,6 @@ var routes = require('./routes')(app);
 //app.post('/notes/submitMisc', auth.requiresLogin, Notes.submitMisc);
 
 //Modified for https
-
 https.createServer(options, app).listen(app.get('port'), function() {
   console.log("Express server listening on port:  " + app.get('port'));
 });

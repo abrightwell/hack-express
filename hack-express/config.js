@@ -21,12 +21,15 @@
 var util = require('util')
 var config = {};
 
+config.cache = {};
 config.db = {};
 config.session = {};
 config.session.db = {};
 config.redis = {};
 config.ssl = {};
 config.page = {};
+
+config.cache.age = 5*60;
 
 config.db.host = 'hack-express-db';
 config.db.port = 27017;

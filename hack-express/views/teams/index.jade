@@ -1,0 +1,25 @@
+doctype 5
+html
+  head
+  title Teams Index
+  body
+    h1 Listing articles
+
+    table
+      thead
+        tr
+          th Name
+          th
+          th
+          th
+      tbody
+      each team in teams
+        tr
+          td #{team.name}
+          td 
+            a(href="/teams/#{team._id}") Show
+          td 
+            a(href="/teams/#{team._id}/edit") Edit
+          td 
+            a(href="#") Destroy
+      tr

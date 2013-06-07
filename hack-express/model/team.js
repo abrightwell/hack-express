@@ -30,4 +30,8 @@ var teamSchema = Schema({
 	captain: {type: Schema.Types.ObjectId, ref: 'User'}
 });
 
-module.exports = mongoose.model('Team', teamSchema);
+mongoose.model('Team', teamSchema);
+
+module.exports = function(connection) {
+	return (connection || mongoose).model('Team');
+}

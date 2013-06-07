@@ -34,6 +34,7 @@ var express = require('express')
   , https = require('https')
   , fs = require('fs')
   , auth = require('./auth')
+  , cache = require('./cache')
   , flash = require('connect-flash')
   , winston = require('winston')
   , log = require('./log');
@@ -82,13 +83,8 @@ app.configure(function() {
     next();
   });
   
-  /**
-   * This is required for nginx.
-   */
-   app.use(function(req, res, next) {
-     req.forwardedSecure = req.headers["x-forwarded-proto"] === "https";
-     return next();
-   });
+  //nginx forwarding
+  app.use(cache.forward);
   
   app.use(express.methodOverride());
   app.use(app.router);

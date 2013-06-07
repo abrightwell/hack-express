@@ -18,7 +18,16 @@
  *Authors:  Robert Dunigan
  */
 
-module.exports.cacheMiddleware = function(req, res, next) {
+module.exports.forward = function(req, res, next) {
+     if(config.cache.secure){
+		 req.forwardedSecure = req.headers["x-forwarded-proto"] === "https";
+	 } else {
+		 req.forwarded = req.headers["x-forwarded-proto"] === "http";
+	 }
+     return next();
+   }
+
+module.exports.cacheSetHeader = function(req, res, next) {
 	logger.log("info", 'Cache');
     res.setHeader("Cache-Control", "public, max-age=" + config.cache.age);
     next();

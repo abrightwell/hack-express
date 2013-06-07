@@ -12,12 +12,12 @@ module.exports = function(app) {
   		res.redirect('Scoreboard');
 	});
 
-	app.get('/registration', cache.cacheMiddleware, Registration.show);
+	app.get('/registration', cache.cacheSetHeader, Registration.show);
 	app.post('/registration/submit', Registration.submit);
-	app.get('/login', cache.cacheMiddleware, Login.show);
+	app.get('/login', cache.cacheSetHeader, Login.show);
 	app.post('/login/submit', Login.submit);
-	app.get('/scoreboard', cache.cacheMiddleware, Scoreboard.show);
-	app.get('/submissions', auth.requiresLogin, cache.cacheMiddleware, Submissions.show);
+	app.get('/scoreboard', cache.cacheSetHeader, Scoreboard.show);
+	app.get('/submissions', auth.requiresLogin, cache.cacheSetHeader, Submissions.show);
 	app.post('/submissions/submit', auth.requiresLogin, Submissions.submit);
-	app.get('/logout', cache.cacheMiddleware, Logout.show);
+	app.get('/logout', cache.cacheSetHeader, Logout.show);
 }

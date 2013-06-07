@@ -30,6 +30,7 @@ config.ssl = {};
 config.page = {};
 config.log = {};
 
+config.cache.secure = true;
 config.cache.age = 300; //Seconds
 
 config.db.host = 'hack-express-db';

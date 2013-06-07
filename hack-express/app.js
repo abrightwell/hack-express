@@ -34,7 +34,9 @@ var express = require('express')
   , https = require('https')
   , fs = require('fs')
   , auth = require('./auth')
-  , flash = require('connect-flash');
+  , flash = require('connect-flash')
+  , winston = require('winston')
+  , log = require('./log');
 
 var mongoose = require('mongoose');
 
@@ -48,6 +50,9 @@ var store = new MongoStore({
   ssl: config.session.db.ssl,
   collection: 'sessions'
 });
+
+//Instantiate a winston logger
+logger = log.getLogger();
 
 //SSL Key/Cert
 var sslkey = fs.readFileSync(config.ssl.key).toString();  //added for https
@@ -63,7 +68,7 @@ app.configure(function() {
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.use(express.favicon());
-  app.use(express.logger('dev'));
+  //app.use(express.logger('dev'));  //Default Expressjs logger
   app.use(express.bodyParser());
   app.use(express.cookieParser('0708aa9e17c6090c04a5e7ea2b482bb7'));
   app.use(express.session({secret: 'secret', store: store}));
@@ -99,7 +104,7 @@ var routes = require('./routes')(app);
 /*
  * Unimplemented Routes
  */
-// app.get('/admin', admin.show);
+//app.get('/admin', admin.show);
 //app.get('/hints', auth.requiresLogin, Hints.show);
 //app.post('/hints/buy', auth.requiresLogin, Hints.buy);
 //app.get('/notes', auth.requiresLogin, Notes.show);
@@ -110,5 +115,5 @@ var routes = require('./routes')(app);
 
 //Modified for https
 https.createServer(options, app).listen(app.get('port'), function() {
-  console.log("Express server listening on port:  " + app.get('port'));
+  logger.log("info", "Express server listening on port:  " + app.get('port'));
 });

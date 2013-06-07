@@ -13,13 +13,20 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
- 
+
 /*
  *Authors:  Robert Dunigan
  */
 
-module.exports.cacheMiddleware = function(req, res, next) {
-	logger.log("info", 'Cache');
-    res.setHeader("Cache-Control", "public, max-age=" + config.cache.age);
-    next();
+winston = require('winston');
+
+module.exports.getLogger = function() {
+	var tempLog = new (winston.Logger);
+	if(config.log.console){
+		tempLog.add(winston.transports.Console, { level: config.log.level, colorize: config.log.color });
+	}
+	if(config.log.file){
+		tempLog.add(winston.transports.File, { level: config.log.level, colorize: config.log.color, filename: config.log.filename, maxsize: config.log.max_size });
+	}
+    return tempLog;
 };

@@ -28,8 +28,9 @@ config.session.db = {};
 config.redis = {};
 config.ssl = {};
 config.page = {};
+config.log = {};
 
-config.cache.age = 5*60;
+config.cache.age = 300; //Seconds
 
 config.db.host = 'hack-express-db';
 config.db.port = 27017;
@@ -47,6 +48,13 @@ config.session.db.username = 'hack-admin';
 config.session.db.password = 'secret';
 
 config.page.refreshTime = 60;
+
+config.log.color = true;
+config.log.console = true;
+config.log.file = true;
+config.log.filename = './logs/hack-express.log';
+config.log.level = 'debug';
+config.log.max_size = 8192; //bytes
 
 config.ssl.key = './security/hack-express-dev.key';
 config.ssl.cert = './security/hack-express-dev.crt';

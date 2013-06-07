@@ -13,7 +13,7 @@ var mongoose = require('mongoose'),
 
 connection.on('error', console.error.bind(console, 'connection error:'));
 connection.once('open', function(err, result) {
-  console.log('Connection to MongoDB is open.')
+  logger.log("info", 'Connection to MongoDB is open.')
 });
 
 exports.connection = connection

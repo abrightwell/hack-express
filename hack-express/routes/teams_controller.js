@@ -56,7 +56,7 @@ exports.create = function(req, res) {
 
 	team.save(function(err) {
 		if (err) {
-			logger.log('error', 'Failed saving new team.');	
+			logger.log('error', 'Failed saving new team.');
 		} else {
 			logger.log('info', "Successfully created new team: " + team._id);
 			if (req.params.format == 'json') {
@@ -72,7 +72,7 @@ exports.create = function(req, res) {
 // GET /teams/1.json
 exports.show = function(req, res) {
 	var id = req.params.id;
-	
+
 	Team.findById(id, function(err, team) {
 		if (err) {
 			logger.log('error', err.reason);
@@ -100,7 +100,7 @@ exports.edit = function(req, res) {
 exports.update = function(req, res) {
 	var id = req.params.id;
 	var team = req.body;
-	
+
 	Team.findByIdAndUpdate(id, {$set: team}, function(err, result) {
 		if (err) {
 			logger.log('error', err);

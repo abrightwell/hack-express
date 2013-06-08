@@ -6,11 +6,11 @@ var Registration = require('./routes/Registration'),
 	Logout = require('./routes/Logout'),
 	auth = require('./auth'),
 	cache = require('./cache')
-	Teams = require('./routes/teams');
+	Teams = require('./routes/teams_controller');
 
 module.exports = function(app) {
 	app.get('/', function (req, res) {
-  		res.redirect('Scoreboard');
+		res.redirect('Scoreboard');
 	});
 
 	app.get('/registration', cache.cacheSetHeader, Registration.show);
@@ -23,9 +23,11 @@ module.exports = function(app) {
 	app.get('/logout', cache.cacheSetHeader, Logout.show);
 
 	// Team routes.
-	app.get('/teams', Teams.index);
-	app.get('/teams/:id', Teams.show);
+	app.get('/teams.:format?', Teams.index);
+	app.post('/teams.:format?', Teams.create);
+	app.get('/teams/new.:format?', Teams.new);
+	app.get('/teams/:id.:format?', Teams.show);
 	app.get('/teams/:id/edit', Teams.edit);
-	app.put('/teams/:id', Teams.update);
-	app.delete('/teams/:id');
+	app.put('/teams/:id.:format?', Teams.update);
+	app.delete('/teams/:id.:format?', Teams.destroy);
 }

@@ -1,0 +1,11 @@
+doctype 5
+html
+  head
+    title Teams Index
+  body
+    form(method='post', action='/teams')
+      div.field
+        label Name
+        input(type="text", name="name", value="#{team.name}")
+      div.actions
+        input(type="submit", value="Submit")

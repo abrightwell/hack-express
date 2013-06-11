@@ -24,7 +24,7 @@ var User = require('./user');
 var Token = require('./token');
 
 var teamSchema = Schema({
-	name: String,
+	name: {type: String, default: ""},
 	members: [{type: Schema.Types.ObjectId, ref: 'User'}],
 	tokens: [{type: Schema.Types.ObjectId, ref: 'Token'}],
 	captain: {type: Schema.Types.ObjectId, ref: 'User'}

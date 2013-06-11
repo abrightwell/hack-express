@@ -18,6 +18,7 @@
  *Authors:  Robert Dunigan
  */
 
+//Forward headers for Nginx
 module.exports.forward = function(req, res, next) {
      if(config.cache.secure){
 		 req.forwardedSecure = req.headers["x-forwarded-proto"] === "https";
@@ -27,8 +28,8 @@ module.exports.forward = function(req, res, next) {
      return next();
    }
 
-module.exports.cacheSetHeader = function(req, res, next) {
-	logger.log("info", 'Cache');
-    res.setHeader("Cache-Control", "public, max-age=" + config.cache.age);
+module.exports.setHeaderPublic = function(req, res, next) {
+	logger.log("info", 'Set Cache-Control:  Public');
+    res.setHeader("Cache-Control", "public, max-age=" + config.cache.minAge.toString());
     next();
 };

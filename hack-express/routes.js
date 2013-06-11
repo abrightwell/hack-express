@@ -9,18 +9,18 @@ var Registration = require('./routes/Registration'),
 	Teams = require('./routes/teams');
 
 module.exports = function(app) {
-	app.get('/', function (req, res) {
+	app.get('/', cache.setHeaderPublic, function (req, res) {
   		res.redirect('Scoreboard');
 	});
 
-	app.get('/registration', cache.cacheSetHeader, Registration.show);
+	app.get('/registration', cache.setHeaderPublic, Registration.show);
 	app.post('/registration/submit', Registration.submit);
-	app.get('/login', cache.cacheSetHeader, Login.show);
+	app.get('/login', cache.setHeaderPublic, Login.show);
 	app.post('/login/submit', Login.submit);
-	app.get('/scoreboard', cache.cacheSetHeader, Scoreboard.show);
-	app.get('/submissions', auth.requiresLogin, cache.cacheSetHeader, Submissions.show);
+	app.get('/scoreboard', cache.setHeaderPublic, Scoreboard.show);
+	app.get('/submissions', auth.requiresLogin, Submissions.show);
 	app.post('/submissions/submit', auth.requiresLogin, Submissions.submit);
-	app.get('/logout', cache.cacheSetHeader, Logout.show);
+	app.get('/logout', Logout.show);
 
 	// Team routes.
 	app.get('/teams', Teams.index);

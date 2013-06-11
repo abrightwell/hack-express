@@ -56,20 +56,18 @@ var store = new MongoStore({
 logger = log.getLogger();
 
 //SSL Key/Cert
-var sslkey = fs.readFileSync(config.ssl.key).toString();  //added for https
-var sslcert = fs.readFileSync(config.ssl.cert).toString(); //added for https
-
-//Added for https
+var sslkey = fs.readFileSync(config.ssl.key).toString();
+var sslcert = fs.readFileSync(config.ssl.cert).toString();
 var options = { key : sslkey, cert : sslcert };
 
 app = express();
 
 app.configure(function() {
-  app.set('port', process.env.PORT || 443);   //modified for https
+  app.set('port', process.env.PORT || 44443);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.use(express.favicon());
-  //app.use(express.logger('dev'));  //Default Expressjs logger
+  app.use(express.logger('dev'));  //Default Expressjs logger
   app.use(express.bodyParser());
   app.use(express.cookieParser('0708aa9e17c6090c04a5e7ea2b482bb7'));
   app.use(express.session({secret: 'secret', store: store}));
@@ -83,12 +81,13 @@ app.configure(function() {
     next();
   });
   
-  //nginx forwarding
+  //Nginx forwarding
   app.use(cache.forward);
   
   app.use(express.methodOverride());
   app.use(app.router);
-  app.use(express.static(path.join(__dirname, 'public')));
+  //Express static file caching
+  app.use(express.static(__dirname + '/public', {maxAge: config.cache.maxAge}));
 });
 
 app.configure('development', function() {
@@ -109,7 +108,7 @@ var routes = require('./routes')(app);
 //app.post('/notes/submitCrypto', auth.requiresLogin, Notes.submitCrypto);
 //app.post('/notes/submitMisc', auth.requiresLogin, Notes.submitMisc);
 
-//Modified for https
+//Create server and start listening
 https.createServer(options, app).listen(app.get('port'), function() {
   logger.log("info", "Express server listening on port:  " + app.get('port'));
 });

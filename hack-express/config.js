@@ -31,24 +31,25 @@ config.page = {};
 config.log = {};
 
 config.cache.secure = true;
-config.cache.age = 300; //Seconds
+config.cache.maxAge = 31536000000; //miliseconds, 1yr, Static files
+config.cache.minAge = 15; //seconds, 0.25min, Public pages
 
 config.db.host = 'hack-express-db';
 config.db.port = 27017;
-config.db.ssl = false;
+config.db.ssl = true;
 config.db.name = 'hack-express';
 config.db.user = 'hack-admin';
 config.db.password = 'secret';
 
 config.session.db.host = 'hack-express-db';
 config.session.db.port = 27017;
-config.session.db.ssl = false;
+config.session.db.ssl = true;
 config.session.db.name = 'hack-express-sessions';
 config.session.db.revs_limit = '1000';
 config.session.db.username = 'hack-admin';
 config.session.db.password = 'secret';
 
-config.page.refreshTime = 60;
+config.page.refreshTime = 60; //seconds, 1min
 
 config.log.color = true;
 config.log.console = true;

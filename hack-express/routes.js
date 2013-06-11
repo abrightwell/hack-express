@@ -9,7 +9,6 @@ var Registration = require('./routes/Registration'),
 	Teams = require('./routes/teams_controller');
 
 module.exports = function(app) {
-<<<<<<< HEAD
 	app.get('/', cache.setHeaderPublic, function (req, res) {
   		res.redirect('Scoreboard');
 	});

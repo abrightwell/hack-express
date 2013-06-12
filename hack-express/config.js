@@ -38,7 +38,8 @@ config.cache.min_age = 15; //seconds, 0.25min, Public pages
 
 config.db.host = 'hack-express-db';
 config.db.port = 27017;
-config.db.ssl = false;
+config.db.ssl = true;
+config.db.poolSize = 5;
 config.db.name = 'hack-express';
 config.db.user = 'hack-admin';
 config.db.password = 'secret';

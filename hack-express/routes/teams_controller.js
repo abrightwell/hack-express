@@ -14,6 +14,10 @@
  *   limitations under the License.
  */
 
+/*
+ *Authors:  Adam Brightwell
+ */
+
 var database = require('../database').connection,
     User = require('../model/user')(database),
     Token = require('../model/token')(database),

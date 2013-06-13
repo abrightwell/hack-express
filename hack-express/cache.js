@@ -30,6 +30,6 @@ module.exports.forward = function(req, res, next) {
 
 module.exports.setHeaderPublic = function(req, res, next) {
 	logger.log("info", 'Set Cache-Control:  Public');
-    res.setHeader("Cache-Control", "public, max-age=" + config.cache.minAge.toString());
+    res.setHeader("Cache-Control", "public, max-age=" + config.cache.min_age.toString());
     next();
 };

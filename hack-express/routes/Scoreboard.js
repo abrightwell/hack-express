@@ -40,6 +40,11 @@ exports.show = function(req, res) {
     .populate('tokens', {points: 1})
     .exec(function (err, users) {
       users.forEach(function(user) {
+		//Truncate username strings being displayed to avoid overflow
+		if(user.username.length>config.name.max_length) {
+			user.username=user.username.substring(0,config.name.max_length)+"...";
+		}
+		//Set scores
         var score = 0;
         user.tokens.forEach(function(token) {
           score += token.points;

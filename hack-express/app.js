@@ -34,6 +34,7 @@ var express = require('express')
   , https = require('https')
   , fs = require('fs')
   , auth = require('./auth')
+  , locals = require('./locals')
   , cache = require('./cache')
   , flash = require('connect-flash')
   , winston = require('winston')
@@ -73,13 +74,8 @@ app.configure(function() {
   app.use(express.session({secret: 'secret', store: store}));
   app.use(flash());
   
-  app.use(function(req, res, next) {
-    res.locals({
-      user: req.session.user,
-      messages: req.flash()
-    });
-    next();
-  });
+  //Get locals
+  app.use(locals.getLocals);
   
   //Nginx forwarding
   app.use(cache.forward);

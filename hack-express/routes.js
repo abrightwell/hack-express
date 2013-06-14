@@ -23,8 +23,9 @@ var Registration = require('./routes/Registration'),
 	Scoreboard = require('./routes/Scoreboard'),
 	Submissions = require('./routes/Submissions'),
 	Logout = require('./routes/Logout'),
+	input = require('./input'),
 	auth = require('./auth'),
-	cache = require('./cache')
+	cache = require('./cache'),
 	Teams = require('./routes/teams_controller');
 
 module.exports = function(app) {
@@ -33,12 +34,12 @@ module.exports = function(app) {
 	});
 
 	app.get('/registration', cache.setHeaderPublic, Registration.show);
-	app.post('/registration/submit', Registration.submit);
+	app.post('/registration/submit', input.sanitize, Registration.submit);
 	app.get('/login', cache.setHeaderPublic, Login.show);
-	app.post('/login/submit', Login.submit);
+	app.post('/login/submit', input.sanitize, Login.submit);
 	app.get('/scoreboard', cache.setHeaderPublic, Scoreboard.show);
 	app.get('/submissions', auth.requiresLogin, Submissions.show);
-	app.post('/submissions/submit', auth.requiresLogin, Submissions.submit);
+	app.post('/submissions/submit', input.sanitize, auth.requiresLogin, Submissions.submit);
 	app.get('/logout', Logout.show);
 
 	// Team routes.

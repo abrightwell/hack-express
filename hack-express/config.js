@@ -30,6 +30,7 @@ config.ssl = {};
 config.page = {};
 config.log = {};
 config.name = {};
+config.input = {};
 
 config.cache.secure = true;
 config.cache.max_age = 31536000000; //miliseconds, 1yr, Static files
@@ -63,6 +64,8 @@ config.log.level = 'debug';
 config.log.max_size = 8192; //bytes
 
 config.name.max_length = 25;
+
+config.input.types = new Array("username", "password", "confirm", "tokenID");
 
 config.db.connection_string = function() {
 	var ssl = config.session.db.ssl ? 's' : '';

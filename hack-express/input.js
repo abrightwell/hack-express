@@ -19,5 +19,23 @@
  */
 
 module.exports.sanitize = function(req, res, next) {
+	
+	//Array of input types to check
+	var inputTypes = config.input.types;
+	
+	//Check request parameters
+	for(var i = 0; i<inputTypes.length;i++){
+		//If exists, sanitize
+		if(req.param(inputTypes[i]) != undefined){
+			//logger.log("info", 'Original input:  ' + req.param(inputTypes[i]));
+			req.sanitize(inputTypes[i]).trim('\r\n\t ');
+			req.sanitize(inputTypes[i]).trim('/\$|\:|,|\{|\}|\[|\]|;|<|>|&+/');
+			req.sanitize(inputTypes[i]).trim('/\]+/');
+			req.sanitize(inputTypes[i]).escape;
+			req.sanitize(inputTypes[i]).xss;
+			req.sanitize(inputTypes[i]).xss(true);
+			//logger.log("info", 'Sanitized input:  ' + req.param(inputTypes[i]));
+		}
+	}
 	next();
 }

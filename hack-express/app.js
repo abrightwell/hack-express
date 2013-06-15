@@ -38,7 +38,8 @@ var express = require('express')
   , cache = require('./cache')
   , flash = require('connect-flash')
   , winston = require('winston')
-  , log = require('./log');
+  , log = require('./log')
+  , expressValidator = require('express-validator');
 
 var mongoose = require('mongoose');
 
@@ -70,6 +71,7 @@ app.configure(function() {
   app.use(express.favicon());
   app.use(express.logger('dev'));  //Default Expressjs logger
   app.use(express.bodyParser());
+  app.use(expressValidator());
   app.use(express.cookieParser('0708aa9e17c6090c04a5e7ea2b482bb7'));
   app.use(express.session({secret: 'secret', store: store}));
   app.use(flash());

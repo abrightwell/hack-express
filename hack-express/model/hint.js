@@ -20,18 +20,18 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var Token = require('./token');
-var Hint = require('./hint');
 
-var userSchema = Schema({
-	username: String,
-	password: String,
-	tokens: [{ type: Schema.Types.ObjectId, ref: 'Token' }],
-	hints: [{ type: Schema.Types.ObjectId, ref: 'Hint' }]
+var hintSchema = Schema({
+	title: {type: String, default: ""},
+	description: {type: String, default: ""},
+	revealed: {type: Boolean, default: false}
+	//title: {type: String, default: ""},
+	//description: {type: String, default: ""},
+	//revealed: {type: Boolean, default: false}
 });
 
-mongoose.model('User', userSchema);
+mongoose.model('Hint', hintSchema);
 
 module.exports = function(connection) {
-	return (connection || mongoose).model('User');
+	return (connection || mongoose).model('Hint');
 }

@@ -13,36 +13,34 @@
 //-   See the License for the specific language governing permissions and
 //-   limitations under the License.
 //-
-//-   Authors:  Robert Dunigan
 
-!!! 5
-html
+//-
+//-   Authors: Adam Brightwell, Robert Dunigan
+//-
+extends layout
+
+//-  div.container
+//-    div.fluid-container
+//-      div.row-fluid
+
+block content
   
-  include includes/head
-  
-  body(onload='initHints();')
+  div.span9.well.bs-docs.sidebar
     h2 Hints
-    div#wrapper
-      div#tabContainer
-        div.tabs
-          ul
-            li#tabHeader_1 General
-            li#tabHeader_2 Personal
-        br
-        div.tabscontent
-          div#tabpage_1.tabpage
-            table#genHintTable.token(name='genHintTable')
-              thead
-                tr
-                  th General Hints
-              tbody!=tbodGeneral
-          #tabpage_2.tabpage
-            table#perHintTable.token(name='perHintTable')
-              thead
-                tr
-                  th Personal Hints
-              tbody!=tbodPersonal
-            form#personalHints(method='post', action='/hints/buy')
-            button#submit(type='submit', form='personalHints', name='buySubmit', value='Submit', tabindex='1') Buy
-    script(src='/javascripts/tabs.js')
-    ul#items
+    
+    //-form.form-inline(method='post', action='/hints/buy')
+      //-input(type='password', name='tokenID', placeholder="Enter Token ID")
+      //-span.icon-bar
+      //-button.btn(type='submit') Submit
+    div
+      table.table.table-striped
+        thead
+          tr
+            th Hint
+            th Description
+        tbody
+          each hint in hints
+            tr
+              td #{hint.title}
+              td #{hint.description}
+  include includes/sponsors

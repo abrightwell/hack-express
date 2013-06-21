@@ -26,7 +26,7 @@ var config = {};
 var options = {};
 var defaults = JSON.parse(fs.readFileSync('./conf/defaults.json'));
 
-if (fs.existsSync('./options.json')) {
+if (fs.existsSync('./conf/options.json')) {
 	options = JSON.parse(fs.readFileSync('./conf/options.json'));
 	config = jquery.extend(true, {}, defaults, options);
 } else {

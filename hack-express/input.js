@@ -18,13 +18,15 @@
  *Authors:  Robert Dunigan
  */
 
+var config = require('./config');
+
 module.exports.sanitize = function(req, res, next) {
 	
 	//Array of input types to check
 	var inputTypes = config.input.types;
-	
+
 	//Check request parameters
-	for(var i = 0; i<inputTypes.length;i++){
+	for(var i = 0; i < inputTypes.length; i++){
 		//If exists, sanitize
 		if(req.param(inputTypes[i]) != undefined){
 			//logger.log("info", 'Original input:  ' + req.param(inputTypes[i]));

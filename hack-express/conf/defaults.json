@@ -1,0 +1,57 @@
+{
+	"cache": {
+		"secure": true,
+		"max_age": 31536000000,
+		"min_age": 15
+	},
+
+	"db": {
+		"host": "localhost",
+		"port": 27017,
+		"ssl": false,
+		"poolSize": 5,
+		"name": "hack-express",
+		"user": "hack-admin",
+		"password": "secret"
+	},
+
+	"session": {
+		"db": {
+			"host": "localhost",
+			"port": 27017,
+			"ssl": false,
+			"name": "hack-express-sessions",
+			"revs_limit": "1000",
+			"username": "hack-admin",
+			"password": "secret"
+		}
+	},
+
+	"ssl": {
+		"key": "./security/hack-express-dev.key",
+		"cert": "./security/hack-express-dev.crt"
+	},
+
+	"page": {
+		"refreshTime": 60
+	},
+
+	"log": {
+		"color": true,
+		"console" : true,
+		"file": true,
+		"filename": "./logs/hack-express.log",
+		"level": "debug",
+		"max_size": 8192
+	},
+
+	"name": {
+		"max_length": 25
+	},
+
+	"input": ["username",
+		"password",
+		"confirm",
+		"tokenID"
+	]
+}

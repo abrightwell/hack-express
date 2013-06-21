@@ -31,7 +31,8 @@
     "mongoose": "3.6.11",
     "connect-mongo": "git://github.com/kcbanner/connect-mongo.git#f199378",
     "winston": "0.7.1",
-    "express-validator": "0.6.0"
+    "express-validator": "0.6.0",
+    "jquery": "1.8.3"
   },
   
   "devDependencies": {

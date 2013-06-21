@@ -25,10 +25,8 @@
 config = require('./config');
 
 var express = require('express')
-  // , database = require('./database')
   , routes = require('./routes')
   , user = require('./routes/user')
-  // , admin = require('./routes/admin')
   , http = require('http')
   , path = require('path')
   , https = require('https')

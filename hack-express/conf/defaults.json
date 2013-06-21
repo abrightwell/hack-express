@@ -49,9 +49,11 @@
 		"max_length": 25
 	},
 
-	"input": ["username",
-		"password",
-		"confirm",
-		"tokenID"
-	]
+	"input": {
+		"types": ["username",
+			"password",
+			"confirm",
+			"tokenID"
+		]
+	}
 }

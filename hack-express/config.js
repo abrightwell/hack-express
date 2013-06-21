@@ -33,6 +33,4 @@ if (fs.existsSync('./conf/options.json')) {
 	config = defaults;
 }
 
-console.log(config);
-
 module.exports = config;

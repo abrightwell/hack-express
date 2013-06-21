@@ -22,6 +22,7 @@ var Registration = require('./routes/Registration'),
 	Login = require('./routes/Login'),
 	Scoreboard = require('./routes/Scoreboard'),
 	Submissions = require('./routes/Submissions'),
+	Hints = require('./routes/Hints'),
 	Logout = require('./routes/Logout'),
 	input = require('./input'),
 	auth = require('./auth'),
@@ -40,6 +41,8 @@ module.exports = function(app) {
 	app.get('/scoreboard', cache.setHeaderPublic, Scoreboard.show);
 	app.get('/submissions', auth.requiresLogin, Submissions.show);
 	app.post('/submissions/submit', input.sanitize, auth.requiresLogin, Submissions.submit);
+	app.get('/hints', auth.requiresLogin, Hints.show);
+	app.post('/hints/buy', input.sanitize, auth.requiresLogin, Hints.buy);
 	app.get('/logout', Logout.show);
 
 	// Team routes.

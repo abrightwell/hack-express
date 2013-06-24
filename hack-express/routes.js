@@ -28,6 +28,8 @@ var Registration = require('./routes/Registration'),
 	auth = require('./auth'),
 	cache = require('./cache'),
 	Teams = require('./routes/teams_controller');
+	admin = require('./routes/admin/admin_controller');
+	admin_teams = require('./routes/admin/admin_teams_controller');
 
 module.exports = function(app) {
 	app.get('/', cache.setHeaderPublic, function (req, res) {
@@ -53,4 +55,16 @@ module.exports = function(app) {
 	app.get('/teams/:id/edit', Teams.edit);
 	app.put('/teams/:id.:format?', Teams.update);
 	app.delete('/teams/:id.:format?', Teams.destroy);
+
+	// Admin Routes
+	app.get('/admin', admin.index);
+
+	// Admin Team Routes
+	app.get('/admin/teams/:id/edit', admin_teams.edit);
+	app.post('/admin/teams', admin_teams.create);
+	app.get('/admin/teams/new', admin_teams.new);
+	app.get('/admin/teams/:id', admin_teams.show);
+	app.get('/admin/teams/:id/edit', admin_teams.edit);
+	app.put('/admin/teams/:id', admin_teams.update);
+	app.delete('/admin/teams/:id', admin_teams.destroy);
 }

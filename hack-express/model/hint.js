@@ -25,9 +25,6 @@ var hintSchema = Schema({
 	title: {type: String, default: ""},
 	description: {type: String, default: ""},
 	revealed: {type: Boolean, default: false}
-	//title: {type: String, default: ""},
-	//description: {type: String, default: ""},
-	//revealed: {type: Boolean, default: false}
 });
 
 mongoose.model('Hint', hintSchema);

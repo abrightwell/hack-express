@@ -96,7 +96,6 @@ var routes = require('./routes')(app);
  * Unimplemented Routes
  */
 //app.get('/admin', admin.show);
-//app.get('/notes', auth.requiresLogin, Notes.show);
 //app.post('/notes/submitNetwork', auth.requiresLogin, Notes.submitNetwork);
 //app.post('/notes/submitCredentials', auth.requiresLogin, Notes.submitCredentials);
 //app.post('/notes/submitCrypto', auth.requiresLogin, Notes.submitCrypto);

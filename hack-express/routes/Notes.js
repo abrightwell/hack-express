@@ -15,51 +15,31 @@
  */
 
 /*
- *Authors:  Robert Dunigan
+ *Authors:  Adam Brightwell, Robert Dunigan
  */
 
-/*
- * GET Notes page.
- */
+var database = require('../database').connection,
+    User = require('../model/user')(database),
+    Token = require('../model/token')(database),
+    Hint = require('../model/hint')(database),
+    Note = require('../model/note')(database),
+    ObjectId = require('mongodb').ObjectId;
 
-exports.show = function(req, res){
-  
-  //Authenticate with cookies
-  // var auth = req.cookies['AuthSession'], nano;
-//   if (!auth) { res.send(401); return; }
-//   nano = require('nano')({ url : 'https://localhost:6984', cookie: 'AuthSession=' + auth });
-  
-  res.render('Notes');
+/**
+ * Display the notes page with the users submitted notes.
+ */
+exports.show = function(req, res) {
+  User.findOne({_id: req.session.user._id})
+  .populate('notes')
+  .exec(function(err, user) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render('Notes', {notes: user.notes});//This will need to be changed to reflect teams
+    }
+  });
 };
 
-/*
- * Submit Network Notes.
- */
+exports.submit = function(req, res){
 
-exports.submitNetwork = function(req, res){
-  res.render('Notes');
-};
-
-/*
- * Submit Credentials Notes.
- */
-
-exports.submitCredentials = function(req, res){
-  res.render('Notes');
-};
-
-/*
- * Submit Crypto Notes.
- */
-
-exports.submitCrypto = function(req, res){
-  res.render('Notes');
-};
-
-/*
- * Submit Misc Notes.
- */
-
-exports.submitMisc = function(req, res){
-  res.render('Notes');
 };

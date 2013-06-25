@@ -23,9 +23,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var tokenSchema = Schema({
-	value: String,
-	points: Number,
-	description: String
+	value: {type: String, default: ""},
+	points: {type: Number, default: 0},
+	description: {type: String, default: ""}
 });
 
 mongoose.model('Token', tokenSchema);

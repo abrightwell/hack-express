@@ -45,12 +45,29 @@ exports.show = function(req, res) {
 
 // GET /admin/teams/:id/edit
 exports.edit = function(req, res) {
+	var id = req.params.id;
 
+	Team.findById(id, function(err, team) {
+		if (err) {
+			logger.log('error', err.reason);
+		} else {
+			res.render('admin/teams/edit', {'team': team});
+		}
+	});
 };
 
 // PUT /admin/teams/:id
 exports.update = function(req, res) {
+	var id = req.params.id;
+	var team = req.body;
 
+	Team.findByIdAndUpdate(id, {$set: team}, function(err, result) {
+		if (err) {
+			logger.log('error', err);
+		} else {
+			res.redirect('/admin/teams');
+		}
+	});
 };
 
 // DELETE /admin/teams/:id

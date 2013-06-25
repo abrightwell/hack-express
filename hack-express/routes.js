@@ -31,6 +31,7 @@ var Registration = require('./routes/Registration'),
 	admin = require('./routes/admin/admin_controller');
 	admin_teams = require('./routes/admin/admin_teams_controller');
 	admin_users = require('./routes/admin/admin_users_controller');
+	admin_hints = require('./routes/admin/admin_hints_controller');
 
 module.exports = function(app) {
 	app.get('/', cache.setHeaderPublic, function (req, res) {
@@ -79,4 +80,14 @@ module.exports = function(app) {
 	app.get('/admin/users/:id/edit', admin_users.edit);
 	app.put('/admin/users/:id', admin_users.update);
 	app.delete('/admin/users/:id', admin_users.destroy);
+
+	// Admin Hints Routes
+	app.get('/admin/hints', admin_hints.index);
+	app.get('/admin/hints/:id/edit', admin_hints.edit);
+	app.post('/admin/hints', admin_hints.create);
+	app.get('/admin/hints/new', admin_hints.new);
+	app.get('/admin/hints/:id', admin_hints.show);
+	app.get('/admin/hints/:id/edit', admin_hints.edit);
+	app.put('/admin/hints/:id', admin_hints.update);
+	app.delete('/admin/hints/:id', admin_hints.destroy);
 }

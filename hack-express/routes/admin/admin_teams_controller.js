@@ -14,9 +14,18 @@
  *   limitations under the License.
  */
 
+var database = require('../../database').connection;
+var Team = require('../../model/team')(database);
+
 // GET /admin/teams
 exports.index = function(req, res) {
-
+	Team.find(function(err, teams) {
+		if (err) {
+			logger.log('error', err);
+		} else {
+			res.render('admin/teams/index', {'teams': teams});
+		}
+	});
 };
 
 // GET /admin/teams/new

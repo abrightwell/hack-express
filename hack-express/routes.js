@@ -30,6 +30,7 @@ var Registration = require('./routes/Registration'),
 	Teams = require('./routes/teams_controller');
 	admin = require('./routes/admin/admin_controller');
 	admin_teams = require('./routes/admin/admin_teams_controller');
+	admin_users = require('./routes/admin/admin_users_controller');
 
 module.exports = function(app) {
 	app.get('/', cache.setHeaderPublic, function (req, res) {
@@ -60,6 +61,7 @@ module.exports = function(app) {
 	app.get('/admin', admin.index);
 
 	// Admin Team Routes
+	app.get('/admin/teams', admin_teams.index);
 	app.get('/admin/teams/:id/edit', admin_teams.edit);
 	app.post('/admin/teams', admin_teams.create);
 	app.get('/admin/teams/new', admin_teams.new);
@@ -67,4 +69,14 @@ module.exports = function(app) {
 	app.get('/admin/teams/:id/edit', admin_teams.edit);
 	app.put('/admin/teams/:id', admin_teams.update);
 	app.delete('/admin/teams/:id', admin_teams.destroy);
+
+	// Admin Users Routes
+	app.get('/admin/users', admin_users.index);
+	app.get('/admin/users/:id/edit', admin_users.edit);
+	app.post('/admin/users', admin_users.create);
+	app.get('/admin/users/new', admin_users.new);
+	app.get('/admin/users/:id', admin_users.show);
+	app.get('/admin/users/:id/edit', admin_users.edit);
+	app.put('/admin/users/:id', admin_users.update);
+	app.delete('/admin/users/:id', admin_users.destroy);
 }

@@ -30,12 +30,22 @@ exports.index = function(req, res) {
 
 // GET /admin/hints/new
 exports.new = function(req, res) {
-
+	var hint = new Hint();
+	res.render('admin/hints/new', {'hint': hint});
 };
 
 // POST /admin/hints
 exports.create = function(req, res) {
-	console.log('admin_hints_controller#create');
+	var hint = new Hint(req.body);
+
+	hint.save(function(err) {
+		if (err) {
+			logger.log('error', 'Failed saving new hint.');
+		} else {
+			logger.log('info', "Successfully created new hint: " + hint._id);
+			res.redirect('/admin/hints');
+		}
+	});
 };
 
 // GET /admin/hints/:id

@@ -20,5 +20,6 @@ div(style="margin: 5px;").row-fluid
             | #{token.description}
     div.span3
         p.pull-right
-            a(href="/admin/tokens/#{token._id}/edit", id="#{token._id}").btn.btn-primary Edit
+            a(href="/admin/tokens/#{token._id}").btn View
+            a(href="/admin/tokens/#{token._id}/edit", style="margin-left: 5px").btn.btn-primary Edit
             a(href="/admin/tokens/#{token._id}", style="margin-left: 5px", data-method="delete", rel="nofollow").btn.btn-danger.delete-button Delete

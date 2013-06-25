@@ -20,5 +20,6 @@ div(style="margin: 5px;").row-fluid
             | #{team.name}
     div.span3
         p.pull-right
-            a(href="/admin/teams/#{team._id}/edit", id="#{team._id}").btn.btn-primary.edit-btn Edit
-            a(style="margin-left: 5px", id="#{team._id}").btn.btn-danger.delete-btn Delete
+            a(href="/admin/teams/#{team.id}").btn View
+            a(href="/admin/teams/#{team._id}/edit", style="margin-left: 5px").btn.btn-primary.edit-btn Edit
+            a(href="/admin/teams/#{team._id}", style="margin-left: 5px", data-method="delete", rel="nofollow").btn.btn-danger.delete-button Delete

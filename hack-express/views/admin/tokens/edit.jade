@@ -17,16 +17,17 @@
 extends ../admin_layout
 
 block admin_content
-  form(method='post', action='/admin/users/#{user._id}')
+  form(method='post', action='/admin/tokens/#{token._id}')
       input(type="hidden", name="_method", value="put")
       fieldset
-          legend Edit User
-          label Username
-          input(type="text", name="username", placeholder="Enter User Name", value="#{user.username}")
-          label Password
-          input(type="password", name="password", placeholder="Enter Password", value="#{user.password")
-          label Confirm
-          input(type="password", name="confirm", placeholder="Confirm Password", value="#{user.password")
-      div.form-actions
-          button(type="submit").btn.btn-primary Save changes
-          a(href="/admin/teams").btn.btn-link Cancel
+          legend Edit Token
+          label Value
+          input(type="text", name="value", value="#{token.value}")
+          label Points
+          input(type="text", name="points", value="#{token.points}");
+          label Description
+          textarea(name="description", rows="5", placeholder="Enter Token Description")
+            | #{token.description}
+          div.form-actions
+            button(type="submit").btn.btn-primary Save changes
+            a(href="/admin/tokens").btn.btn-link Cancel

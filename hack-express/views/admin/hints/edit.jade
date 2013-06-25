@@ -29,4 +29,4 @@ block admin_content
             input(type="checkbox", name="revealed", checked="(#{hint.revealed} === false ? 'checked' : undefined)")
         div.form-actions
             button(type="submit").btn.btn-primary Save changes
-            button(style="margin-left: 5px", type="cancel")#cancel.btn Cancel
+            a(href="/admin/hints").btn.btn-link Cancel

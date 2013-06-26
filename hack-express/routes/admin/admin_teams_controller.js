@@ -30,12 +30,22 @@ exports.index = function(req, res) {
 
 // GET /admin/teams/new
 exports.new = function(req, res) {
-
+	var team = new Team();
+	res.render('admin/teams/new', {'team': team});
 };
 
 // POST /admin/teams
 exports.create = function(req, res) {
+	var team = new Team(req.body);
 
+	team.save(function(err) {
+		if (err) {
+			logger.log('error', 'Failed saving new team.');
+		} else {
+			logger.log('info', "Successfully created new team: " + team._id);
+			res.redirect('/admin/teams');
+		}
+	});
 };
 
 // GET /admin/teams/:id

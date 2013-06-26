@@ -17,7 +17,11 @@
 extends ../admin_layout
 
 block admin_content
-  div.row-fluid
-    a(href="/admin/teams/new").pull-right.btn.btn-primary Create New Team
-  each team in teams
-    include ../partials/team
+  form(method='post', action='/admin/teams')
+      fieldset
+          legend Create New Team
+          label Name
+          input(type="text", name="name", placeholder="Enter Team Name", value="#{team.name}")
+          div.form-actions
+            button(type="submit").btn.btn-primary Create
+            a(href="/admin/teams", style="margin-left: 5px", type="cancel").btn.btn-link Cancel

@@ -18,6 +18,6 @@ extends ../admin_layout
 
 block admin_content
   div.row-fluid
-    a(href="/admin/hints/new").btn.btn-primary Create New Hint
+    a(href="/admin/hints/new").pull-right.btn.btn-primary Create New Hint
   each hint in hints
     include ../partials/hint

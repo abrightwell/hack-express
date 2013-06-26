@@ -32,12 +32,22 @@ exports.index = function(req, res) {
 
 // GET /admin/users/new
 exports.new = function(req, res) {
-
+	var user = new User();
+	res.render('admin/users/new', {'user': user});
 };
 
 // POST /admin/users
 exports.create = function(req, res) {
+	var user = new User(req.body);
 
+	user.save(function(err) {
+		if (err) {
+			logger.log('error', 'Failed saving new user.');
+		} else {
+			logger.log('info', "Successfully created new user: " + user._id);
+			res.redirect('/admin/users');
+		}
+	});
 };
 
 // GET /admin/users/:id

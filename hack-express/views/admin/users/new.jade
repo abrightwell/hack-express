@@ -17,7 +17,15 @@
 extends ../admin_layout
 
 block admin_content
-  div.row-fluid
-    a(href="/admin/users/new").pull-right.btn.btn-primary Create New User
-  each user in users
-    include ../partials/user
+  form(method='post', action='/admin/users')
+      fieldset
+          legend Create New User
+          label Username
+          input(type="text", name="username", placeholder="Enter User Name", value="#{user.username}")
+          label Password
+          input(type="password", name="password", placeholder="Enter Password", value="#{user.password")
+          label Confirm
+          input(type="password", name="confirm", placeholder="Confirm Password", value="#{user.password")
+      div.form-actions
+          button(type="submit").btn.btn-primary Save changes
+          a(href="/admin/users").btn.btn-link Cancel

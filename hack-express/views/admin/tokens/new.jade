@@ -17,7 +17,16 @@
 extends ../admin_layout
 
 block admin_content
-  div.row-fluid
-    a(href="/admin/tokens/new").pull-right.btn.btn-primary Create New Token
-  each token in tokens
-    include ../partials/token
+  form(method='post', action='/admin/tokens')
+      fieldset
+          legend Create New Token
+          label Value
+          input(type="text", name="value", placeholder="Enter Token Value", value="#{token.value}")
+          label Points
+          input(type="text", name="points", placeholder="Enter Token Points", value="#{token.points}");
+          label Description
+          textarea(name="description", rows="5", placeholder="Enter Token Description")
+            | #{token.description}
+          div.form-actions
+            button(type="submit").btn.btn-primary Create
+            a(href="/admin/tokens", style="margin-left: 5px", type="cancel").btn.btn-link Cancel

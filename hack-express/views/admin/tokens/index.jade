@@ -17,7 +17,10 @@
 extends ../admin_layout
 
 block admin_content
+  h2 Tokens
+  table.table.table-bordered.table-striped
+    each token in tokens
+      include ../partials/token
   div.row-fluid
     a(href="/admin/tokens/new").pull-right.btn.btn-primary Create New Token
-  each token in tokens
-    include ../partials/token
+  

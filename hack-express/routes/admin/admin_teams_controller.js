@@ -101,5 +101,14 @@ exports.update = function(req, res) {
 
 // DELETE /admin/teams/:id
 exports.destroy = function(req, res) {
+	var id = req.params.id;
 
+	Team.findByIdAndRemove(id, function(err, result) {
+		if (err) {
+			logger.log('error', err);
+		} else {
+			logger.log('info', 'Successfully deleted team: ' + id);
+			res.redirect('/admin/teams');
+		}
+	});
 };

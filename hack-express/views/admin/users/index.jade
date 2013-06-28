@@ -18,8 +18,16 @@ extends ../admin_layout
 
 block admin_content
   h2 Users
-  div.row-fluid
-    a(href="/admin/users/new").pull-right.btn.btn-primary Create New User
   table.table.table-bordered.table-striped
     each user in users
       include ../partials/user
+
+  div.row-fluid
+    div.span4.pull-left
+      a(href="/admin/users/new").btn.btn-primary Create New User
+    div.span8.pagination.pagination-right
+      ul
+        - for (var i = 0; i < page_count; i++) {
+        li
+          a(href="/admin/users?page=#{(i + 1)}") #{i + 1}
+        - }

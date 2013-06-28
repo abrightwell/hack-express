@@ -18,14 +18,33 @@ var database = require('../../database').connection;
 var User = require('../../model/user')(database);
 var log = require('../../log');
 var logger = log.getLogger();
+var per_page = 10;
 
 // GET /admin/users
 exports.index = function(req, res) {
-	User.find({$query: {}, $orderby: { username: 1 }}, function(err, users) {
+	var page = parseInt(req.param('page')) || 1;
+	var offset = (page - 1) * per_page;
+
+	query = {$query: {}, $orderby: { username: 1 }};
+	fields = {};
+	options = {'skip': offset, 'limit': per_page};
+
+	User.find(query, fields, options, function(err, users) {
 		if (err) {
 			logger.log('error', err);
 		} else {
-			res.render('admin/users/index', {'users': users});
+			User.count(function(err, total) {
+				var page_count = (total / per_page);
+
+				locals = {
+					'total': total,
+					'page_count': page_count,
+					'page': page, 
+					'users': users
+				};
+
+				res.render('admin/users/index', locals);
+			});
 		}
 	});
 };

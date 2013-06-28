@@ -17,7 +17,16 @@
 extends ../admin_layout
 
 block admin_content
+  h1 Teams
   div.row-fluid
     a(href="/admin/teams/new").pull-right.btn.btn-primary Create New Team
-  each team in teams
-    include ../partials/team
+  table.table.table-bordered.table-striped
+    each team in teams
+      include ../partials/team
+
+  div.pagination.pull-right
+    ul
+      - for (var i = 0; i < page_count; i++) {
+      li
+        a(href="/admin/teams?page=#{(i + 1)}") #{i + 1}
+      - }

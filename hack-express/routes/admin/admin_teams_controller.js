@@ -16,14 +16,33 @@
 
 var database = require('../../database').connection;
 var Team = require('../../model/team')(database);
+var per_page = 10;
 
 // GET /admin/teams
 exports.index = function(req, res) {
-	Team.find(function(err, teams) {
+	var page = parseInt(req.param('page')) || 1;
+	var offset = (page - 1) * per_page;
+
+	query = {$query: {}, $orderby: { name: 1 }};
+	fields = {};
+	options = {'skip': offset, 'limit': per_page};
+
+	Team.find(query, fields, options, function(err, teams) {
 		if (err) {
 			logger.log('error', err);
 		} else {
-			res.render('admin/teams/index', {'teams': teams});
+			Team.count(function(err, total) {
+				var page_count = (total / per_page);
+
+				locals = {
+					'total': total,
+					'page_count': page_count,
+					'page': page, 
+					'teams': teams
+				};
+
+				res.render('admin/teams/index', locals);
+			});
 		}
 	});
 };

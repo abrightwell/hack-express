@@ -105,7 +105,7 @@ exports.destroy = function(req, res) {
 
 	Team.findByIdAndRemove(id, function(err, result) {
 		if (err) {
-			logger.log('error', err);
+			logger.log('error', 'Error removing deleting team - ' + err);
 		} else {
 			logger.log('info', 'Successfully deleted team: ' + id);
 			res.redirect('/admin/teams');

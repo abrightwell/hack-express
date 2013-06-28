@@ -21,6 +21,13 @@ block admin_content
   table.table.table-bordered.table-striped
     each token in tokens
       include ../partials/token
+
   div.row-fluid
-    a(href="/admin/tokens/new").pull-right.btn.btn-primary Create New Token
-  
+    div.span4.pull-left
+      a(href="/admin/tokens/new").btn.btn-primary Create New Token
+    div.span8.pagination.pagination-right
+      ul
+        - for (var i = 0; i < page_count; i++) {
+        li
+            a(href="/admin/tokens?page=#{(i + 1)}") #{i + 1}
+        - }

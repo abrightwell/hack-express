@@ -16,14 +16,33 @@
 
 var database = require('../../database').connection;
 var Token = require('../../model/token')(database);
+var per_page = 10;
 
 // GET /admin/tokens
 exports.index = function(req, res) {
-	Token.find(function(err, tokens) {
+	var page = parseInt(req.param('page')) || 1;
+	var offset = (page - 1) * per_page;
+
+	query = {$query: {}, $orderby: { description: 1 }};
+	fields = {};
+	options = {'skip': offset, 'limit': per_page};
+
+	Token.find(query, fields, options, function(err, tokens) {
 		if (err) {
 			logger.log('error', err);
 		} else {
-			res.render('admin/tokens/index', {'tokens': tokens});
+			Token.count(function(err, total) {
+				var page_count = (total / per_page);
+
+				locals = {
+					'total': total,
+					'page_count': page_count,
+					'page': page,
+					'tokens': tokens
+				};
+
+				res.render('admin/tokens/index', locals);
+			});
 		}
 	});
 };

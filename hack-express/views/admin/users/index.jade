@@ -17,7 +17,9 @@
 extends ../admin_layout
 
 block admin_content
+  h1 Teams
   div.row-fluid
     a(href="/admin/users/new").pull-right.btn.btn-primary Create New User
-  each user in users
-    include ../partials/user
+  table.table.table-bordered.table-striped
+    each user in users
+      include ../partials/user

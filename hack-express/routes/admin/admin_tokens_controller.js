@@ -92,5 +92,14 @@ exports.update = function(req, res) {
 
 // DELETE /admin/tokens/:id
 exports.destroy = function(req, res) {
+	var id = req.params.id;
 
+	Token.findByIdAndRemove(id, function(err, result) {
+		if (err) {
+			logger.log('error', 'Error deleting token - ' + err);
+		} else {
+			logger.log('info', 'Successfully deleted token - ' + id);
+			res.redirect('/admin/tokens');
+		}
+	});
 };

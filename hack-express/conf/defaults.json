@@ -29,7 +29,8 @@
 
 	"ssl": {
 		"key": "./security/hack-express-dev.key",
-		"cert": "./security/hack-express-dev.crt"
+		"cert": "./security/hack-express-dev.crt",
+		"port": 443
 	},
 
 	"page": {

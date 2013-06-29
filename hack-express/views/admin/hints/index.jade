@@ -21,7 +21,6 @@ block admin_content
   table.table.table-bordered.table-striped
     each hint in hints
       include ../partials/hint
-
   div.row-fluid
     div.span4.pull-left
       a(href="/admin/hints/new").btn.btn-primary Create New Hint
@@ -29,5 +28,5 @@ block admin_content
       ul
         - for (var i = 0; i < page_count; i++) {
         li
-            a(href="/admin/hints?page=#{(i + 1)}") #{i + 1}
+          a(href="/admin/hints?page=#{(i + 1)}") #{i + 1}
         - }

@@ -24,14 +24,14 @@ var per_page = 10;
 
 // GET /admin/hints
 exports.index = function(req, res) {
-	
+
 	var page = parseInt(req.param('page')) || 1;
 	var offset = (page - 1) * per_page;
 
-	query = {$query: {}, $orderby: { title: 1 }};
+	query = {$query: {}, $orderby: { name: 1 }};
 	fields = {};
 	options = {'skip': offset, 'limit': per_page};
-
+	
 	Hint.find(query, fields, options, function(err, hints) {
 		if (err) {
 			logger.log('error', err);

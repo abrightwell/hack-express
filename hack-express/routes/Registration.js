@@ -101,10 +101,7 @@ function createUser(username, password, confirm, success, failure) {
       notes:[]
     });
     //Create new note
-    note = new Note({
-		userId: user.id,
-		text: ""
-	});
+    note = new Note({userId: user.id});
 	
 	//Save the newly created note
 	note.save(function(error, result) {

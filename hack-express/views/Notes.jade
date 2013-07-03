@@ -38,7 +38,7 @@ block content
           | #{notes[0].text}
         p
         form.form-inline(method='post', action='/notes/submit')
-          input(type='textarea', rows='300', cols='150', wrap='hard', name='noteInput', placeholder='Enter Notes', spellcheck='true', value='')
+          input(type='textarea', rows='300', cols='150', wrap='hard', name='noteInput', placeholder='Enter Notes', spellcheck='true', autofocus)
           span.icon-bar
           button.btn(type='submit') Submit
       div#teamNotes.tab-pane

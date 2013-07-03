@@ -14,6 +14,16 @@
  *   limitations under the License.
  */
 
+/*
+ * Authors:  Adam Brightwell, Robert Dunigan
+ */
+
+/*
+ * TO DO:  The registration functionality along with the admin page's
+ * user creation functionality needs to be broken out and refactored
+ * to simplify and incorporate code reuse.
+ */
+
 var bcrypt = require('bcrypt');
 var database = require('../../database').connection;
 var User = require('../../model/user')(database);

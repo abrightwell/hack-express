@@ -18,9 +18,16 @@
  * Authors:  Adam Brightwell, Robert Dunigan
  */
 
+/*
+ * TO DO:  The registration functionality along with the admin page's
+ * user creation functionality needs to be broken out and refactored
+ * to simplify and incorporate code reuse.
+ */
+
 var bcrypt = require('bcrypt');
     database = require('../database').connection,
-    User = require('../model/user')(database);
+    User = require('../model/user')(database),
+    Note = require('../model/note')(database);
 
 exports.show = function(req, res){
   res.render('Registration');
@@ -86,12 +93,32 @@ function createUser(username, password, confirm, success, failure) {
   if (password !== confirm) {
     failure('Passwords do not match.');
   } else {
+	  //Create new user
     user = new User({
       username: username,
       password: hash,
-      tokens: []
+      tokens: [],
+      notes:[]
     });
-
+    //Create new note
+    note = new Note({
+		userId: user.id,
+		text: ""
+	});
+	
+	//Save the newly created note
+	note.save(function(error, result) {
+      if (error) {
+        failure('Error saving note: ' + note.text);
+      } else {
+        success();
+      }
+    });
+    
+    //Associate the new note with the new user
+    user.notes.push(note);
+    
+    //Save the newly created user
     user.save(function(error, result) {
       if (error) {
         failure('Error saving user: ' + user.username);

@@ -54,7 +54,8 @@
 		"types": ["username",
 			"password",
 			"confirm",
-			"tokenID"
+			"tokenID",
+			"noteInput"
 		]
 	}
 }

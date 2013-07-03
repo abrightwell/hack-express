@@ -29,17 +29,45 @@ var database = require('../database').connection,
  * Display the notes page with the users submitted notes.
  */
 exports.show = function(req, res) {
-  User.findOne({_id: req.session.user._id})
-  .populate('notes')
-  .exec(function(err, user) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.render('Notes', {notes: user.notes});//This will need to be changed to reflect teams
-    }
-  });
+	var userId = req.session.user._id;
+	
+	User.findById(userId)
+	.populate('notes')
+	.exec(function(err, user) {
+		if (err) {
+			console.log(err);
+		} else {
+			res.render('Notes', {notes: user.notes});//This will need to be changed to reflect teams
+		}
+	});
 };
 
 exports.submit = function(req, res){
-
+	var noteValue = req.param("noteInput");
+	var userId = req.session.user._id;
+	
+	User.findById(userId)
+	.populate('notes')
+	.exec(function(err, user) {
+		if (err) {
+			console.log(err);
+		} else {
+			
+			//Get note id and current text value
+			var noteId = user.notes[0].id;
+			var noteText = user.notes[0].text;
+			
+			//Append new notes to current text value
+			noteValue = noteText + '\r\n' + noteValue;
+			
+			//Update note text value
+			Note.findByIdAndUpdate(noteId, {$set: {text: noteValue}}, function(err, result) {
+				if (err) {
+					logger.log('error', err);
+				} else {
+					res.redirect('/notes');
+				}
+			});
+		}
+	});
 };

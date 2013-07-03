@@ -22,7 +22,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var noteSchema = Schema({
-	username: {type: String, default: ""},
+	userId: { type: Schema.Types.ObjectId, ref: 'User' },
 	text: {type: String, default: ""}
 });
 

@@ -29,19 +29,18 @@ block content
     h2 Notes
     ul#myTab.nav.nav-tabs(data-tabs='tabs')
       li.active
-        a(href='#personal', data-toggle='tab') Personal
+        a(href='#personalNotes', data-toggle='tab') Personal
       li
-        a(href='#team', data-toggle='tab') Team
+        a(href='#teamNotes', data-toggle='tab') Team
     div.tab-content
-      div#personal.tab-pane.active
-        input(type='textarea', rows='900', cols='150', wrap='hard', name='userNotes', placeholder='User Notes', value='User Notes', readonly='readonly')
-      div#team.tab-pane
-        input(type='textarea', rows='900', cols='150', wrap='hard', name='teamNotes', placeholder='Team Notes', value='Team Notes', readonly='readonly')
-
-    p
-    input(type='textarea', rows='300', cols='150', wrap='hard', name='userInput', placeholder='Enter Notes', spellcheck='true', value='Enter Notes here')
-    span.icon-bar
-    button.btn(type='submit') Submit
-              //-td #{note.username}
-              //-td #{note.text}
+      div#personalNotes.tab-pane.active
+        textarea(rows='25', wrap='hard', name='userNotes', placeholder='User Notes', readonly='readonly')
+          | #{notes[0].text}
+        p
+        form.form-inline(method='post', action='/notes/submit')
+          input(type='textarea', rows='300', cols='150', wrap='hard', name='noteInput', placeholder='Enter Notes', spellcheck='true', value='')
+          span.icon-bar
+          button.btn(type='submit') Submit
+      div#teamNotes.tab-pane
+        textarea(rows='25', wrap='hard', name='teamNotes', placeholder='Team Notes', readonly='readonly')
   include includes/sponsors

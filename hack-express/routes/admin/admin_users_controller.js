@@ -14,11 +14,13 @@
  *   limitations under the License.
  */
 
+var bcrypt = require('bcrypt');
 var database = require('../../database').connection;
 var User = require('../../model/user')(database);
 var log = require('../../log');
 var logger = log.getLogger();
 var per_page = 10;
+var Note = require('../../model/note')(database);
 
 // GET /admin/users
 exports.index = function(req, res) {
@@ -57,8 +59,26 @@ exports.new = function(req, res) {
 
 // POST /admin/users
 exports.create = function(req, res) {
+	
+	var salt = bcrypt.genSaltSync(10);
+	req.body.password = bcrypt.hashSync(req.body.password, salt);
+	
 	var user = new User(req.body);
-
+	var note = new Note({userId: user.id});
+	
+	//Save note first
+	note.save(function(err) {
+		if (err) {
+			logger.log('error', 'Failed saving new note.');
+		} else {
+			logger.log('info', "Successfully created new note: " + note._id);
+		}
+	});
+	
+	//Add note reference to user
+	user.notes.push(note);
+	
+	//Save user
 	user.save(function(err) {
 		if (err) {
 			logger.log('error', 'Failed saving new user.');

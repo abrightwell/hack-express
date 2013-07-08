@@ -17,7 +17,17 @@
 extends ../admin_layout
 
 block admin_content
+  h2 Hints
+  table.table.table-bordered.table-striped
+    each hint in hints
+      include ../partials/hint
+
   div.row-fluid
-    a(href="/admin/hints/new").pull-right.btn.btn-primary Create New Hint
-  each hint in hints
-    include ../partials/hint
+    div.span4.pull-left
+      a(href="/admin/hints/new").btn.btn-primary Create New Hint
+    div.span8.pagination.pagination-right
+      ul
+        - for (var i = 0; i < page_count; i++) {
+        li
+            a(href="/admin/hints?page=#{(i + 1)}") #{i + 1}
+        - }

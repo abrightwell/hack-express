@@ -90,7 +90,7 @@ module.exports = function(app) {
 	app.get('/admin/hints/:id/edit', admin_hints.edit);
 	app.post('/admin/hints', admin_hints.create);
 	app.get('/admin/hints/new', admin_hints.new);
-	app.get('/admin/hints/:id', admin_hints.show);
+	app.get('/admin/hints/:id/show', admin_hints.show);
 	app.get('/admin/hints/:id/edit', admin_hints.edit);
 	app.put('/admin/hints/:id', admin_hints.update);
 	app.delete('/admin/hints/:id', admin_hints.destroy);

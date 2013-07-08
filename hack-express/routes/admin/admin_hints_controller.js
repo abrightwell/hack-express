@@ -48,9 +48,17 @@ exports.create = function(req, res) {
 	});
 };
 
-// GET /admin/hints/:id
+// GET /admin/hints/:id/show
 exports.show = function(req, res) {
+	var id = req.params.id;
 
+	Hint.findById(id, function(err, hint) {
+		if (err) {
+			logger.log('error', err.reason);
+		} else {
+			res.render('admin/hints/show', {'hint': hint});
+		}
+	});
 };
 
 // GET /admin/hints/:id/edit

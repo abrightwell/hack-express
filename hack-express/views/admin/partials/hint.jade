@@ -14,12 +14,11 @@
 //-   limitations under the License.
 //-
 
-div(style="margin: 5px;").row-fluid
-    div.span9
-        p
-            | #{hint.title}
-    div.span3
-        p.pull-right
-            a(href="/admin/hints/#{hint._id}").btn View
-            a(href="/admin/hints/#{hint._id}/edit", style="margin-left: 5px").btn.btn-primary Edit
+tr
+    td
+        | #{hint.title}
+    td
+        span.pull-right
+            a(href="/admin/hints/#{hint._id}/show").btn View
+            a(href="/admin/hints/#{hint._id}/edit", style="margin-left: 5px").btn.btn-primary.edit-btn Edit
             a(href="/admin/hints/#{hint._id}", style="margin-left: 5px", data-method="delete", rel="nofollow").btn.btn-danger.delete-button Delete

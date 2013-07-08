@@ -19,6 +19,13 @@ div#teamNotes>input,textarea, .uneditable-input {
 	margin: 0px 0px 0px 0px;
 }
 
+.span3.well img {
+	display: block;
+	padding: 10px 0px 10px 0px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
 [class^="icon-"],
 [class*=" icon-"] {
 	background-image: url('/images/glyphicons-halflings.png')

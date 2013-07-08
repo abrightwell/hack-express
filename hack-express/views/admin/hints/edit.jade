@@ -20,7 +20,7 @@ block admin_content
   form(method='post', action='/admin/hints/#{hint._id}')
       input(type="hidden", name="_method", value="put")
       fieldset
-          legend Edit Team
+          legend Edit Hint
           label Title
           input(type="text", name="title", placeholder="Enter Hint Title", value="#{hint.title}")
           label Description

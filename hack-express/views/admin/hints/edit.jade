@@ -26,7 +26,7 @@ block admin_content
           label Description
           input(type="textarea", name="description", value="#{hint.description}")
           label.checkbox Revealed
-            input(type="checkbox", name="revealed", checked="(#{hint.revealed} === false ? 'checked' : undefined)")
+            input(type="checkbox", name="revealed", checked=(#{hint.revealed} === true ? "checked" : undefined))
         div.form-actions
             button(type="submit").btn.btn-primary Save changes
             a(href="/admin/hints").btn.btn-link Cancel

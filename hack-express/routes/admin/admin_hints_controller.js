@@ -80,7 +80,6 @@ exports.show = function(req, res) {
 		if (err) {
 			logger.log('error', err.reason);
 		} else {
-			console.log(hint);
 			res.render('admin/hints/show', {'hint': hint});
 		}
 	});
@@ -104,26 +103,26 @@ exports.edit = function(req, res) {
 exports.update = function(req, res) {
 	var id = req.params.id;
 	var hint = req.body;
-	
-	/*
-	console.log(hint);
-	
-	if(hint.revealed==='undefined'){
-		//Push
+		
+	//Checkboxes are a special kind of hell
+	//They don't pass unchecked values
+	if(hint.revealed===undefined){
+		Hint.findByIdAndUpdate(id, {$set: {title: hint.title, description: hint.description, revealed: false}}, function(err, result) {
+			if (err) {
+				logger.log('error', err);
+			} else {
+				res.redirect('/admin/hints');
+			}
+		});
 	} else {
-		//Blah
+		Hint.findByIdAndUpdate(id, {$set: hint}, function(err, result) {
+			if (err) {
+				logger.log('error', err);
+			} else {
+				res.redirect('/admin/hints');
+			}
+		});
 	}
-	
-	console.log(hint);
-	*/
-
-	Hint.findByIdAndUpdate(id, {$set: hint}, function(err, result) {
-		if (err) {
-			logger.log('error', err);
-		} else {
-			res.redirect('/admin/hints');
-		}
-	});
 };
 
 // DELETE /admin/hints/:id

@@ -24,6 +24,11 @@ block admin_content
         label Description
         input(type="textarea", name="description", value="#{hint.description}", readonly='readonly')
         label.checkbox Revealed
-          input(type="checkbox", name="revealed", checked=(#{hint.revealed} === true ? "checked" : undefined), readonly='readonly')
+          - if(hint.revealed){
+            input(type="checkbox", name="revealed", checked)
+          - }
+          - else {
+            input(type="checkbox", name="revealed")
+          - }
       div.form-actions
           a(href="/admin/hints").btn.btn-link Back

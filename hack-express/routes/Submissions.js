@@ -33,7 +33,13 @@ exports.show = function(req, res) {
     if (err) {
       console.log(err);
     } else {
-      res.render('Submissions', {tokens: user.tokens});
+		//Mask Token Values Before Displaying
+		var tokens_temp = user.tokens;
+		for (x = 0; x < tokens_temp.length; x++) {
+			tokens_temp[x].value = "xxxxxxxxxxxx" + tokens_temp[x].value.slice(tokens_temp[x].value.length-5,-1);
+		}
+      res.render('Submissions', {tokens: tokens_temp});
+      //res.render('Submissions', {tokens: user.tokens});
     }
   });
 };

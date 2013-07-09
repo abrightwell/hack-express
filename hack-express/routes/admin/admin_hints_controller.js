@@ -13,17 +13,41 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+ 
+ /*
+  * Author: Adam Brightwell, Robert Dunigan
+  */
 
 var database = require('../../database').connection;
 var Hint = require('../../model/hint')(database);
+var per_page = 10;
 
 // GET /admin/hints
 exports.index = function(req, res) {
-	Hint.find(function(err, hints) {
+	
+	var page = parseInt(req.param('page')) || 1;
+	var offset = (page - 1) * per_page;
+
+	query = {$query: {}, $orderby: { title: 1 }};
+	fields = {};
+	options = {'skip': offset, 'limit': per_page};
+
+	Hint.find(query, fields, options, function(err, hints) {
 		if (err) {
 			logger.log('error', err);
 		} else {
-			res.render('admin/hints/index', {'hints': hints});
+			Hint.count(function(err, total) {
+				var page_count = (total / per_page);
+
+				locals = {
+					'total': total,
+					'page_count': page_count,
+					'page': page,
+					'hints': hints
+				};
+
+				res.render('admin/hints/index', locals);
+			});
 		}
 	});
 };
@@ -56,6 +80,7 @@ exports.show = function(req, res) {
 		if (err) {
 			logger.log('error', err.reason);
 		} else {
+			console.log(hint);
 			res.render('admin/hints/show', {'hint': hint});
 		}
 	});
@@ -69,6 +94,7 @@ exports.edit = function(req, res) {
 		if (err) {
 			logger.log('error', err.reason);
 		} else {
+			console.log(hint.revealed);
 			res.render('admin/hints/edit', {'hint': hint});
 		}
 	});
@@ -78,6 +104,18 @@ exports.edit = function(req, res) {
 exports.update = function(req, res) {
 	var id = req.params.id;
 	var hint = req.body;
+	
+	/*
+	console.log(hint);
+	
+	if(hint.revealed==='undefined'){
+		//Push
+	} else {
+		//Blah
+	}
+	
+	console.log(hint);
+	*/
 
 	Hint.findByIdAndUpdate(id, {$set: hint}, function(err, result) {
 		if (err) {

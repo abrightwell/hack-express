@@ -18,23 +18,27 @@
  *Authors:  Adam Brightwell, Robert Dunigan
  */
 
+/* 
+ * Currently Hints page displays all hints to all teams and all players.
+ * This can be modified later to display to certain users or certain
+ * teams by using the hint array associated with each user doc.
+ */
+
 var database = require('../database').connection,
-    User = require('../model/user')(database),
-    Token = require('../model/token')(database),
+    //User = require('../model/user')(database),
+    //Token = require('../model/token')(database),
     Hint = require('../model/hint')(database),
     ObjectId = require('mongodb').ObjectId;
 
 /**
- * Display the hints page with the users achieved hints.
+ * Display the hints page with the user's available hints.
  */
 exports.show = function(req, res) {
-  User.findOne({_id: req.session.user._id})
-  .populate('hints')
-  .exec(function(err, user) {
+  Hint.find({revealed: true}, function(err, hints) {
     if (err) {
       console.log(err);
     } else {
-      res.render('Hints', {hints: user.hints});
+      res.render('Hints', {hints: hints});
     }
   });
 };

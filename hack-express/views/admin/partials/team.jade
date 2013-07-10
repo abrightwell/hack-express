@@ -19,6 +19,6 @@ tr
         | #{team.name}
     td
         span.pull-right
-            a(href="/admin/teams/#{team.id}").btn View
+            a(href="/admin/teams/#{team.id}/show").btn View
             a(href="/admin/teams/#{team._id}/edit", style="margin-left: 5px").btn.btn-primary.edit-btn Edit
             a(href="/admin/teams/#{team._id}", style="margin-left: 5px", data-method="delete", rel="nofollow").btn.btn-danger.delete-button Delete

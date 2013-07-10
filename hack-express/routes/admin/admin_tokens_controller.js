@@ -67,9 +67,17 @@ exports.create = function(req, res) {
 	});
 };
 
-// GET /admin/tokens/:id
+// GET /admin/tokens/:id/show
 exports.show = function(req, res) {
+	var id = req.params.id;
 
+	Token.findById(id, function(err, token) {
+		if (err) {
+			logger.log('error', err);
+		} else {
+			res.render('admin/tokens/show', {'token': token});
+		}
+	});
 };
 
 // GET /admin/tokens/:id/edit

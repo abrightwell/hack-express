@@ -93,7 +93,6 @@ exports.edit = function(req, res) {
 		if (err) {
 			logger.log('error', err.reason);
 		} else {
-			console.log(hint.revealed);
 			res.render('admin/hints/edit', {'hint': hint});
 		}
 	});

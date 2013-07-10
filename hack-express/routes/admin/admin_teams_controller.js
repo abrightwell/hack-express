@@ -67,9 +67,17 @@ exports.create = function(req, res) {
 	});
 };
 
-// GET /admin/teams/:id
+// GET /admin/teams/:id/show
 exports.show = function(req, res) {
+	var id = req.params.id;
 
+	Team.findById(id, function(err, team) {
+		if (err) {
+			logger.log('error', err.reason);
+		} else {
+			res.render('admin/teams/show', {'team': team});
+		}
+	});
 };
 
 // GET /admin/teams/:id/edit

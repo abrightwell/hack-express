@@ -14,11 +14,16 @@
 //-   limitations under the License.
 //-
 
-tr
-    td
-        | #{token.description}
-    td
-        span.pull-right
-            a(href="/admin/tokens/#{token._id}/show").btn View
-            a(href="/admin/tokens/#{token._id}/edit", style="margin-left: 5px").btn.btn-primary.edit-btn Edit
-            a(href="/admin/tokens/#{token._id}", style="margin-left: 5px", data-method="delete", rel="nofollow").btn.btn-danger.delete-button Delete
+extends ../admin_layout
+
+block admin_content
+    fieldset
+        legend View User
+        label Username
+        input(type="text", name="username", placeholder="Enter User Name", value="#{user.username}", readonly='readonly')
+        label Password
+        input(type="password", name="password", placeholder="Enter Password", value="#{user.password", readonly='readonly')
+        label Confirm
+        input(type="password", name="confirm", placeholder="Confirm Password", value="#{user.password", readonly='readonly')
+    div.form-actions
+        a(href="/admin/users").btn.btn-link Back

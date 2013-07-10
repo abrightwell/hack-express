@@ -70,7 +70,7 @@ module.exports = function(app) {
 	app.get('/admin/teams/:id/edit', admin_teams.edit);
 	app.post('/admin/teams', admin_teams.create);
 	app.get('/admin/teams/new', admin_teams.new);
-	app.get('/admin/teams/:id', admin_teams.show);
+	app.get('/admin/teams/:id/show', admin_teams.show);
 	app.get('/admin/teams/:id/edit', admin_teams.edit);
 	app.put('/admin/teams/:id', admin_teams.update);
 	app.delete('/admin/teams/:id', admin_teams.destroy);
@@ -80,7 +80,7 @@ module.exports = function(app) {
 	app.get('/admin/users/:id/edit', admin_users.edit);
 	app.post('/admin/users', admin_users.create);
 	app.get('/admin/users/new', admin_users.new);
-	app.get('/admin/users/:id', admin_users.show);
+	app.get('/admin/users/:id/show', admin_users.show);
 	app.get('/admin/users/:id/edit', admin_users.edit);
 	app.put('/admin/users/:id', admin_users.update);
 	app.delete('/admin/users/:id', admin_users.destroy);
@@ -100,7 +100,7 @@ module.exports = function(app) {
 	app.get('/admin/tokens/:id/edit', admin_tokens.edit);
 	app.post('/admin/tokens', admin_tokens.create);
 	app.get('/admin/tokens/new', admin_tokens.new);
-	app.get('/admin/tokens/:id', admin_tokens.show);
+	app.get('/admin/tokens/:id/show', admin_tokens.show);
 	app.get('/admin/tokens/:id/edit', admin_tokens.edit);
 	app.put('/admin/tokens/:id', admin_tokens.update);
 	app.delete('/admin/tokens/:id', admin_tokens.destroy);

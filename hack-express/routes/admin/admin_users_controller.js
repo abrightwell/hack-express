@@ -31,6 +31,7 @@ var log = require('../../log');
 var logger = log.getLogger();
 var per_page = 10;
 var Note = require('../../model/note')(database);
+var Team = require('../../model/team')(database);
 
 // GET /admin/users
 exports.index = function(req, res) {
@@ -99,9 +100,17 @@ exports.create = function(req, res) {
 	});
 };
 
-// GET /admin/users/:id
+// GET /admin/users/:id/show
 exports.show = function(req, res) {
+	var id = req.params.id;
 
+	User.findById(id, function(err, user) {
+		if (err) {
+			logger.log('error', err.reason);
+		} else {
+			res.render('admin/users/show', {'user': user});
+		}
+	});
 };
 
 // GET /admin/users/:id/edit

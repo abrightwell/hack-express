@@ -14,11 +14,17 @@
 //-   limitations under the License.
 //-
 
-tr
-    td
-        | #{token.description}
-    td
-        span.pull-right
-            a(href="/admin/tokens/#{token._id}/show").btn View
-            a(href="/admin/tokens/#{token._id}/edit", style="margin-left: 5px").btn.btn-primary.edit-btn Edit
-            a(href="/admin/tokens/#{token._id}", style="margin-left: 5px", data-method="delete", rel="nofollow").btn.btn-danger.delete-button Delete
+extends ../admin_layout
+
+block admin_content
+    fieldset
+        legend View Token
+        label Value
+        input(type="text", name="value", value="#{token.value}", readonly='readonly')
+        label Points
+        input(type="text", name="points", value="#{token.points}", readonly='readonly');
+        label Description
+        textarea(name="description", rows="5", placeholder="Enter Token Description", readonly='readonly')
+          | #{token.description}
+        div.form-actions
+          a(href="/admin/tokens").btn.btn-link Back

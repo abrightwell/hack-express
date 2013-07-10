@@ -15,6 +15,15 @@ div#teamNotes>input,textarea, .uneditable-input {
 	resize:vertical;
 }
 
+table.table.table-striped {
+	table-layout: fixed;
+	width: 100%;
+}
+
+table.table.table-striped td {
+	word-wrap: break-word;
+}
+
 .pagination {
 	margin: 0px 0px 0px 0px;
 }

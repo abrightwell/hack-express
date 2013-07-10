@@ -24,7 +24,8 @@ block admin_content
           label Title
           input(type="text", name="title", placeholder="Enter Hint Title", value="#{hint.title}", autofocus)
           label Description
-          input(type="textarea", name="description", value="#{hint.description}")
+          textarea(name="description", rows="5")
+            | #{hint.description}
           label.checkbox Revealed
             - if(hint.revealed){
               input(type="checkbox", name="revealed", checked)

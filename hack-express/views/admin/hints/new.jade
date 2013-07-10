@@ -21,7 +21,7 @@ block admin_content
       fieldset
           legend Create New Hint
           label Title
-          input(type="text", name="title", placeholder="Enter Hint Title", value="#{hint.title}")
+          input(type="text", name="title", placeholder="Enter Hint Title", value="#{hint.title}", autofocus)
           label Description
           textarea(name="description", rows="5", placeholder="Enter Hint Description")
             | #{hint.description}

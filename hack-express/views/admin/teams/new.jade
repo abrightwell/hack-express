@@ -21,7 +21,7 @@ block admin_content
       fieldset
           legend Create New Team
           label Name
-          input(type="text", name="name", placeholder="Enter Team Name", value="#{team.name}")
+          input(type="text", name="name", placeholder="Enter Team Name", value="#{team.name}", autofocus)
           div.form-actions
             button(type="submit").btn.btn-primary Create
             a(href="/admin/teams", style="margin-left: 5px", type="cancel").btn.btn-link Cancel

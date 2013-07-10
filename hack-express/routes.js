@@ -67,7 +67,6 @@ module.exports = function(app) {
 
 	// Admin Team Routes
 	app.get('/admin/teams', admin_teams.index);
-	app.get('/admin/teams/:id/edit', admin_teams.edit);
 	app.post('/admin/teams', admin_teams.create);
 	app.get('/admin/teams/new', admin_teams.new);
 	app.get('/admin/teams/:id/show', admin_teams.show);
@@ -77,7 +76,6 @@ module.exports = function(app) {
 
 	// Admin Users Routes
 	app.get('/admin/users', admin_users.index);
-	app.get('/admin/users/:id/edit', admin_users.edit);
 	app.post('/admin/users', admin_users.create);
 	app.get('/admin/users/new', admin_users.new);
 	app.get('/admin/users/:id/show', admin_users.show);
@@ -87,7 +85,6 @@ module.exports = function(app) {
 
 	// Admin Hints Routes
 	app.get('/admin/hints', admin_hints.index);
-	app.get('/admin/hints/:id/edit', admin_hints.edit);
 	app.post('/admin/hints', admin_hints.create);
 	app.get('/admin/hints/new', admin_hints.new);
 	app.get('/admin/hints/:id/show', admin_hints.show);
@@ -97,7 +94,6 @@ module.exports = function(app) {
 
 	// Admin Tokens Routes
 	app.get('/admin/tokens', admin_tokens.index);
-	app.get('/admin/tokens/:id/edit', admin_tokens.edit);
 	app.post('/admin/tokens', admin_tokens.create);
 	app.get('/admin/tokens/new', admin_tokens.new);
 	app.get('/admin/tokens/:id/show', admin_tokens.show);

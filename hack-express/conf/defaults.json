@@ -55,7 +55,12 @@
 			"password",
 			"confirm",
 			"tokenID",
-			"noteInput"
+			"noteInput",
+			"value",
+			"points",
+			"description",
+			"name",
+			"title"
 		]
 	}
 }

@@ -8,16 +8,13 @@ CERT_DAYS=365
 
 mkdir ${OUTPUT_DIR}
 
-#openssl genrsa -des3 -out ${OUTPUT_DIR}/server.key
+openssl genrsa -des3 -out ${OUTPUT_DIR}/server.key
 
-#openssl req -new -key ${OUTPUT_DIR}/server.key -out ${OUTPUT_DIR}/server.csr
+openssl req -new -key ${OUTPUT_DIR}/server.key -out ${OUTPUT_DIR}/server.csr
 
-#openssl rsa -in ${OUTPUT_DIR}/server.key -out ${OUTPUT_DIR}/${KEY_NAME}
+openssl rsa -in ${OUTPUT_DIR}/server.key -out ${OUTPUT_DIR}/${KEY_NAME}
 
-#openssl x509 -req -days ${CERT_DAYS} -in ${OUTPUT_DIR}/server.csr -signkey ${OUTPUT_DIR}/${KEY_NAME} -out ${OUTPUT_DIR}/${CERT_NAME}
+openssl x509 -req -days ${CERT_DAYS} -in ${OUTPUT_DIR}/server.csr -signkey ${OUTPUT_DIR}/${KEY_NAME} -out ${OUTPUT_DIR}/${CERT_NAME}
 
-#rm ${OUTPUT_DIR}/server.key
-#rm ${OUTPUT_DIR}/server.csr
-
-openssl genrsa -out ${OUTPUT_DIR}/serverkey.pem 4096
-openssl req -new -x509 -key ${OUTPUT_DIR}/serverkey.pem -out ${OUTPUT_DIR}/cacert.pem -days 1095
+rm ${OUTPUT_DIR}/server.key
+rm ${OUTPUT_DIR}/server.csr

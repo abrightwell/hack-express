@@ -16,6 +16,8 @@
 
 extends ../admin_layout
 
+include ../mixins/team_member
+
 block admin_content
   form(method='post', action='/admin/teams/#{team._id}')
       input(type="hidden", name="_method", value="put")
@@ -24,7 +26,10 @@ block admin_content
           label Team Name
           input(type="text", name="name", placeholder="Enter Team Name", value="#{team.name}", autofocus)
           label Team Members
-          input(type="textarea")
+          div.row-fluid
+            table.table.table-striped.span8
+              each member in team.members
+                mixin team_member(team._id, member.id, member.username)
           label Team Captain
           select 
       div.form-actions

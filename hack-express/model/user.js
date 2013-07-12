@@ -27,6 +27,7 @@ var Note = require('./note');
 var userSchema = Schema({
 	username: {type: String, default: ""},
 	password: {type: String, default: ""},
+	team_id: {type: Schema.Types.ObjectId, ref: 'User'},
 	tokens: [{ type: Schema.Types.ObjectId, ref: 'Token' }],
 	hints: [{ type: Schema.Types.ObjectId, ref: 'Hint' }],
 	notes: [{ type: Schema.Types.ObjectId, ref: 'Note' }]

@@ -83,8 +83,11 @@ exports.show = function(req, res) {
 // GET /admin/teams/:id/edit
 exports.edit = function(req, res) {
 	var id = req.params.id;
+	var path = 'members';
+	var select = {'id': 1, 'username': 1};
 
-	Team.findById(id, function(err, team) {
+
+	Team.findById(id).populate(path, select).exec(function(err, team) {
 		if (err) {
 			logger.log('error', err.reason);
 		} else {
@@ -98,10 +101,13 @@ exports.update = function(req, res) {
 	var id = req.params.id;
 	var team = req.body;
 
-	Team.findByIdAndUpdate(id, {$set: team}, function(err, result) {
+	Team.findByIdAndUpdate(id, 
+		{ $set: team }, 
+		function(err, result) {
 		if (err) {
 			logger.log('error', err);
 		} else {
+			console.log(result);
 			res.redirect('/admin/teams');
 		}
 	});
@@ -120,3 +126,25 @@ exports.destroy = function(req, res) {
 		}
 	});
 };
+
+// DELETE
+// /admin/teams/:id/members/:user_id 
+exports.remove_member = function(req, res) {
+	var id = req.params.id;
+	var user_id = req.params.user_id;
+	var update_stmt = {$pull: {'members': user_id}};
+
+	Team.findByIdAndUpdate(id, update_stmt, function(err, result) {
+		if (err) {
+			logger.log('error', 'Error removing team member: ' + err);
+		} else {
+			User.findByIdAndUpdate(user_id, {$set: {'team_id': null}}, function() {
+				if (err) {
+					logger.log('error', 'Error removing team from user: ' + err);
+				} else {
+					res.redirect('/admin/teams');
+				}
+			});
+		}
+	});
+}

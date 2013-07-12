@@ -27,6 +27,7 @@
 var bcrypt = require('bcrypt');
 var database = require('../../database').connection;
 var User = require('../../model/user')(database);
+var Team = require('../../model/team')(database);
 var log = require('../../log');
 var logger = log.getLogger();
 var per_page = 10;
@@ -72,7 +73,7 @@ exports.new = function(req, res) {
 exports.create = function(req, res) {
 	
 	var salt = bcrypt.genSaltSync(10);
-	req.body.password = bcrypt.hashSync(req.body.password, salt);
+	req.body.password = bcrypt.hashSync(req.body.password, salt);	
 	
 	var user = new User(req.body);
 	var note = new Note({userId: user.id});
@@ -118,11 +119,15 @@ exports.edit = function(req, res) {
 	var id = req.params.id;
 
 	User.findById(id, function(err, user) {
-		if (err) {
-			logger.log('error', err.reason);
-		} else {
-			res.render('admin/users/edit', {'user': user});
-		}
+		Team.find(function(err, teams) {
+			if (err) {
+				logger.log('error', err.reason);
+			} else {
+				res.locals.user = user;
+				res.locals.teams = teams;
+				res.render('admin/users/edit');
+			}
+	    });
 	});
 };
 
@@ -131,16 +136,65 @@ exports.update = function(req, res) {
 	var id = req.params.id;
 	var user = req.body;
 
-	User.findByIdAndUpdate(id, {$set: user}, function(err, result) {
-		if (err) {
-			logger.log('error', err);
-		} else {
-			res.redirect('/admin/users');
-		}
+	User.findById(id, function(err, user_result) {
+		// Remove the user for it's current team.
+		remove_user_from_team(user_result, function(err, result) {
+			if (err) {
+				logger.log('error', 'error removing user from team.' + err);
+			} else {
+				add_user_to_team(id, user.team_id, function(err, result) {
+					if (err) {
+						logger.log('error', 'error adding user to team.' + err);
+					} else {
+						user_result.update({$set: user}, function(err, result) {
+							if (err) {
+								logger.log('error', 'error updating user.' + err);
+							} else {
+								res.redirect('/admin/users');
+							}
+						});
+					}
+				});
+			}
+		});
 	});
 };
 
 // DELETE /admin/users/:id
 exports.destroy = function(req, res) {
+	var id = req.params.id;
 
+	User.findByIdAndRemove(id, function(err, result) {
+		if (err) {
+			logger.log('error', 'Error removing deleting user - ' + err);
+		} else {
+			logger.log('info', 'Successfully deleted user: ' + id);
+			res.redirect('/admin/users');
+		}
+	});
+};
+
+// Helper Functions.
+
+add_user_to_team = function(user_id, team_id, callback) {
+	Team.findByIdAndUpdate(team_id, {$addToSet: {'members': user_id}}, function(err, result) {
+		if (err) {
+			callback(err, null);
+		} else {
+			callback(null, result);
+		}
+	});
+};
+
+remove_user_from_team = function(user, callback) {
+	var update_stmt = {$pull: {'members': user.id}};
+	console.log(user);
+
+	Team.findByIdAndUpdate(user.team_id, update_stmt, function(err, result) {
+		if (err) {
+			callback(err, null);
+		} else {
+			callback(null, result);
+		}
+	});
 };

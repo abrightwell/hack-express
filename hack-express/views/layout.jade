@@ -49,6 +49,14 @@ html
                     div.input-prepend.input-append
                       span.add-on= 'Logged in as: ' + displayName
                       button.btn Logout
+          - else
+              form.navbar-form.form-inline.pull-right(action='/login')
+                input(type='hidden', name='redir', value='redir')
+                div.control-groups
+                  div.controls
+                    div.input-prepend.input-append
+                      span.add-on= 'Welcome: Visitor'
+                      button.btn Login
     div.container
       div.fluid-container
         h1.title Hack Warz

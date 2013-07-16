@@ -19,8 +19,22 @@
  */
 
 winston = require('winston');
+fs = require('fs');
 
 module.exports.getLogger = function() {
+	
+	//Log folder path
+	var logs = __dirname + "/logs";
+	
+	//Check logs, create log folder if needed
+	var logsExists = fs.existsSync(logs);
+	if(logsExists){
+	//No action required
+	} else {
+		//Create log folder
+		fs.mkdirSync(logs);
+	}
+	
 	var tempLog = new (winston.Logger);
 	if(config.log.console){
 		tempLog.add(winston.transports.Console, 

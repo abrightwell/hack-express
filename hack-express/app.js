@@ -40,6 +40,7 @@ var express = require('express')
   , expressValidator = require('express-validator');
 
 var mongoose = require('mongoose');
+var grid = require('gridfs-stream');
 
 // Database Configuration and Initialization.
 MongoStore = require('connect-mongo')(express);
@@ -95,7 +96,6 @@ var routes = require('./routes')(app);
 /*
  * Unimplemented Routes
  */
-//app.get('/admin', admin.show);
 //app.post('/notes/submitNetwork', auth.requiresLogin, Notes.submitNetwork);
 //app.post('/notes/submitCredentials', auth.requiresLogin, Notes.submitCredentials);
 //app.post('/notes/submitCrypto', auth.requiresLogin, Notes.submitCrypto);

@@ -36,8 +36,14 @@ var mongoose = require('mongoose'),
 		}
 	);
 
+var grid = require('gridfs-stream');//GridFS
+var gfs;
+
 connection.on('error', console.error.bind(console, 'connection error:'));
 connection.once('open', function(err, result) {
+	//There seems to be an issue with this returning the proper object.
+	//When trying to export gfs below we receive an undefined object.
+	//gfs = grid(connection.db, mongoose.mongo);//GridFS
 	if (err) {
 		logger.log('error', 'Error connection to database.')
 	} else {
@@ -45,4 +51,6 @@ connection.once('open', function(err, result) {
 	}
 });
 
-exports.connection = connection
+exports.connection = connection;
+//Modified this to call grid vs returning the current value of gfs
+module.exports.gfs = grid(connection.db, mongoose.mongo);

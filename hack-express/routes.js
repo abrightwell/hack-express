@@ -33,6 +33,7 @@ var Registration = require('./routes/Registration'),
 	admin_teams = require('./routes/admin/admin_teams_controller');
 	admin_users = require('./routes/admin/admin_users_controller');
 	admin_hints = require('./routes/admin/admin_hints_controller');
+	admin_sponsors = require('./routes/admin/admin_sponsors_controller');
 	admin_tokens = require('./routes/admin/admin_tokens_controller');
 
 module.exports = function(app) {
@@ -63,41 +64,50 @@ module.exports = function(app) {
 	app.delete('/teams/:id.:format?', Teams.destroy);
 
 	// Admin Routes
-	app.get('/admin', admin.index);
+	app.get('/admin', auth.requiresLogin, admin.index);
 
 	// Admin Team Routes
-	app.get('/admin/teams', admin_teams.index);
-	app.post('/admin/teams', admin_teams.create);
-	app.get('/admin/teams/new', admin_teams.new);
-	app.get('/admin/teams/:id/show', admin_teams.show);
-	app.get('/admin/teams/:id/edit', admin_teams.edit);
-	app.put('/admin/teams/:id', admin_teams.update);
-	app.delete('/admin/teams/:id', admin_teams.destroy);
+	app.get('/admin/teams', auth.requiresLogin, admin_teams.index);
+	app.post('/admin/teams', auth.requiresLogin, admin_teams.create);
+	app.get('/admin/teams/new', auth.requiresLogin, admin_teams.new);
+	app.get('/admin/teams/:id/show', auth.requiresLogin, admin_teams.show);
+	app.get('/admin/teams/:id/edit', auth.requiresLogin, admin_teams.edit);
+	app.put('/admin/teams/:id', auth.requiresLogin, admin_teams.update);
+	app.delete('/admin/teams/:id', auth.requiresLogin, admin_teams.destroy);
 
 	// Admin Users Routes
-	app.get('/admin/users', admin_users.index);
-	app.post('/admin/users', admin_users.create);
-	app.get('/admin/users/new', admin_users.new);
-	app.get('/admin/users/:id/show', admin_users.show);
-	app.get('/admin/users/:id/edit', admin_users.edit);
-	app.put('/admin/users/:id', admin_users.update);
-	app.delete('/admin/users/:id', admin_users.destroy);
+	app.get('/admin/users', auth.requiresLogin, admin_users.index);
+	app.post('/admin/users', auth.requiresLogin, admin_users.create);
+	app.get('/admin/users/new', auth.requiresLogin, admin_users.new);
+	app.get('/admin/users/:id/show', auth.requiresLogin, admin_users.show);
+	app.get('/admin/users/:id/edit', auth.requiresLogin, admin_users.edit);
+	app.put('/admin/users/:id', auth.requiresLogin, admin_users.update);
+	app.delete('/admin/users/:id', auth.requiresLogin, admin_users.destroy);
 
 	// Admin Hints Routes
-	app.get('/admin/hints', admin_hints.index);
-	app.post('/admin/hints', admin_hints.create);
-	app.get('/admin/hints/new', admin_hints.new);
-	app.get('/admin/hints/:id/show', admin_hints.show);
-	app.get('/admin/hints/:id/edit', admin_hints.edit);
-	app.put('/admin/hints/:id', admin_hints.update);
-	app.delete('/admin/hints/:id', admin_hints.destroy);
+	app.get('/admin/hints', auth.requiresLogin, admin_hints.index);
+	app.post('/admin/hints', auth.requiresLogin, admin_hints.create);
+	app.get('/admin/hints/new', auth.requiresLogin, admin_hints.new);
+	app.get('/admin/hints/:id/show', auth.requiresLogin, admin_hints.show);
+	app.get('/admin/hints/:id/edit', auth.requiresLogin, admin_hints.edit);
+	app.put('/admin/hints/:id', auth.requiresLogin, admin_hints.update);
+	app.delete('/admin/hints/:id', auth.requiresLogin, admin_hints.destroy);
 
 	// Admin Tokens Routes
-	app.get('/admin/tokens', admin_tokens.index);
-	app.post('/admin/tokens', admin_tokens.create);
-	app.get('/admin/tokens/new', admin_tokens.new);
-	app.get('/admin/tokens/:id/show', admin_tokens.show);
-	app.get('/admin/tokens/:id/edit', admin_tokens.edit);
-	app.put('/admin/tokens/:id', admin_tokens.update);
-	app.delete('/admin/tokens/:id', admin_tokens.destroy);
+	app.get('/admin/tokens', auth.requiresLogin, admin_tokens.index);
+	app.post('/admin/tokens', auth.requiresLogin, admin_tokens.create);
+	app.get('/admin/tokens/new', auth.requiresLogin, admin_tokens.new);
+	app.get('/admin/tokens/:id/show', auth.requiresLogin, admin_tokens.show);
+	app.get('/admin/tokens/:id/edit', auth.requiresLogin, admin_tokens.edit);
+	app.put('/admin/tokens/:id', auth.requiresLogin, admin_tokens.update);
+	app.delete('/admin/tokens/:id', auth.requiresLogin, admin_tokens.destroy);
+	
+	// Admin Sponsors Routes
+	app.get('/admin/sponsors', auth.requiresLogin, admin_sponsors.index);
+	app.post('/admin/sponsors', auth.requiresLogin, admin_sponsors.create);
+	app.get('/admin/sponsors/new', auth.requiresLogin, admin_sponsors.new);
+	app.get('/admin/sponsors/:id/show', auth.requiresLogin, admin_sponsors.show);
+	app.get('/admin/sponsors/:id/edit', auth.requiresLogin, admin_sponsors.edit);
+	app.put('/admin/sponsors/:id', auth.requiresLogin, admin_sponsors.update);
+	app.delete('/admin/sponsors/:id', auth.requiresLogin, admin_sponsors.destroy);
 }

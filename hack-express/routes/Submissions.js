@@ -36,7 +36,7 @@ exports.show = function(req, res) {
 		//Mask Token Values Before Displaying
 		var tokens_temp = user.tokens;
 		for (x = 0; x < tokens_temp.length; x++) {
-			tokens_temp[x].value = "xxxxxxxxxxxx" + tokens_temp[x].value.slice(tokens_temp[x].value.length-5,-1);
+			tokens_temp[x].value = "xxxxxxxxxxxx" + tokens_temp[x].value.slice(tokens_temp[x].value.length-4);
 		}
       res.render('Submissions', {tokens: tokens_temp});
       //res.render('Submissions', {tokens: user.tokens});

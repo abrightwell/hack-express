@@ -26,6 +26,10 @@ block admin_content
           input(type="password", name="password", placeholder="Enter Password", value="#{user.password")
           label Confirm
           input(type="password", name="confirm", placeholder="Confirm Password", value="#{user.password")
+          label Team
+          select(name="team_id")
+            each team in teams
+              option(value="#{team.id}") #{team.name}
       div.form-actions
           button(type="submit").btn.btn-primary Save changes
           a(href="/admin/users").btn.btn-link Cancel

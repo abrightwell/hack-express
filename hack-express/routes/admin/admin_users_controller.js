@@ -68,7 +68,13 @@ exports.index = function(req, res) {
 // GET /admin/users/new
 exports.new = function(req, res) {
 	var user = new User();
-	res.render('admin/users/new', {'user': user});
+	Team.find({}, {'name': 1}).sort({'name': 1}).exec(function(err, teams) {
+		if (err) {
+			logger.log('error', 'Error fetching teams: ' + err);
+		} else {
+			res.render('admin/users/new', {'user': user, 'teams': teams});	
+		}
+	});
 };
 
 // POST /admin/users
@@ -77,37 +83,28 @@ exports.create = function(req, res) {
 	var salt = bcrypt.genSaltSync(10);
 	req.body.password = bcrypt.hashSync(req.body.password, salt);	
 	
-	var user = new User(req.body);
-	
-	/**
-	 * Commented out since the current implementation is simply using a
-	 * string value as part of the user model.  This was causing issues
-	 * with user creation.
-	 */
-	/*
-	var note = new Note({userId: user.id});
-	
-	//Save note first
-	note.save(function(err) {
-		if (err) {
-			logger.log('error', 'Failed saving new note.');
-		} else {
-			logger.log('info', "Successfully created new note: " + note._id);
+	async.waterfall([
+		function(callback) {
+			var user = new User(req.body);
+			user.save(function(err) {
+				if (err) {
+					logger.log('error', 'Failed saving new user.');
+					callback(err, null);
+				} else {
+					logger.log('info', "Successfully created new user: " + user._id);
+					callback(null, user);
+				}
+			});
+		},
+		function(user, callback) {
+			add_user_to_team(user.id, user.team_id, callback);
 		}
-	});
-	
-	//Add note reference to user
-	user.notes.push(note);
-	*/
-	
-	//Save user
-	user.save(function(err) {
+	], function(err, result) {
 		if (err) {
-			logger.log('error', 'Failed saving new user.');
+			logger.log('error', 'Error creating user: ' + err);
 		} else {
-			logger.log('info', "Successfully created new user: " + user._id);
-			res.redirect('/admin/users');
-		}
+			res.redirect('/admin/users');	
+		}	
 	});
 };
 

@@ -78,6 +78,13 @@ exports.create = function(req, res) {
 	req.body.password = bcrypt.hashSync(req.body.password, salt);	
 	
 	var user = new User(req.body);
+	
+	/**
+	 * Commented out since the current implementation is simply using a
+	 * string value as part of the user model.  This was causing issues
+	 * with user creation.
+	 */
+	/*
 	var note = new Note({userId: user.id});
 	
 	//Save note first
@@ -91,6 +98,7 @@ exports.create = function(req, res) {
 	
 	//Add note reference to user
 	user.notes.push(note);
+	*/
 	
 	//Save user
 	user.save(function(err) {

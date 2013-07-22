@@ -26,6 +26,9 @@ div#teamNotes>input,textarea, .uneditable-input {
 	resize:vertical;
 }
 
+/*
+ * General Tables
+ */
 table.table.table-striped {
 	table-layout: fixed;
 	width: 100%;
@@ -33,6 +36,53 @@ table.table.table-striped {
 
 table.table.table-striped td {
 	word-wrap: break-word;
+	width: 100%;
+}
+
+/*
+ * Scoreboard Tables
+ */
+table.table.table-striped#individual-table {
+	table-layout: auto;
+}
+
+table.table.table-striped#team-table {
+	table-layout: auto;
+}
+
+table.table.table-striped#individual-table td:last-child {
+	word-wrap: normal;
+	width: 0%;
+	white-space: nowrap;
+}
+
+table.table.table-striped#team-table td:last-child {
+	word-wrap: normal;
+	width: 0%;
+	white-space: nowrap;
+}
+
+/*
+ * Submission Table
+ */
+table.table.table-striped#submissions-table {
+	table-layout: auto;
+}
+
+table.table.table-striped#submissions-table td {
+	width: 100%;
+}
+
+table.table.table-striped#submissions-table td:first-child {
+	word-wrap: normal;
+	width: 0%;
+	white-space: nowrap;
+}
+
+table.table.table-striped#submissions-table td:last-child {
+	word-wrap: normal;
+	width: 0%;
+	white-space: nowrap;
 }
 
 .pagination {

@@ -25,6 +25,8 @@
  */
 
 var bcrypt = require('bcrypt');
+var async = require('async');
+var auth = require('../../auth');
 var database = require('../../database').connection;
 var User = require('../../model/user')(database);
 var Team = require('../../model/team')(database);
@@ -137,28 +139,52 @@ exports.update = function(req, res) {
 	var user = req.body;
 
 	User.findById(id, function(err, user_result) {
-		// Remove the user for it's current team.
-		remove_user_from_team(user_result, function(err, result) {
-			if (err) {
-				logger.log('error', 'error removing user from team.' + err);
-			} else {
-				add_user_to_team(id, user.team_id, function(err, result) {
-					if (err) {
-						logger.log('error', 'error adding user to team.' + err);
-					} else {
-						user_result.update({$set: user}, function(err, result) {
-							if (err) {
-								logger.log('error', 'error updating user.' + err);
-							} else {
-								res.redirect('/admin/users');
-							}
-						});
-					}
-				});
-			}
-		});
+		if (err) {
+			logger.log('error', 'Error finding user: ' + err);
+		} else {
+			async.series([
+				function(callback) {
+					remove_user_from_team(user_result, callback);	
+				},
+				function(callback) {
+					add_user_to_team(id, user.team_id, callback);
+				},
+				function(callback) {
+					user_result.update({$set: user}, callback);
+				}
+			], function(err, result) {
+				if (err) {
+					logger.log('error', 'Error updating user: ' + err);
+				} else {
+					res.redirect('/admin/users');
+				}
+			});
+		}
 	});
 };
+
+// PUT /admin/users/:id/password
+exports.update_password = function(req, res) {
+	var id = req.params.id;
+
+	var password = req.body.password;
+	var confirm = req.body.confirm;
+
+	if (password == confirm) {
+		auth.encrypt(password, function(err, hash) {
+			User.findByIdAndUpdate(id, {$set: {password: hash}}, function(err, result) {
+				if (err) {
+					logger.log('error', 'Error updating password: ' + err);
+				} else {
+					logger.log('info', 'Successfully updated password');
+				}
+				res.redirect('/admin/users/' + id + '/edit#password')
+			});
+		});	
+	} else {
+		logger.log('error', 'password != confirm');
+	}
+}
 
 // DELETE /admin/users/:id
 exports.destroy = function(req, res) {
@@ -188,7 +214,6 @@ add_user_to_team = function(user_id, team_id, callback) {
 
 remove_user_from_team = function(user, callback) {
 	var update_stmt = {$pull: {'members': user.id}};
-	console.log(user);
 
 	Team.findByIdAndUpdate(user.team_id, update_stmt, function(err, result) {
 		if (err) {

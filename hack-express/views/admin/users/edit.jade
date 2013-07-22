@@ -17,16 +17,22 @@
 extends ../admin_layout
 
 block admin_content
-  form(method='post', action='/admin/users/#{user._id}')
-      input(type="hidden", name="_method", value="put")
-      fieldset
+  ul(data-tabs="tabs").nav.nav-tabs#tabs
+    li
+      a(href="#general", data-toggle="tab") General
+    li
+      a(href="#password", data-toggle="tab") Password
+
+  div.tab-content#tab-content
+    div.tab-pane#general
+      form(method='post', action='/admin/users/#{user._id}')
+        input(type="hidden", name="_method", value="put")
+        fieldset
           legend Edit User
           label Username
           input(type="text", name="username", placeholder="Enter User Name", value="#{user.username}", autofocus)
-          label Password
-          input(type="password", name="password", placeholder="Enter Password", value="#{user.password")
-          label Confirm
-          input(type="password", name="confirm", placeholder="Confirm Password", value="#{user.password")
+          legend Email
+          input(type="email", name="email", placeholder="Enter Email Address", value="#{user.email}")
           label Team
           select(name="team_id")
             each team in teams
@@ -34,6 +40,20 @@ block admin_content
                 option(value="#{team.id}", selected="selected") #{team.name}
               else
                 option(value="#{team.id}") #{team.name}
-      div.form-actions
+        div.form-actions
           button(type="submit").btn.btn-primary Save changes
           a(href="/admin/users").btn.btn-link Cancel
+    
+    div.tab-pane#password
+      form(method='post', action='/admin/users/#{user._id}/password')
+        input(type="hidden", name="_method", value="put")
+        fieldset
+          legend Change Password
+          label Password
+          input(type="password", name="password", placeholder="Enter Password")
+          label Confirm
+          input(type="password", name="confirm", placeholder="Confirm Password")
+        div.form-actions
+          button(type="submit").btn.btn-primary Submit
+          a(href="/admin/users").btn.btn-link Cancel
+  

@@ -18,11 +18,13 @@
  * Authors: Adam Brightwell, Robert Dunigan
  */
 
-var database = require('../database').connection,
-    User = require('../model/user')(database);
+var async = require('async');
+var database = require('../database').connection;
+var User = require('../model/user')(database);
+var Team = require('../model/team')(database);
 
 /**
- * Gets and dispalys the scoreboard values.
+ * Gets and displays the scoreboard values.
  *
  * The scoreboard values are added to the response locals value as:
  *
@@ -36,26 +38,141 @@ var database = require('../database').connection,
  */
 exports.show = function(req, res) {
   var scores = [];
-  User.find()
+  User.find({}, {username: 1, team_id: 1, tokens: 1})
+    .populate('team_id', {name: 1})
     .populate('tokens', {points: 1})
     .exec(function (err, users) {
-      users.forEach(function(user) {
-		//Truncate username strings being displayed to avoid overflow
-		if(user.username.length>config.name.max_length) {
-			user.username=user.username.substring(0,config.name.max_length)+"...";
-		}
-		//Set scores
-        var score = 0;
-        user.tokens.forEach(function(token) {
-          score += token.points;
-        });
-        scores.push({username: user.username, score: score});
+      async.parallel(
+        {
+          user_scores: function(callback) {
+            get_user_scores(users, callback);
+          },
+          team_scores: function(callback) {
+            get_team_scores(users, callback);
+          }
+        },
+        function(err, results) {
+          if (err) {
+            console.log('Error getting scores: ' + err);
+          } else {
+            res.render('Scoreboard', {
+              title: 'Scoreboard',
+              userScores: results.user_scores,
+              teamScores: results.team_scores,
+              refreshTime: config.page.refreshTime
+            });
+          }
+        }
+      );
+    });
+};
+
+/**
+ * Creates a mapped array of user scores.  This function should is 
+ * equivalent to the mapping function of a map/reduce set.
+ *
+ * users    -> collection of users.
+ * callback -> returns err and scores.
+ */
+var map_user_scores = function(users, callback) {
+  var scores = [];
+  
+  users.forEach(function(user) {
+      scores.push({key: user.username, value: 0});
+    user.tokens.forEach(function(token) {
+      scores.push({key: user.username, value: token.points});
+    });
+  });
+
+  callback(null, scores);
+};
+
+/**
+ * Reduces mapped values for user scores.  This function is
+ * equivalent to the reduce function of a map/reduce set.
+ *
+ * users    -> the mapped user scores to reduce.
+ * callback -> returns err and scores.
+ */
+var reduce_user_scores = function(users, callback) {
+  var scores = {};
+
+  users.forEach(function(user) {
+    if (scores[user.key] == null) scores[user.key] = 0;
+    scores[user.key] += user.value;
+  });
+
+  callback(null, scores);
+};
+
+/**
+ * Get an array of user scores.
+ *
+ * users    -> user information.
+ * callback -> returns err and array of scores. Scores will be an
+ * array of objects with the following signature:
+ * {username: <username>, score: <score>}
+ */
+var get_user_scores = function(users, callback) {
+  map_user_scores(users, function(err, result) {
+    reduce_user_scores(result, function(err, result) {
+      scores = [];
+      
+      Object.keys(result).forEach(function(key) {
+        scores.push({username: key, score: result[key]});
       });
-    
-      res.render('Scoreboard', {
-      title: 'Scoreboard',
-      userScores: scores,
-      refreshTime: config.page.refreshTime
+
+      callback(null, scores);
     });
   });
 };
+
+/**
+ *
+ */
+var map_team_scores = function(users, callback) {
+  var teams = [];
+  users.forEach(function(user) {
+    if (user.team_id != null) {
+      teams.push({key: user.team_id.name, value: 0});
+      user.tokens.forEach(function(token) {
+        if (user.team_id != undefined) {
+          teams.push({key: user.team_id.name, value: token.points});
+        }
+      })
+    }
+  });
+  
+  callback(null, teams);
+}
+
+/**
+ *
+ */
+var reduce_team_scores = function(teams, callback) {
+  var scores = {};
+
+  teams.forEach(function(team) {
+    if (scores[team.key] == null) scores[team.key] = 0;
+    scores[team.key] += team.value;
+  });
+
+  callback(null, scores);
+}
+
+/**
+ *
+ */
+var get_team_scores = function(users, callback) {
+  map_team_scores(users, function(err, result) {
+    reduce_team_scores(result, function(err, result) {
+      scores = [];
+
+      Object.keys(result).forEach(function(key) {
+        scores.push({name: key, score: result[key]});
+      });
+
+      callback(null, scores);
+    });
+  });
+}

@@ -23,14 +23,17 @@ var Schema = mongoose.Schema;
 var Token = require('./token');
 var Hint = require('./hint');
 var Note = require('./note');
+var Team = require('./team');
 
 var userSchema = Schema({
 	username: {type: String, default: ""},
 	password: {type: String, default: ""},
-	team_id: {type: Schema.Types.ObjectId, ref: 'User'},
+	email: {type: String, default: ""},
+	team_id: {type: Schema.Types.ObjectId, ref: 'Team'},
 	tokens: [{ type: Schema.Types.ObjectId, ref: 'Token' }],
 	hints: [{ type: Schema.Types.ObjectId, ref: 'Hint' }],
-	notes: [{ type: Schema.Types.ObjectId, ref: 'Note' }]
+	notes: {type: String, default: ""},
+	roles: [{type: String, default: ""}]
 });
 
 mongoose.model('User', userSchema);

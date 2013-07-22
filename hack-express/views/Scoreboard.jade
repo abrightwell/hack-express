@@ -29,14 +29,37 @@ block content
     h2 Feed
   div.span6.well
     h2 Scoreboard
-    table.table.table-striped
-      thead
-        tr
-          th Name
-          th Points
-      tbody
-      each userScore in userScores
-        tr
-          td #{userScore.username}
-          td #{userScore.score}
+
+    ul(data-tabs="tabs").nav.nav-tabs#tabs
+      li
+        a(href="#individual-scores", data-toggle="tab") Individual
+      li
+        a(href="#team-scores", data-toggle="tab") Team
+
+    div.tab-content#tab-content
+      div.tab-pane#individual-scores
+        table.table.table-striped
+          thead
+            tr
+              th Name
+              th Points
+          tbody
+          each userScore in userScores
+            tr
+              td #{userScore.username}
+              td #{userScore.score}
+
+      div.tab-pane#team-scores
+        table.table.table-striped
+          thead
+            tr
+              th Name
+              th Points
+          tbody
+          each teamScore in teamScores
+            tr
+              td #{teamScore.name}
+              td #{teamScore.score}
+
+    
   include includes/sponsors

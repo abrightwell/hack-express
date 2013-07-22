@@ -1,3 +1,14 @@
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('../font/fontawesome-webfont.eot?v=3.2.1');
+  src: url('../font/fontawesome-webfont.eot?#iefix&v=3.2.1') format('embedded-opentype'), 
+       url('../font/fontawesome-webfont.woff?v=3.2.1') format('woff'), 
+       url('../font/fontawesome-webfont.ttf?v=3.2.1') format('truetype'), 
+       url('../font/fontawesome-webfont.svg#fontawesomeregular?v=3.2.1') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
 	padding-top: 60px;
 	padding-bottom: 40px;
@@ -35,7 +46,11 @@ table.table.table-striped td {
 	margin-left: auto;
 }
 
-[class^="icon-"],
+.dropdown-toggle {
+	border-radius: 0 4px 4px 0!important;
+}
+
+/*[class^="icon-"],
 [class*=" icon-"] {
 	background-image: url('/images/glyphicons-halflings.png')
-}
+}*/

@@ -18,11 +18,10 @@
  *Authors:  Adam Brightwell, Robert Dunigan
  */
 
+var async = require('async');
 var database = require('../database').connection,
     User = require('../model/user')(database),
-    Token = require('../model/token')(database),
-    Hint = require('../model/hint')(database),
-    Note = require('../model/note')(database),
+    Team = require('../model/team')(database),
     ObjectId = require('mongodb').ObjectId;
 
 /**
@@ -30,44 +29,52 @@ var database = require('../database').connection,
  */
 exports.show = function(req, res) {
 	var userId = req.session.user._id;
-	
-	User.findById(userId)
-	.populate('notes')
-	.exec(function(err, user) {
-		if (err) {
-			console.log(err);
-		} else {
-			res.render('Notes', {notes: user.notes});//This will need to be changed to reflect teams
+	var select = {'id': 1, 'username': 1};
+	async.parallel({
+			user_notes: function(callback) {
+				User.findById(userId, {'notes': 1}, callback);
+			},
+			team_notes: function(callback) {
+				User.findById(userId, {'team_id': 1}, function(err, user){
+					Team.findById(user.team_id, {'members': 1})
+						.populate('members', {'username': 1, 'notes': 1})
+						.exec(callback);
+				});
+			}
+		},
+		function(err, results) {
+			if (err) {
+				console.log(err);
+			} else {
+				var locals = {
+					'user_notes': results.user_notes.notes,
+					'team_notes': results.team_notes
+				}
+				res.render('Notes', locals);
+			}
 		}
-	});
+	);
+
+	// User.findById(userId, {'notes': 1}, function(err, user) {
+	// 	if (err) {
+	// 		console.log(err);
+	// 	} else {
+	// 		res.render('Notes', {'user': user});
+	// 	}
+	// });
 };
 
 exports.submit = function(req, res){
-	var noteValue = req.param("noteInput");
-	var userId = req.session.user._id;
+	var notes = req.body.notes;
+	var user_id = req.body.user_id;
 	
-	User.findById(userId)
-	.populate('notes')
-	.exec(function(err, user) {
+	var update_stmt = {$set: {'notes': notes}};
+
+	User.findByIdAndUpdate(user_id, update_stmt, function(err, result) {
 		if (err) {
 			console.log(err);
 		} else {
-			
-			//Get note id and current text value
-			var noteId = user.notes[0].id;
-			var noteText = user.notes[0].text;
-			
-			//Append new notes to current text value
-			noteValue = noteText + '\r\n' + noteValue;
-			
-			//Update note text value
-			Note.findByIdAndUpdate(noteId, {$set: {text: noteValue}}, function(err, result) {
-				if (err) {
-					logger.log('error', err);
-				} else {
-					res.redirect('/notes');
-				}
-			});
+			res.redirect('/notes');
 		}
 	});
 };

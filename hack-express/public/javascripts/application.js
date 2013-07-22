@@ -12,4 +12,6 @@ $(document).ready(function() {
 		$form.submit();
 	});
 
+	$('a[data-toggle="tab"]:first').tab('show');
+	$('#user-tabs a[data-toggle="tab"]:first').tab('show');
 });

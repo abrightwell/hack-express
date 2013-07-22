@@ -52,6 +52,12 @@ function compareLogin(password, user, success, failure) {
 	}
 }
 
+module.exports.encrypt = function(value, callback) {
+	var salt = bcrypt.genSaltSync(10);
+  	var hash = bcrypt.hashSync(value, salt);
+  	callback(null, hash);
+}
+
 /**
  * Function to enforce login on routes requiring protection.
  */

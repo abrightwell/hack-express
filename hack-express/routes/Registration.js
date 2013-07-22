@@ -24,13 +24,21 @@
  * to simplify and incorporate code reuse.
  */
 
-var bcrypt = require('bcrypt');
-    database = require('../database').connection,
-    User = require('../model/user')(database),
-    Note = require('../model/note')(database);
+var async = require('async');
+var auth = require('../auth');
+var database = require('../database').connection;
+var User = require('../model/user')(database);
+var Note = require('../model/note')(database);
+var Team = require('../model/team')(database);
 
-exports.show = function(req, res){
-  res.render('Registration');
+exports.show = function(req, res) {
+  Team.find({}, {'name': 1}).sort({'name': 1}).exec(function(err, teams) {
+    if (err) {
+      console.log('Error getting teams for registration.');
+    } else {
+      res.render('Registration', {'teams': teams});
+    }
+  });
 };
 
 /*
@@ -45,6 +53,8 @@ exports.submit = function(req, res){
   var username = req.param("username");
   var password = req.param("password");
   var confirm  = req.param("confirm");
+  var email = req.param("email");
+  var team_id = req.param("team_id");
 
   // var users = hack_db.collection('users');
 
@@ -54,22 +64,41 @@ exports.submit = function(req, res){
       res.redirect('/');
     } else {
       if (result == null) {
-        createUser(username, password, confirm,
-          function() {
-            req.flash('info', 'Successfully created account.');
-            res.redirect('/');
-          },
-          function(message) {
-            if (message !== 'undefined') {
-              req.flash('info', 'Failed to create account: ' + message);  
+        async.waterfall([
+          function(callback) {
+            if (password == confirm) {
+              auth.encrypt(password, callback);
             } else {
-              req.flash('info', 'Failed to create account.');
+              req.flash('info', "Passwords do not match.");
+              var err = new Error("Passwords do not match.");
+              callback(err, null);
             }
-            res.redirect('/registration')
+          },
+          function(hash, callback) {
+            user = new User({
+              username: username,
+              password: hash,
+              email: email,
+              team_id: team_id
+            });
+
+            user.save(function(err, result) {
+              callback(err, result);
+            });
+          },
+          function(user, callback) {
+            add_user_to_team(user._id, user.team_id, callback);
           }
-        );
+        ], function(err, result) {
+          if (err) {
+            console.log("Error: " + err);
+            res.redirect('/registration');
+          } else {
+            res.redirect('/');
+          }
+        });
       } else {
-        req.flash('info', 'User name already exists.')
+        req.flash('info', 'User name already exists.');
         res.redirect('/registration');
       }
     }
@@ -87,41 +116,40 @@ exports.submit = function(req, res){
  * failure: callback used if the user creation failed.
  */
 function createUser(username, password, confirm, success, failure) {
-  var salt = bcrypt.genSaltSync(10);
-  var hash = bcrypt.hashSync(password, salt);
-  
   if (password !== confirm) {
     failure('Passwords do not match.');
   } else {
 	  //Create new user
-    user = new User({
-      username: username,
-      password: hash,
-      tokens: [],
-      notes:[]
-    });
-    //Create new note
-    note = new Note({userId: user.id});
-	
-	//Save the newly created note
-	note.save(function(error, result) {
-      if (error) {
-        failure('Error saving note: ' + note.text);
-      } else {
-        success();
+    async.waterfall([
+      function(callback) {
+        auth.encrypt(password, callback);
+      },
+      function(hash, callback) {
+        user = new User({
+          username: username,
+          password: hash
+        });
+        user.save(callback);
       }
-    });
-    
-    //Associate the new note with the new user
-    user.notes.push(note);
-    
-    //Save the newly created user
-    user.save(function(error, result) {
-      if (error) {
-        failure('Error saving user: ' + user.username);
+    ], function(err, result) {
+      console.log("Registration: ");
+      console.log(result);
+      if (err) {
+        failure();
       } else {
         success();
       }
     });
   }
-}
+};
+
+var add_user_to_team = function(user_id, team_id, callback) {
+  Team.findByIdAndUpdate(team_id, {$addToSet: {'members': user_id}}, function(err, result) {
+    if (err) {
+      callback(err, null);
+    } else {
+      console.log(callback);
+      callback(null, result);
+    }
+  });
+};

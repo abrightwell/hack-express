@@ -76,13 +76,14 @@ module.exports = function(app) {
 	app.delete('/admin/teams/:id', auth.requiresLogin, admin_teams.destroy);
 
 	// Admin Users Routes
-	app.get('/admin/users', auth.requiresLogin, admin_users.index);
-	app.post('/admin/users', auth.requiresLogin, admin_users.create);
-	app.get('/admin/users/new', auth.requiresLogin, admin_users.new);
-	app.get('/admin/users/:id/show', auth.requiresLogin, admin_users.show);
-	app.get('/admin/users/:id/edit', auth.requiresLogin, admin_users.edit);
-	app.put('/admin/users/:id', auth.requiresLogin, admin_users.update);
-	app.delete('/admin/users/:id', auth.requiresLogin, admin_users.destroy);
+	app.get('/admin/users', admin_users.index);
+	app.post('/admin/users', admin_users.create);
+	app.get('/admin/users/new', admin_users.new);
+	app.get('/admin/users/:id/show', admin_users.show);
+	app.get('/admin/users/:id/edit', admin_users.edit);
+	app.put('/admin/users/:id', admin_users.update);
+	app.put('/admin/users/:id/password', admin_users.update_password);
+	app.delete('/admin/users/:id', admin_users.destroy);
 
 	// Admin Hints Routes
 	app.get('/admin/hints', auth.requiresLogin, admin_hints.index);

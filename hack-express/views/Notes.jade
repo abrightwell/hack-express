@@ -27,20 +27,32 @@ block content
   
   div.span9.well.bs-docs.sidebar
     h2 Notes
-    ul#myTab.nav.nav-tabs(data-tabs='tabs')
-      li.active
-        a(href='#personalNotes', data-toggle='tab') Personal
+    ul(data-tabs="tabs").nav.nav-tabs#tabs
       li
-        a(href='#teamNotes', data-toggle='tab') Team
-    div.tab-content
-      div#personalNotes.tab-pane.active
-        textarea(rows='25', wrap='hard', name='userNotes', placeholder='User Notes', readonly='readonly')
-          | #{notes[0].text}
-        p
-        form.form-inline(method='post', action='/notes/submit')
-          input(type='textarea', rows='300', cols='150', wrap='hard', name='noteInput', placeholder='Enter Notes', spellcheck='true', autofocus)
-          span.icon-bar
-          button.btn(type='submit') Submit
-      div#teamNotes.tab-pane
-        textarea(rows='25', wrap='hard', name='teamNotes', placeholder='Team Notes', readonly='readonly')
+        a(href='#user-notes', data-toggle='tab') User
+      li
+        a(href='#team-notes', data-toggle='tab') Team
+    
+    div.tab-content#tab-content
+      div.tab-pane#user-notes
+        form(method="post", action='/notes/submit')
+          input(type="hidden", name="user_id", value="#{user._id}")
+          textarea(rows='25', wrap='hard', name='notes', placeholder='User Notes')
+            | #{user_notes}
+          button(type='submit').btn.btn-primary Save
+      
+      div.tab-pane#team-notes
+        div.tabbable
+          ul(data-tabs="tabs").nav.nav-tabs#user-tabs
+            each team_member in team_notes.members
+              li
+                a(href="##{team_member.username}", data-toggle="tab") #{team_member.username}
+          
+          div.tab-content
+            each team_member in team_notes.members
+              div(id="#{team_member.username}").tab-pane
+                textarea(rows='25', wrap='hard', name='notes', readonly="readonly")
+                  | #{team_member.notes}
+
+
   include includes/sponsors

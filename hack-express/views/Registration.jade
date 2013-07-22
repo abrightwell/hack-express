@@ -36,19 +36,35 @@ block content
                       i.icon-user
                     input(type='text', name='username', autofocus='true', tabindex='1', required='true/', placeholder='Username')
             div.control-group
+                label.control-label(for='email') Email:
+                div.controls
+                  div.input-prepend
+                    span.add-on
+                      i.icon-envelope
+                    input(type="email", name="email", tabindex="2", required="true", placeholder="Email")
+            div.control-group
                 label.control-label(for='password') Password:
                 div.controls  
                   div.input-prepend
                     span.add-on
                       i.icon-lock
-                    input(type='password', name='password', tabindex='2', required='true/', placeholder='Password')
+                    input(type='password', name='password', tabindex='3', required='true', placeholder='Password')
             div.control-group
                 label.control-label(for='confirm') Confirm:
                 div.controls  
                   div.input-prepend
                     span.add-on
                       i.icon-lock
-                    input(type='password', name='confirm', tabindex='3', required='true/', placeholder='Confirm Password')
+                    input(type='password', name='confirm', tabindex='4', required='true', placeholder='Confirm Password')
+            div.control-group
+                label.control-label(for='confirm') Team:
+                div.controls 
+                  div.input-prepend
+                    span.add-on
+                      i.icon-group
+                    select(name="team_id")
+                      each team in teams
+                        option(value="#{team._id}") #{team.name}
             div.control-group
                 div.controls
                   button.btn.primary-btn(type='submit') Register

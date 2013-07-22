@@ -164,15 +164,42 @@ var reduce_team_scores = function(teams, callback) {
  *
  */
 var get_team_scores = function(users, callback) {
-  map_team_scores(users, function(err, result) {
-    reduce_team_scores(result, function(err, result) {
+  async.waterfall([
+    function(callback) {
+      var team_scores = {};
+
+      users.forEach(function(user) {
+        if (user.team_id != null) {
+          team_scores[user.team_id.name] = {};
+
+          user.tokens.forEach(function(token) {  
+            if (user.team_id != undefined) {
+              team_scores[user.team_id.name][token.id] = token.points;
+            }
+          });
+        }
+      });
+      callback(null, team_scores);
+    },
+    function(team_scores, callback) {
       scores = [];
 
-      Object.keys(result).forEach(function(key) {
-        scores.push({name: key, score: result[key]});
+      Object.keys(team_scores).forEach(function(team) {
+        var score = 0;
+        Object.keys(team_scores[team]).forEach(function(token) {
+          score += team_scores[team][token];    
+        });
+
+        scores.push({'name': team, 'score': score});  
       });
 
       callback(null, scores);
-    });
+    }
+  ], function(err, result) {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, result);
+      }
   });
 }

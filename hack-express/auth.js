@@ -18,9 +18,10 @@
  *Authors:  Adam Brightwell, Robert Dunigan
  */
 
-var bcrypt = require('bcrypt'),
-	database = require('./database').connection,
-    User = require('./model/user')(database);
+var bcrypt = require('bcrypt');
+var jquery = require('jquery');
+var	database = require('./database').connection;
+var User = require('./model/user')(database);
 
 module.exports.authenticate = function(username, password, callback) {
 	User.findOne({'username': username}, function(err, user) {
@@ -67,6 +68,15 @@ module.exports.requiresLogin = function(req, res, next) {
   } else {
     res.redirect('/login?redir=' + req.url);
   }
+}
+
+module.exports.requiresAdmin = function(req, res, next) {
+	if (req.session.user && (jquery.inArray('admin', req.session.user.roles) == 0)) {
+		next();
+	} else {
+		req.flash('You must have administrator privileges to access this resource.');
+		res.redirect('/login?redir=' + req.url);
+	}
 }
 
 

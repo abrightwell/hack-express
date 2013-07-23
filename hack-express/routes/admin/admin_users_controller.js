@@ -194,13 +194,23 @@ exports.update_password = function(req, res) {
 // DELETE /admin/users/:id
 exports.destroy = function(req, res) {
 	var id = req.params.id;
+	var user = req.body;
 
-	User.findByIdAndRemove(id, function(err, result) {
+	User.findByIdAndRemove(id, function(err, user_result) {
 		if (err) {
-			logger.log('error', 'Error removing deleting user - ' + err);
+			logger.log('error', 'Error finding user - ' + err);
 		} else {
-			logger.log('info', 'Successfully deleted user: ' + id);
-			res.redirect('/admin/users');
+			async.series([
+				function(callback) {
+					remove_user_from_team(user_result, callback);	
+				}
+			], function(err, result) {
+				if (err) {
+					logger.log('error', 'Error deleting user: ' + err);
+				} else {
+					res.redirect('/admin/users');
+				}
+			});
 		}
 	});
 };

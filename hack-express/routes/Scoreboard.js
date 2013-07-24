@@ -170,7 +170,7 @@ var get_team_scores = function(users, callback) {
 
       users.forEach(function(user) {
         if (user.team_id != null) {
-          team_scores[user.team_id.name] = {};
+          team_scores[user.team_id.name] = team_scores[user.team_id.name] || {};
 
           user.tokens.forEach(function(token) {  
             if (user.team_id != undefined) {

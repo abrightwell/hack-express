@@ -112,7 +112,7 @@ exports.update = function(req, res) {
 			if (req.params.format == 'json') {
 				res.json(result);
 			} else {
-				res.redirect('/teams/' + id);
+				res.redirect('teams/' + id);
 			}
 		}
 	});
@@ -130,7 +130,7 @@ exports.destroy = function(req, res) {
 			if (req.params.format == 'json') {
 				res.json();
 			} else {
-				res.redirect('/teams');
+				res.redirect('teams');
 			}
 		}
 	});

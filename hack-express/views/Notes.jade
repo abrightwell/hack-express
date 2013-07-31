@@ -46,11 +46,11 @@ block content
           ul(data-tabs="tabs").nav.nav-tabs#user-tabs
             each team_member in team_notes.members
               li
-                a(href="##{team_member.username}", data-toggle="tab") #{team_member.username}
+                a(href="##{team_notes.members.indexOf(team_member)}", data-toggle="tab") #{team_member.username}
           
           div.tab-content
             each team_member in team_notes.members
-              div(id="#{team_member.username}").tab-pane
+              div(id="#{team_notes.members.indexOf(team_member)}").tab-pane
                 textarea(rows='25', wrap='hard', name='notes', readonly="readonly")
                   | #{team_member.notes}
 

@@ -95,7 +95,16 @@ exports.edit = function(req, res) {
 
 // PUT /admin/tokens/:id
 exports.update = function(req, res) {
-
+	var id = req.params.id;
+	var token = req.body;
+	
+	Token.findByIdAndUpdate(id, {$set: token}, function(err, result) {
+		if (err) {
+			logger.log('error', err);
+		} else {
+			res.redirect('/admin/tokens');
+		}
+	});
 };
 
 // DELETE /admin/tokens/:id

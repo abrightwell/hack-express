@@ -142,7 +142,7 @@ exports.remove_member = function(req, res) {
 				if (err) {
 					logger.log('error', 'Error removing team from user: ' + err);
 				} else {
-					res.render('admin/teams/edit', {'team': team});
+					res.redirect('/admin/teams/' + id + '/edit');
 				}
 			});
 		}

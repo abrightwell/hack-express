@@ -15,6 +15,7 @@
  */
 
 var database = require('../../database').connection;
+var User = require('../../model/user')(database);
 var Team = require('../../model/team')(database);
 var per_page = 10;
 
@@ -86,7 +87,6 @@ exports.edit = function(req, res) {
 	var path = 'members';
 	var select = {'id': 1, 'username': 1};
 
-
 	Team.findById(id).populate(path, select).exec(function(err, team) {
 		if (err) {
 			logger.log('error', err.reason);
@@ -133,8 +133,8 @@ exports.remove_member = function(req, res) {
 	var id = req.params.id;
 	var user_id = req.params.user_id;
 	var update_stmt = {$pull: {'members': user_id}};
-
-	Team.findByIdAndUpdate(id, update_stmt, function(err, result) {
+	
+	Team.findByIdAndUpdate(id, update_stmt, function(err, team) {
 		if (err) {
 			logger.log('error', 'Error removing team member: ' + err);
 		} else {
@@ -142,7 +142,7 @@ exports.remove_member = function(req, res) {
 				if (err) {
 					logger.log('error', 'Error removing team from user: ' + err);
 				} else {
-					res.redirect('/admin/teams');
+					res.render('admin/teams/edit', {'team': team});
 				}
 			});
 		}

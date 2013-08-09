@@ -78,6 +78,7 @@ module.exports = function(app) {
 	app.get('/admin/teams/:id/edit', admin_teams.edit);
 	app.put('/admin/teams/:id', admin_teams.update);
 	app.delete('/admin/teams/:id', admin_teams.destroy);
+	app.delete('/admin/teams/:id/members/:user_id', admin_teams.remove_member);
 
 	// Admin Users Routes
 	app.get('/admin/users', admin_users.index);

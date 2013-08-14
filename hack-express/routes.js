@@ -45,7 +45,7 @@ module.exports = function(app) {
 	app.post('/registration/submit', input.sanitize, Registration.submit);
 	app.get('/login', cache.setHeaderPublic, Login.show);
 	app.post('/login/submit', input.sanitize, Login.submit);
-	app.get('/scoreboard', cache.setHeaderPublic, Scoreboard.show);
+	app.get('/scoreboard', Scoreboard.show);
 	app.get('/submissions', auth.requiresLogin, Submissions.show);
 	app.post('/submissions/submit', input.sanitize, auth.requiresLogin, Submissions.submit);
 	app.get('/notes', auth.requiresLogin, Notes.show);
